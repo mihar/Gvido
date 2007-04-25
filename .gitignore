@@ -12,3 +12,4 @@ config/double_recall.yml
 .sass-cache
 coverage
 .gitattributes
+config/paperclip.yml
