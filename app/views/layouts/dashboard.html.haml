@@ -3,15 +3,22 @@
   %head
     %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "Content-Type" }/
     %title
-      = yield(:title).empty?? "Gvido Dashboard" : yield(:title)
+      = yield(:title).empty?? "GVIDO Informacijski sistem" : yield(:title)
     = stylesheet_link_tag "dashboard"
     = javascript_include_tag :defaults
     = csrf_meta_tag
   %body{body_attrs}
-    #header
-      %ul#nav
+    %header
+      %h1 GVIDO
+      %h2 Informacijski sistem
+      %nav
+        = menu_item "Učenci", people_path, :people, false
+        = menu_item "Mentorji", mentors_path, :mentors, false
     #content
       = yield
-    #footer
-      &copy;2010 GVIDO
-      %span.production &mdash; produkcija: <a href="http://disru.pt">DISRU.PT</a>
+    %footer
+      &copy;2011 GVIDO
+      %span.production
+        &mdash; produkcija:
+        = link_to image_tag("disrupt.png"), "http://disru.pt", :title => "Produkcija: DISRU.PT - Agile thinking (http://disru.pt)"
+

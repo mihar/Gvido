@@ -1,0 +1,66 @@
+table
+  :width 100%
+  border-spacing: 0
+  thead
+    tr
+      th
+        padding: 4px
+        background: $gvido_light_blue
+        +small-text
+        +crisp-shadow
+      th:last-child, td:last-child
+        :padding-right 1px
+  tbody
+    tr
+      td
+        +small-text
+        :padding  4px
+        :margin 0
+        :border-bottom 1px solid #efefef
+        &:last-child
+          border: 0
+          padding-right: 0
+          background: none !important
+      &:last-child td
+        :border 0
+      &:nth-child(odd) td
+        background-color: #fff
+      &:nth-child(even) td
+        background-color: #fafafa
+      &.clickable
+        td
+          cursor: pointer
+          a
+            text-decoration: none
+            color: #000
+        &:hover
+          td
+            background: #eee
+
+  tfoot
+    tr
+      td
+        border-top: 3px solid $gvido_gray
+        padding: 4px
+        font-weight: bold
+        +small-text
+
+  &.fields
+    width: auto
+    margin-bottom: 50px
+    td, th
+      vertical-align: top
+      border: 0
+      border-right: 3px solid #efefef !important
+      background: none !important
+      padding:
+        left: 20px
+        right: 20px
+      &:first-child
+        padding-left: 0
+      &:last-child
+        border-right: 0 !important
+  th, td
+    .crud
+      float: right
+

@@ -1,23 +1,26 @@
-- title "Ucenci"
+= title "Učenci"
 
-= link_to 'Nova oseba', new_person_path
+.crud
+  .master
+    = link_to 'Nova oseba', new_person_path
 
 %table
-  %tr
-    %th
-      Ime in priimek
-    %th
-      Naslov
-    %th
-      Kraj
-    %th
-      Telefonska stevilka
-    %th
-      Mobitel
-    %th
-      Email
-    %th
-      Opombe
-    %th
-      Datum dodajanja
-  = render :partial => @people
+  %thead
+    %tr
+      %th
+        Ime in priimek
+      %th
+        Naslov
+      %th
+        Kraj
+      %th
+        Telefonska stevilka
+      %th
+        Mobitel
+      %th
+        Email
+      %th
+        Opombe
+      %th
+        Datum dodajanja
+  %tbody= render collection

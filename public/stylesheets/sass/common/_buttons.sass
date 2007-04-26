@@ -1,0 +1,56 @@
+=button
+  :display table
+  :background $gvido_red
+  :padding 4.5px 10px
+  :color #fff !important
+  +bold
+  +sans
+  +ultra-small-text
+  +small-radius
+  +dark-shadow
+  :text-decoration none !important
+  :border 1px solid transparent
+  :cursor pointer
+  &:hover
+    +lite-shadow
+    :color #000 !important
+    :background #fff
+    :border 1px solid #ccc
+    :text-decoration none !important
+  &:active
+    +mid-shadow
+    :color #000 !important
+    :background #eee
+    :border 1px solid #ccc
+    :text-decoration none !important
+  
+
+=lite-button
+  +button
+  +crisp-shadow
+  :background $gvido_gray
+  :border 1px solid #ccc
+  :color #000 !important
+  &:hover
+    :border-color #000
+
+=dark-button
+  +button
+  +dark-shadow
+  :background #333
+  :color #fff !important
+  &:hover
+    +dark-shadow
+    :background #444
+    :color #fff !important
+  
+
+=small-button
+  +button
+  :width auto
+  :background url(/images/backgrounds/70white.png)
+  :border-color #ccc
+  &:hover
+    :background url(/images/backgrounds/50black.png)
+    :color #fff !important
+    +dark_shadow

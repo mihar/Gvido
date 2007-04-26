@@ -53,8 +53,10 @@
         = yield :sidebar
       #content= yield
       #footer
-        &copy;2010 GVIDO 
-        %span.production &mdash; produkcija: <a href="http://miha.rebernik.info">Miha Rebernik</a>
+        &copy;2011 GVIDO 
+        %span.production 
+          &mdash; produkcija: 
+          = link_to image_tag("disrupt.png"), "http://disru.pt", :title => "Produkcija: DISRU.PT - Agile thinking (http://disru.pt)"
         
         - if Rails.env.production?
           = render "layouts/analytics"

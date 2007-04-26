@@ -27,7 +27,7 @@ module LayoutHelper
 
   def title(_title, heading = true)
     default = "Gvido"
-    title = (_title) ? _title : default
+    title = (_title) ? "#{_title} (#{default})" : default
     content_for(:title) { title }
 
     if heading
