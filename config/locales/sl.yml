@@ -84,10 +84,45 @@ sl:
     models:
       person: "Oseba"
       post: "Novica"
+      about: "Pogosta vprašanja"
+      album_category: "Kategorije albumov"
+      album: "Albumi"
+      contact: "Kontakt"
+      gig: "Koncerti"
+      
     attributes:
       person:
         first_name: "Ime"
         last_name: "Priimek"
+        address:    "Naslov"
+        place: "Kraj"
+        mobile: "Mobitel"
+        email: "E-pošta"
+        landline: "Telefonska št."
+        notes: "Opombe"
+        date_of_birth: "Datum rojstva"
+      album:
+        title: "Naziv albuma"
+        position: "Pozicija"
+        description: "Opis albuma"
+      about:
+        text: "Vsebina"
+        contact: "Kontakt"
+      album_category:
+        title: "Naziv kategorije"
+      contact:
+        email: "E-pošta"
+        phone: "Telefonska št."
+        experience: "Izkušnje"
+        name: "Ime in priimek"
+        address:    "Naslov"
+        text:  "Dodatne informacije"
+      gig:
+        title: "Naziv koncerta"
+        venue: "Prireditveni prostor"
+        address: "Naslov"
+        when: "Datum koncerta"
+        
     errors:
       messages:
         record_invalid: "Vpis ni možen zaradi napak!"
