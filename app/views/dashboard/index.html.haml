@@ -1,0 +1,20 @@
+%table
+  %tr
+    %th
+      Ime
+    %th
+      Telefon
+    %th
+      Email
+    %th
+      Datum kontakta
+  - @contacts.each do |contact|
+    %tr
+      %td
+        = contact.name
+      %td
+        = contact.phone
+      %td
+        = contact.email
+      %td
+        = contact.created_at
