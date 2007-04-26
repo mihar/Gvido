@@ -1,4 +1,4 @@
-= simple_form_for @contact do |f|
+= simple_form_for @contact, :class => :simple do |f|
   #contact
     %p
       = f.input :name
@@ -16,6 +16,7 @@
         %li
           %label
             = check_box_tag "contact[instrument_ids][]", instrument.id, @contact.instruments.include?(instrument)
+
             = instrument.title
   #locations
     = f.label "Zanimam se za lokacijo"

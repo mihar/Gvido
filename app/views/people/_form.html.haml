@@ -18,9 +18,9 @@
   %p
     = f.input :student
   %p
-    = f.collection_select :mother_id, Person.others, :id, :full_name, :prompt => "Mama"
+    = f.association :mother, :collection => Person.others, :label_method => :full_name, :prompt => 'Izberite mamo'
   %p
-    = f.collection_select :father_id, Person.others, :id, :full_name, :prompt => "Oce"
+    = f.association :father, :collection => Person.others, :label_method => :full_name, :prompt => 'Izberite oceta'
 
   %p.submit
     = f.button :submit
