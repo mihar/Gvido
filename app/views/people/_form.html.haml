@@ -1,0 +1,27 @@
+= simple_form_for resource do |f|
+  %p
+    = f.input :first_name
+  %p
+    = f.input :last_name
+  %p
+    = f.input :address
+  %p
+    = f.input :place
+  %p
+    = f.input :landline
+  %p
+    = f.input :mobile
+  %p
+    = f.input :email
+  %p
+    = f.input :notes
+  %p
+    = f.input :student
+  %p
+    = f.collection_select :mother_id, Person.others, :id, :full_name, :prompt => "Mama"
+  %p
+    = f.collection_select :father_id, Person.others, :id, :full_name, :prompt => "Oce"
+
+  %p.submit
+    = f.button :submit
+

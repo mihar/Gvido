@@ -1,0 +1,23 @@
+- title "Ucenci"
+
+= link_to 'Nova oseba', new_person_path
+
+%table
+  %tr
+    %th
+      Ime in priimek
+    %th
+      Naslov
+    %th
+      Kraj
+    %th
+      Telefonska stevilka
+    %th
+      Mobitel
+    %th
+      Email
+    %th
+      Opombe
+    %th
+      Datum dodajanja
+  = render :partial => @people

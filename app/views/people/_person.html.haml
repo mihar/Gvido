@@ -1,0 +1,21 @@
+%tr
+  %td
+    = person.full_name
+  %td
+    = person.address
+  %td
+    = person.place
+  %td
+    = person.landline
+  %td
+    = person.mobile
+  %td
+    = person.email
+  %td
+    = person.notes  
+  %td
+    = h person.created_at.to_s :simple
+  %td
+    = link_to "Podrobnosti", person
+  %td
+    = link_to "Odstrani", person, :confirm => 'Ste prepričani?', :method => :delete
