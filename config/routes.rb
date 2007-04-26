@@ -1,4 +1,5 @@
 App::Application.routes.draw do
+  match 'dashboard', :to => 'dashboard#index'
   resources :people
   resources :abouts
   resources :notices
