@@ -10,7 +10,7 @@ class Person < ActiveRecord::Base
   #UNSUBSCRIBED = 4
 
   scope :students,  where('student = ?', true).order('first_name ASC, last_name ASC')
-  scope :others,    where('student = ?', false).order('created_at DESC')
+  scope :others,    where('student = ?', false).order('id DESC')
   
   validates_presence_of :first_name, :last_name
     

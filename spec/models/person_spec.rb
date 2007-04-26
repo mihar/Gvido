@@ -10,9 +10,9 @@ describe Person do
   it { should belong_to(:father) }
   
   it "should have momma and poppa if added" do
-    tata = Factory :person, :first_name => "Tata", :student => false
-    mama = Factory :person, :first_name => "Mata", :student => false
-    student = Factory :person, :student => true
+    tata = Factory :parent
+    mama = Factory :parent, :first_name => "Mata"
+    student = Factory :student
     
     student.mother= mama
     student.father= tata
@@ -23,7 +23,7 @@ describe Person do
   end
   
   it "shouldnt have parents if not added" do
-    student = Factory :person, :student => true
+    student = Factory :student
     student.mother.should eql(nil)
     student.father.should eql(nil)
   end
@@ -41,26 +41,36 @@ describe Person do
   end 
   
   it "shouldn't include paretns in students scope" do
-    Factory :person, :first_name => "Tata", :student => false
-    Factory :person, :first_name => "Mata", :student => false
-    Factory :person, :student => true
+    Factory :parent
+    Factory :parent, :first_name => "Mata"
+    Factory :student
     
     Person.students.length.should eql(1)
   end
   
   it "shouldn't include students in others scope" do
-    Factory :person, :first_name => "Tata", :student => false
-    Factory :person, :first_name => "Mata", :student => false
-    Factory :person, :student => true
+    Factory :parent
+    Factory :parent, :first_name => "Mata"
+    Factory :student
     
     Person.others.length.should eql(2)
   end
   
+  it "should properly order parents in others scope" do
+    last = Factory :parent
+    Factory :parent
+    Factory :parent
+    first = Factory :parent
+    
+    Person.others.first.should eql(first)
+    Person.others.last.should eql(last)
+  end
+  
   it "should properly order students in students scope" do
-    Factory :person, :first_name => "B", :last_name => 'A', :student => true
-    b = Factory :person, :first_name => "B", :last_name => 'B', :student => true
-    a = Factory :person, :first_name => "A", :last_name => 'A', :student => true
-    Factory :person, :first_name => "A", :last_name => 'B', :student => true
+    Factory :student, :first_name => "B", :last_name => 'A'
+    b = Factory :student, :first_name => "B", :last_name => 'B'
+    a = Factory :student, :first_name => "A", :last_name => 'A'
+    Factory :student, :first_name => "A", :last_name => 'B'
     
     organized_students_list = Person.students
     organized_students_list.first.should eql(a)

@@ -8,6 +8,18 @@ Factory.define :person do |f|
   f.last_name  'Mekakil'
 end
 
+Factory.define :student, :class => 'person' do |f|
+  f.first_name 'Mikakhil'
+  f.last_name  'Mekakil'
+  f.student     true
+end
+
+Factory.define :parent, :class => 'person' do |f|
+  f.first_name 'Tata'
+  f.last_name  'Mekakil'
+  f.student     false
+end
+
 Factory.define :album_category do |f|
   f.title "Johanesberen"
 end
