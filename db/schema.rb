@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110225132333) do
+ActiveRecord::Schema.define(:version => 20110225132335) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20110225132333) do
     t.string   "experience"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "processed",  :default => false
   end
 
   create_table "contacts_instruments", :id => false, :force => true do |t|
@@ -185,8 +186,9 @@ ActiveRecord::Schema.define(:version => 20110225132333) do
     t.integer  "sign_up_status"
     t.integer  "mother_id"
     t.integer  "father_id"
-    t.boolean  "student"
+    t.boolean  "student",        :default => false
     t.text     "notes"
+    t.date     "date_of_birth"
   end
 
   create_table "photos", :force => true do |t|

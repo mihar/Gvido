@@ -1,6 +1,6 @@
 class AddStudentToPeople < ActiveRecord::Migration
   def self.up
-    add_column :people, :student, :boolean
+    add_column :people, :student, :boolean, :default => false
   end
 
   def self.down
