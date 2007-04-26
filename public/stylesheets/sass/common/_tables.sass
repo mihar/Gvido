@@ -6,6 +6,7 @@ table
       th
         padding: 4px
         background: $gvido_light_blue
+        text-align: left
         +small-text
         +crisp-shadow
       th:last-child, td:last-child
@@ -18,9 +19,7 @@ table
         :margin 0
         :border-bottom 1px solid #efefef
         &:last-child
-          border: 0
           padding-right: 0
-          background: none !important
       &:last-child td
         :border 0
       &:nth-child(odd) td
@@ -32,7 +31,7 @@ table
           cursor: pointer
           a
             text-decoration: none
-            color: #000
+            color: #000 !important
         &:hover
           td
             background: #eee

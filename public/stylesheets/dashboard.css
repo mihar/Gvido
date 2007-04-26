@@ -86,7 +86,7 @@
   border: 1px solid transparent;
   cursor: pointer;
   text-shadow: 0px 1px 1px white;
-  background: #af928b;
+  background: #d7cfcd;
   border: 1px solid #cccccc;
   color: black !important; }
   #content .to_back:hover {
@@ -127,7 +127,7 @@
       border: 1px solid transparent;
       cursor: pointer;
       text-shadow: 0px 1px 1px white;
-      background: #af928b;
+      background: #d7cfcd;
       border: 1px solid #cccccc;
       color: black !important; }
       #content > .crud a.super:hover, #content > .crud a.secondary:hover {
@@ -151,7 +151,7 @@
   #content > .crud:hover {
     z-index: 999;
     overflow: auto;
-    background: url("/images/backgrounds/gvido_gray_gradient.png") left top repeat-y; }
+    background: url("/images/backgrounds/dr_gray_gradient.png") left top repeat-y; }
     #content > .crud:hover a {
       display: table !important; }
 
@@ -240,6 +240,7 @@ table {
   table thead tr th {
     padding: 4px;
     background: #b2dcfe;
+    text-align: left;
     font-size: 14px;
     text-shadow: 0px 1px 1px white; }
   table thead tr th:last-child, table thead tr td:last-child {
@@ -250,9 +251,7 @@ table {
     margin: 0;
     border-bottom: 1px solid #efefef; }
     table tbody tr td:last-child {
-      border: 0;
-      padding-right: 0;
-      background: none !important; }
+      padding-right: 0; }
   table tbody tr:last-child td {
     border: 0; }
   table tbody tr:nth-child(odd) td {
@@ -263,11 +262,11 @@ table {
     cursor: pointer; }
     table tbody tr.clickable td a {
       text-decoration: none;
-      color: black; }
+      color: black !important; }
   table tbody tr.clickable:hover td {
     background: #eeeeee; }
   table tfoot tr td {
-    border-top: 3px solid #af928b;
+    border-top: 3px solid #d7cfcd;
     padding: 4px;
     font-weight: bold;
     font-size: 14px; }
@@ -288,6 +287,79 @@ table {
   table th .crud, table td .crud {
     float: right; }
 
+.contacts table td, .contacts table th {
+  padding: 3px; }
+.contacts table td {
+  border-bottom: 1px dotted #cccccc; }
+.contacts .date, .contacts .data {
+  margin: 20px 0; }
+  .contacts .date strong, .contacts .data strong {
+    color: #666666; }
+  .contacts .date ul li, .contacts .data ul li {
+    list-style: inside; }
+.contacts #start {
+  padding: 25px 0;
+  display: inline-block;
+  display: block; }
+  .contacts #start:after {
+    clear: both;
+    content: " ";
+    display: block;
+    font-size: 0;
+    line-height: 0;
+    visibility: hidden;
+    width: 0;
+    height: 0; }
+  * html .contacts #start {
+    height: 1%; }
+  .contacts #start a {
+    display: table;
+    background: #591f16;
+    padding: 4.5px 10px;
+    color: white !important;
+    font-weight: bold;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    text-shadow: 0px 1px 1px #272727;
+    text-decoration: none !important;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 18px; }
+    .contacts #start a:hover {
+      text-shadow: 0px 1px 1px #dddddd;
+      color: black !important;
+      background: white;
+      border: 1px solid #cccccc;
+      text-decoration: none !important; }
+    .contacts #start a:active {
+      text-shadow: 0px 1px 1px #bababa;
+      color: black !important;
+      background: #eeeeee;
+      border: 1px solid #cccccc;
+      text-decoration: none !important; }
+  .contacts #start a, .contacts #start span {
+    float: left; }
+  .contacts #start span {
+    display: block;
+    margin: 0 20px;
+    line-height: 30px;
+    font-size: 18px; }
+
+#contacts-new form .notice {
+  color: #888888; }
+#contacts-new form #contact, #contacts-new form #instruments, #contacts-new form #locations {
+  float: left;
+  width: 250px; }
+  #contacts-new form #contact ul, #contacts-new form #instruments ul, #contacts-new form #locations ul {
+    margin-left: 0; }
+    #contacts-new form #contact ul li, #contacts-new form #instruments ul li, #contacts-new form #locations ul li {
+      list-style: none inside; }
+      #contacts-new form #contact ul li label, #contacts-new form #instruments ul li label, #contacts-new form #locations ul li label {
+        font-weight: normal; }
+
 * {
   padding: 0;
   margin: 0; }
@@ -302,13 +374,19 @@ header {
   padding: 20px;
   position: relative;
   height: 54px; }
-  header h1, header h2 {
-    text-shadow: 0px 1px 1px #272727; }
+  header h1 a, header h2 a {
+    text-shadow: 0px 1px 1px #272727;
+    color: white;
+    text-decoration: none; }
   header h1 {
-    font-size: 30px; }
+    height: 30px; }
+    header h1 a {
+      font-size: 30px; }
   header h2 {
-    font: normal 18px/18px Times, Times New Roman, serif;
-    font-style: italic; }
+    height: 18px; }
+    header h2 a {
+      font: normal 18px/18px Times, Times New Roman, serif;
+      font-style: italic; }
   header nav {
     position: absolute;
     top: 0px;
@@ -336,6 +414,14 @@ header {
   #content > h1 {
     font-size: 28px;
     margin-bottom: 14px; }
+  #content a {
+    color: #591f16; }
+    #content a:hover {
+      color: #812717; }
+    #content a:active {
+      color: red; }
+  #content p {
+    margin: 10px 0; }
 
 footer {
   padding: 20px;

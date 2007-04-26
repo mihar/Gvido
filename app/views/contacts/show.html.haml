@@ -1,8 +1,9 @@
-- title "Kontakt"
+= title "Kontakt"
 
 %p.date
   %strong Oddano:
   = @contact.created_at.to_s :simple
+  
 .data
   %p
     %strong Ime in priimek:
@@ -24,6 +25,7 @@
     %strong Dosedanje izkušnje:
     %br
     = h @contact.experience
+    
   - unless @contact.instruments.empty?
     %p
       %strong Zanimanje za program(e):
@@ -37,7 +39,10 @@
         - @contact.locations.each do |location|
           %li= link_to location.title, location_path(location)
 
-= admin_section do
-  = link_to "Odstrani", @contact, :confirm => 'Ste prepričani?', :method => :delete
-  |
-  = link_to_back contacts_path
+#start
+  = link_to "Začni vpis", new_person_path(:contact_id => resource)
+  %span ali
+  = link_to "Odstrani", resource, :confirm => 'Ste prepričani?', :method => :delete
+
+
+= link_to_back contacts_path

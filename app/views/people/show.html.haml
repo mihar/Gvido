@@ -1,8 +1,8 @@
--title 'Pregled ucenca'
+= title 'Pregled ucenca'
 
 .crud
+  = link_to "Odstrani", @person, :confirm => 'Ste prepričani?', :method => :delete
   .master
-    = link_to "Odstrani", @person, :confirm => 'Ste prepričani?', :method => :delete
     = link_to 'Uredi', edit_person_path(@person)
     
 %p.date
@@ -41,3 +41,4 @@
       = @person.father.full_name
       
 = link_to_back people_path
+
