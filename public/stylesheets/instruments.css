@@ -1,0 +1,23 @@
+.instruments #content .instrument {
+  width: 250px;
+  float: left;
+  height: 50px;
+  font: bold 14px/50px Helvetica, Arial, sans-serif;
+  margin: 15px 0; }
+  .instruments #content .instrument .icon {
+    width: 50px;
+    margin-right: 15px;
+    text-align: center;
+    float: left; }
+.instruments #content .admin {
+  display: inline; }
+
+.instruments#instruments-show #content .instrument_image {
+  float: right; }
+.instruments#instruments-show #content .description {
+  margin: 20px 0;
+  font-size: 14px; }
+.instruments#instruments-show #content .mentors, .instruments#instruments-show #content .locations {
+  margin: 20px 0; }
+.instruments#instruments-show #content .shop_instructions {
+  margin-bottom: 25px; }

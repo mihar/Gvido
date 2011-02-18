@@ -1,0 +1,23 @@
+- title "Kategorije povezav"
+
+%table
+  %tr
+    %th
+      Naziv
+    %th
+      Pozicija
+  - for link_category in @link_categories
+    %tr
+      %td
+        = h link_category.title
+      %td
+        = h link_category.position
+      %td
+        = link_to "Show", link_category
+      %td
+        = link_to "Edit", edit_link_category_path(link_category)
+      %td
+        = link_to "Destroy", link_category, :confirm => 'Ste prepričani?', :method => :delete
+
+%p
+  = link_to "Nova kategorija", new_link_category_path

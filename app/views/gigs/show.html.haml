@@ -1,0 +1,26 @@
+- title "Koncert #{@gig.title}"
+
+= spit @gig, :title, :h3
+
+- if @gig.when
+  %p.date= h @gig.when.to_s(:simple)
+
+= spit @gig, :venue
+= spit @gig, :address    
+
+- if @gig.description
+  %div.description
+    %strong Opis:
+    = textilize h @gig.description
+
+- unless @gig.mentors.empty?
+  %p.mentors
+    %strong Nastopajoči mentorji:
+    = spit_with_links @gig, :mentors
+
+- admin_section do
+  = link_to "Uredi", edit_gig_path(@gig)
+  |
+  = link_to "Izbrisi", @gig, :confirm => 'Ste prepričani?', :method => :delete
+  |
+  = link_to "Nazaj", gigs_path

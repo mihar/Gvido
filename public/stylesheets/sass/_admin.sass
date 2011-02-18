@@ -1,0 +1,94 @@
+.sessions
+  form
+    :margin 20px 0
+    label
+      :font-weight bold
+      :display block
+      :margin-top 20px
+    input.password
+      :height 20px
+      :padding 10px
+      :margin 10px 0 20px 0
+      :font 20px/20px "Lucida Grande","Lucida Sans Unicode", helvetica, verdana, arial, sans-serif
+
+#content
+  .admin
+    :background #C71D2C
+    :height 16px
+    :padding 2px 4px
+    :display table
+    :color #fff
+    &:hover
+      :background #FFDF67
+      :color #000
+      a
+        :color #000
+    a
+      :font bold 10px/16px Arial, sans-serif
+      :text-decoration underline
+      :color #fff
+      &:hover
+        :color #000
+
+#admin
+  :position fixed
+  :z-index 5000
+  :top 0px
+  :right 0px
+  :background #000
+  :color #ccc
+  :width 100%
+  :border-bottom 1px dotted #fff
+  :padding 7px
+  #flash, #logout
+    :padding 0 10px
+  #flash
+    :float left
+    :width 90%
+    :font bold 12px/12px Verdana, Helvetica, Arial, sans-serif
+    :color #fff
+    :padding-top 3px
+  #notice, #error
+    :text-align center
+    :padding 2px
+  #notice
+    :background #007015
+  #error
+    :background #9B0600
+  #logout
+    :float right
+    :width 5%
+    :text-align right
+    a
+      :background #ccc
+      :color #000
+      :padding 2px
+      :text-decoration none
+      :font-weight bold
+      &:hover
+        :background #fff
+        :color #980C00
+        
+#errorExplanation.errorExplanation
+  :border 2px solid #C50000
+  :margin 0 0 20px 0
+  :padding 0
+  h2
+    :float none
+    :width auto
+    :height auto
+    :background #C50000
+    :color #fff
+    :padding 10px
+    :margin 0 0 10px 0
+    :font bold 12px/12px Verdana, Helvetica, Arial, sans-serif
+  p
+    :padding 0 10px
+    :font-weight bold
+    
+.fieldWithErrors
+  :background #C50000
+  :padding 2px
+  :margin 0
+  :display table
+  

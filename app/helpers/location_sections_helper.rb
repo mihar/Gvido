@@ -1,0 +1,2 @@
+module LocationSectionsHelper
+end

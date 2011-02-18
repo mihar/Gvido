@@ -1,0 +1,15 @@
+- title "Koncerti"
+
+= render_misc 'gig'
+
+%table{:cellpadding => 0, :cellspacing => 0}
+  %thead
+    %th
+    %th Lokacija
+    %th Datum in ura
+    %td
+  %tbody
+    = render :partial => @gigs
+
+- admin_section do
+  = link_to "Nov koncert", new_gig_path

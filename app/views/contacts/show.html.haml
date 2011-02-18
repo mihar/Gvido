@@ -1,0 +1,43 @@
+- title "Kontakt"
+
+%p.date
+  %strong Oddano:
+  = @contact.created_at.to_s :simple
+.data
+  %p
+    %strong Ime in priimek:
+    = @contact.name
+  %p
+    %strong Naslov:
+    = @contact.address
+  %p
+    %strong Email:
+    = link_to @contact.email, "mailto:#{@contact.email}"
+  %p
+    %strong Telefon:
+    = @contact.phone
+  %p
+    %strong Opombe:
+    %br
+    = h @contact.text
+  %p
+    %strong Dosedanje izkušnje:
+    %br
+    = h @contact.experience
+  - unless @contact.instruments.empty?
+    %p
+      %strong Zanimanje za program(e):
+      %ul
+        - @contact.instruments.each do |instrument|
+          %li= link_to instrument.title, instrument_path(instrument)
+  - unless @contact.locations.empty?
+    %p
+      %strong Zanimanje za lokacije:
+      %ul
+        - @contact.locations.each do |location|
+          %li= link_to location.title, location_path(location)
+
+- admin_section do
+  = link_to "Odstrani", @contact, :confirm => 'Ste prepričani?', :method => :delete
+  |
+  = link_to "Nazaj", contacts_path

@@ -1,0 +1,13 @@
+.mentor
+  %h4.name= link_to mentor.full_name, mentor_path(mentor)
+  .instruments
+    - mentor.instruments.each do |i|
+      = link_to image_tag(i.icon_small, :title => i.title), instrument_path(i), :title => i.title
+  .locations
+    %ul
+      - mentor.locations_by_city.each do |l|
+        %li= l
+  - admin_section do
+    = link_to "Uredi", edit_mentor_path(mentor)
+    |
+    = link_to "Odstrani", mentor, :confirm => 'Ste prepričani?', :method => :delete

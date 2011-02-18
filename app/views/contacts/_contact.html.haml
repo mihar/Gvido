@@ -1,0 +1,14 @@
+%tr
+  = spit contact, :name, :td
+  %td
+    = contact.instruments.map { |i| link_to i.title, instrument_path(i) }.join(", ") unless contact.instruments.empty?
+  %td
+    = contact.locations.map { |i| link_to i.title, location_path(i) }.join(", ") unless contact.locations.empty?    
+  %td
+    = h contact.created_at.to_s :simple
+
+
+  %td
+    = link_to "Podrobnosti", contact
+  %td
+    = link_to "Odstrani", contact, :confirm => 'Ste prepričani?', :method => :delete

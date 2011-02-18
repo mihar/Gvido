@@ -1,0 +1,11 @@
+= simple_form_for resource, :html => {:multipart => true} do |f|
+  %p
+    = f.input :title
+  %p
+    = f.input :body
+  %p
+    = f.input :file
+
+  %p.submit
+    = f.button :submit
+

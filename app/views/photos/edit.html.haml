@@ -1,0 +1,10 @@
+- title "Urejanje fotografije"
+
+%h3 Trenutna fotografija
+- if @photo.photo
+  = image_tag @photo.photo.url(:medium)
+
+= render :partial => 'form'
+
+%p
+  = link_to "Nazaj", album_path(parent_object)

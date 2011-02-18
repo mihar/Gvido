@@ -1,0 +1,31 @@
+- title @mentor.full_name
+- @lightbox = true
+
+.data
+  = spit @mentor, :full_name, :h3
+  = spit @mentor, :phone
+  = spit @mentor, :address
+  - if @mentor.email
+    %p.email= link_to @mentor.email, "mailto:#{@mentor.email}"
+  
+  .facebook_myspace
+    - if @mentor.facebook
+      = link_to image_tag('icons/facebook_mini.png'), @mentor.facebook, :title => "#{@mentor.full_name} na Facebook"
+    - if @mentor.myspace
+      = link_to image_tag('icons/myspace_mini.png'), @mentor.myspace, :title => "#{@mentor.full_name} na MySpace"
+
+  .instruments
+    = render :partial => "instruments/table", :locals => {:instruments => @mentor.instruments}
+
+  = render :partial => "locations"
+
+
+- unless @mentor.about.blank?
+  = link_to_lightbox image_tag(@mentor.photo.url(:medium)), @mentor.photo.url(:normal), @mentor.permalink, @mentor.full_name
+  .about.textilize= textilize @mentor.about
+
+
+- admin_section do
+  = link_to "Uredi", edit_mentor_path(@mentor)
+  |
+  = link_to "Odstrani", @mentor, :confirm => 'Ste prepričani?', :method => :delete

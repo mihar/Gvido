@@ -1,0 +1,9 @@
+= simple_form_for resource do |f|
+  %p
+    = f.input :title
+  %p
+    = f.input :uri
+  %p
+    = f.association :category
+  %p.submit
+    = f.button :submit

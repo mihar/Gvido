@@ -1,0 +1,12 @@
+- title "Nakupovalni nasveti za #{parent_object.title}"
+- @lightbox = true
+
+.instructions
+  = parent_object.shop_instructions_html
+.instrument_image= image_tag @instrument.icon
+
+
+= render :partial => @shop_advices
+
+- admin_section do
+  = link_to "Dodaj nasvet", new_instrument_shop_advice_path

@@ -1,0 +1,14 @@
+.advice
+  - if shop_advice.photo.file?
+    .image= link_to_lightbox image_tag(shop_advice.photo.url(:square)), shop_advice.photo.url(:normal), shop_advice.id, ""
+  - if shop_advice.description
+    .body= shop_advice.description_html
+  - if shop_advice.url
+    .link= link_to "Povezava", shop_advice.url
+  
+  - admin_section do
+    = link_to 'Uredi', edit_instrument_shop_advice_path(parent_object, shop_advice)
+    |
+    = link_to 'Odstrani', instrument_shop_advice_path(parent_object, shop_advice), :method => :delete
+  
+  .clear

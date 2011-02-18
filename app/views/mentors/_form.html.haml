@@ -1,0 +1,25 @@
+= simple_form_for resource, :html => {:multipart => true} do |f|
+  %p
+    = f.input :name
+  %p
+    = f.input :surname
+  %p
+    = f.input :phone
+  %p
+    = f.input :email
+  %p
+    = f.input :address
+  %p
+    = f.input :photo
+  %p
+    = f.input :about
+  %p
+    = f.input :facebook
+  %p
+    = f.input :myspace
+  %p
+    = f.input :position
+
+  %p.submit
+    = f.button :submit
+

@@ -1,0 +1,7 @@
+- title "Pogosta vprašanja"
+
+= render_misc 'question'
+= render :partial => @questions
+      
+- admin_section do
+  = link_to "Novo vprašanje", new_question_path

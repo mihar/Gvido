@@ -1,0 +1,7 @@
+.question
+  %h3= question.question
+  .answer= textilize question.answer
+  - admin_section do
+    = link_to "Uredi", edit_question_path(question)
+    |
+    = link_to "Odstrani", question, :confirm => 'Ste prepričani?', :method => :delete

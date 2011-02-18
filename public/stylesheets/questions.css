@@ -1,0 +1,6 @@
+.questions #content .question h3 {
+  font: bold 14px/19px Helvetica, Arial, sans-serif; }
+.questions #content .question .answer {
+  border-left: 7px solid #eee;
+  padding-left: 5px;
+  margin: 5px 0 15px 0; }

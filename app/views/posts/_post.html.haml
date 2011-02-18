@@ -1,0 +1,12 @@
+.post
+  .header
+    %h3= h post.title
+    %p.date
+      objavljeno
+      %em= post.created_at.to_s :simple
+  .text.textilize= post.text_html
+  
+  - admin_section do
+    = link_to "Uredi", edit_post_path(post)
+    |
+    = link_to "Izbriši", post, :confirm => 'Ste prepričani?', :method => :delete

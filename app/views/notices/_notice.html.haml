@@ -1,0 +1,12 @@
+.post
+  .header
+    %h3= h notice.title
+    %p.date
+      objavljeno
+      %em= notice.created_at.to_s :simple
+  .text.textilize= notice.body_html
+  
+  - admin_section do
+    = link_to "Uredi", edit_notice_path(notice)
+    |
+    = link_to "Izbriši", notice, :confirm => 'Ste prepričani?', :method => :delete

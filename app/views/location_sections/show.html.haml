@@ -1,0 +1,11 @@
+- title "Location Section"
+%p
+  %strong
+    Title:
+  = h @location_section.title
+%p
+  = link_to "Edit", edit_location_section_path(@location_section)
+  |
+  = link_to "Destroy", @location_section, :confirm => 'Ste prepričani?', :method => :delete
+  |
+  = link_to "View All", location_sections_path

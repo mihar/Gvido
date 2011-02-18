@@ -1,0 +1,233 @@
+@import instruments_table.sass
+@import references.sass
+@import schedules.sass
+@import misc.sass
+@import admin.sass
+@import posts.sass
+@import links.sass
+@import locations.sass
+@import mentors.sass
+@import instruments.sass
+@import questions.sass
+@import gigs.sass
+@import about.sass
+@import contacts.sass
+@import forms.sass
+@import albums.sass
+@import shop_advices.sass
+@import pagination.sass
+
+
+*
+  :margin 0
+  :padding 0
+
+
+body
+  :background #591F16 url("../images/back.gif") repeat
+  :text-align center
+  :font normal 11px/18px verdana, arial, tahoma, sans-serif
+  :color #333
+  :padding-top 40px
+
+
+a
+  :color #666
+  :text-decoration underline
+
+  &:visited
+    :color #999
+
+  &:hover
+    :color #000
+
+
+#header
+  :width 950px
+  :height 174px
+  :overflow hidden
+  :position relative
+  a
+    img 
+      :position absolute
+      :top 0px
+      :right 0px
+      :padding 0
+      :margin 0
+      :width 799px
+      :margin-bottom 20px
+
+
+#wrapper
+  :width 950px
+  :background #fff url("../images/sidebar.gif") repeat-y
+  :background-position 0 0
+  :border solid 10px #fff
+  :margin 0 auto
+  :text-align left
+
+
+h1
+  :width 140px
+  :height 48px
+  :background-color #333
+  :margin 1px 1px 0 0
+  :float left
+  :font bold 24px/48px arial, verdana, tahoma, sans-serif
+  :padding-left 10px
+  :color #fff
+  :cursor default
+
+
+h2
+  :width 789px
+  :height 48px
+  :background-color #333
+  :float left
+  :font normal 24px/48px arial, verdana, tahoma, sans-serif
+  :padding-left 10px
+  :color #fff
+  :margin-top 1px
+  :cursor default
+
+#backdoor
+  a
+    :display block
+    :position absolute
+    :top 0px
+    :right 0px
+    :width 20px
+    :height 20px
+    :background transparent
+    &:hover
+      :visibility visible
+      :background #ff0000
+      :border 5px dotted #591F16
+      :border-width 0 0 3px 3px
+    span
+      :display none
+
+#nav
+  :list-style none
+  :z-index 2
+  :border-right 1px solid #fff
+  :height 210px
+  :width 150px
+
+  li
+    :position relative
+
+    a
+      :color #fff
+      :font normal 11px/24px verdana, arial, tahoma, sans-serif
+      :display block
+      :width 140px
+      :height 24px
+      :background-color #000
+      :border-bottom 1px solid #fff
+      :padding-left 10px
+      :text-decoration none
+
+      &:hover
+        :background-color #333
+
+    ul
+      :position absolute
+      :display none
+      :top 0px
+      :left 150px
+      :z-index 100
+
+      
+      li
+        :list-style none 
+        a
+          :display block
+          :background #666
+          :border-bottom-style dotted
+
+    &:hover ul
+      :display block
+
+
+#current a
+  :background-image url("../images/bullet.gif")
+  :background-repeat no-repeat
+  :background-position 100% 50%
+
+
+#sidebar
+  :width 132px
+  :background-color #ccc
+  :float left
+  :border-top 1px solid #fff
+  :font normal 10px/18px verdana, arial, tahoma, sans-serif
+  :padding 8px
+
+  .social
+    :margin 20px 0
+    img
+      :border 2px solid #eee
+
+img
+  :border none
+
+
+#content
+  :float left
+  :width 788px
+  :margin 10px 0 0 10px
+  :position relative
+
+  a
+    :color #591F16
+
+  h2
+    :background transparent
+    :color #333
+    :padding 0
+    :margin 10px 0
+
+  h3
+    :font-size 14px
+    :margin 10px 0 5px 0
+
+  .news
+    :margin 10px 0
+    :padding 5px 0
+    :border-bottom 1px dotted #ccc
+
+    h3
+    .meta
+      :font-size 9px
+      :color #666
+      
+  ul
+    :margin 10px
+    li
+      :list-style square inside
+
+  // Global textilize styling
+  .textilize
+    p
+      :margin 10px 0
+    ul
+  // Miscellanious container in content container    
+  .misc
+    +misc
+
+  // Global expander styles
+
+#footer
+  :margin-top 20px
+  :padding-top 20px
+  :text-align center
+  :clear both
+  :width 520px
+  :margin-left 163px
+  .production, .production a
+    :color #999
+    
+    
+br.clear
+  :clear both

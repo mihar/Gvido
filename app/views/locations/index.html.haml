@@ -1,0 +1,19 @@
+- title "Lokacije"
+
+- map = GoogleMap.new
+- @locations.each do |loc|
+  - icon = GoogleMapLetterIcon.new(loc.letter)
+  - map.markers << GoogleMapMarker.new( :map => map, :icon => icon, :lat => loc.lat, :lng => loc.lng, :html => render(:partial => 'info', :locals => {:location => loc, :link => true}), :marker_hover_text => location_tooltip(loc))
+= map.to_html
+#map= map.div
+
+
+- @locations.in_groups_of(3).each do |row|
+  .row
+    - row.each do |location|
+      - if location
+        = render :partial => location
+  
+
+- admin_section do
+  = link_to "Nova lokacija", new_location_path

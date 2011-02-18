@@ -1,0 +1,9 @@
+.reference
+  %h3= reference.title
+  - unless reference.body.blank?
+    .body= reference.body_html
+
+  - admin_section do
+    = link_to "Edit", edit_reference_path(reference);
+    |
+    = link_to "Destroy", reference, :confirm => 'Are you sure?', :method => :delete

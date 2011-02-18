@@ -1,0 +1,12 @@
+- attrs = (gig.upcoming?) ?  {:class => "upcoming"} : {}
+%tr{attrs}
+  %td.title= h gig.title
+  %td.venue= h gig.venue
+  %td= h gig.when.to_s(:simple)
+
+  %td
+    = link_to "Podrobnosti", gig
+    - admin_section do
+      = link_to "Uredi", edit_gig_path(gig)
+      |
+      = link_to "Odstrani", gig, :confirm => 'Ste prepričani?', :method => :delete

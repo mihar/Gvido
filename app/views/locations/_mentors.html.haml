@@ -1,0 +1,6 @@
+%h3 Mentorji
+%ul
+  = render :partial => 'mentor', :collection => @location.mentors
+- form_tag add_mentor_location_path, :method => :post do
+  = collection_select :mentor, :id, @mentors, :id, :full_name
+  = submit_tag :Dodaj

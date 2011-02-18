@@ -1,0 +1,17 @@
+- title "Kategorija povezav"
+%p
+  %strong Naziv:
+  = h @link_category.title
+%p
+  %strong Pozicija:
+  = h @link_category.position
+  
+%p
+  %strong Povezave:
+  = render :partial => "links/link", :collection => @link_category.links
+%p
+  = link_to "Edit", edit_link_category_path(@link_category)
+  |
+  = link_to "Destroy", @link_category, :confirm => 'Ste prepričani?', :method => :delete
+  |
+  = link_to "View All", link_categories_path

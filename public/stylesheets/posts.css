@@ -1,0 +1,94 @@
+/*
+Syntax error: Undefined mixin 'misc'.
+        on line 28 of /Users/mihar/Work/Gvido/rails_webroot/public/stylesheets/sass/posts.sass, in `misc'
+        from line 28 of /Users/mihar/Work/Gvido/rails_webroot/public/stylesheets/sass/posts.sass
+
+23:   
+24: #posts-index
+25:   .admin
+26:     :clear both
+27:   .notices
+28:     +misc
+29:     ul
+30:       li
+31:         :color #666
+32:         a
+33:           :font-weight bold
+
+Backtrace:
+/Users/mihar/Work/Gvido/rails_webroot/public/stylesheets/sass/posts.sass:28:in `misc'
+/Users/mihar/Work/Gvido/rails_webroot/public/stylesheets/sass/posts.sass:28
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/mixin_node.rb:74:in `perform!'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:301:in `_perform'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:209:in `perform'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:322:in `perform_children'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:322:in `map'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:322:in `perform_children'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:313:in `perform!'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/rule_node.rb:191:in `perform!'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:301:in `_perform'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:209:in `perform'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:322:in `perform_children'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:322:in `map'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:322:in `perform_children'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:313:in `perform!'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/rule_node.rb:191:in `perform!'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:301:in `_perform'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:209:in `perform'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:322:in `perform_children'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:322:in `map'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:322:in `perform_children'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:313:in `perform!'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/root_node.rb:59:in `perform!'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:301:in `_perform'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/node.rb:209:in `perform'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/root_node.rb:37:in `perform'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/tree/root_node.rb:29:in `render'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/plugin.rb:221:in `update_stylesheet'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/plugin.rb:86:in `update_stylesheets'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/plugin.rb:79:in `each'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/plugin.rb:79:in `update_stylesheets'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/plugin.rb:77:in `each'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/plugin.rb:77:in `update_stylesheets'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/plugin.rb:51:in `check_for_updates'
+/Library/Ruby/Gems/1.8/gems/haml-3.0.13/lib/sass/plugin/rack.rb:40:in `call'
+/Library/Ruby/Gems/1.8/gems/actionpack-2.3.5/lib/action_controller/string_coercion.rb:25:in `call'
+/Library/Ruby/Gems/1.8/gems/rack-1.0.1/lib/rack/head.rb:9:in `call'
+/Library/Ruby/Gems/1.8/gems/rack-1.0.1/lib/rack/methodoverride.rb:24:in `call'
+/Library/Ruby/Gems/1.8/gems/actionpack-2.3.5/lib/action_controller/params_parser.rb:15:in `call'
+/Library/Ruby/Gems/1.8/gems/actionpack-2.3.5/lib/action_controller/session/cookie_store.rb:93:in `call'
+/Library/Ruby/Gems/1.8/gems/actionpack-2.3.5/lib/action_controller/failsafe.rb:26:in `call'
+/Library/Ruby/Gems/1.8/gems/rack-1.0.1/lib/rack/lock.rb:11:in `call'
+/Library/Ruby/Gems/1.8/gems/rack-1.0.1/lib/rack/lock.rb:11:in `synchronize'
+/Library/Ruby/Gems/1.8/gems/rack-1.0.1/lib/rack/lock.rb:11:in `call'
+/Library/Ruby/Gems/1.8/gems/actionpack-2.3.5/lib/action_controller/dispatcher.rb:114:in `call'
+/Library/Ruby/Gems/1.8/gems/actionpack-2.3.5/lib/action_controller/reloader.rb:34:in `run'
+/Library/Ruby/Gems/1.8/gems/actionpack-2.3.5/lib/action_controller/dispatcher.rb:108:in `call'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/rack/request_handler.rb:92:in `process_request'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/abstract_request_handler.rb:207:in `main_loop'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/railz/application_spawner.rb:441:in `start_request_handler'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/railz/application_spawner.rb:381:in `handle_spawn_application'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/utils.rb:252:in `safe_fork'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/railz/application_spawner.rb:377:in `handle_spawn_application'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/abstract_server.rb:352:in `__send__'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/abstract_server.rb:352:in `main_loop'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/abstract_server.rb:196:in `start_synchronously'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/abstract_server.rb:163:in `start'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/railz/application_spawner.rb:222:in `start'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/spawn_manager.rb:253:in `spawn_rails_application'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/abstract_server_collection.rb:126:in `lookup_or_add'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/spawn_manager.rb:247:in `spawn_rails_application'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/abstract_server_collection.rb:80:in `synchronize'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/abstract_server_collection.rb:79:in `synchronize'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/spawn_manager.rb:246:in `spawn_rails_application'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/spawn_manager.rb:145:in `spawn_application'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/spawn_manager.rb:278:in `handle_spawn_application'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/abstract_server.rb:352:in `__send__'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/abstract_server.rb:352:in `main_loop'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/lib/phusion_passenger/abstract_server.rb:196:in `start_synchronously'
+/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/bin/passenger-spawn-server:61
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: Undefined mixin 'misc'.\A         on line 28 of /Users/mihar/Work/Gvido/rails_webroot/public/stylesheets/sass/posts.sass, in `misc'\A         from line 28 of /Users/mihar/Work/Gvido/rails_webroot/public/stylesheets/sass/posts.sass\A \A 23:   \A 24: #posts-index\A 25:   .admin\A 26:     :clear both\A 27:   .notices\A 28:     +misc\A 29:     ul\A 30:       li\A 31:         :color #666\A 32:         a\A 33:           :font-weight bold"; }

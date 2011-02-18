@@ -1,0 +1,62 @@
+.mentors #content
+  &>.admin
+    :clear left
+  .mentor
+    :margin 10px 0
+    :width 27%
+    :height 75px  
+    :float left
+    :padding 2%
+    :margin-right 2.5%
+    :background #efefef
+    :position relative
+    h4.name
+      :font-weight bold
+      :font-size 13px
+      a
+        :color #333
+    .instruments
+      :position absolute
+      :bottom 5px
+      :left 10px
+    .locations
+      :position absolute
+      :top 0
+      :right 0
+      :text-align right
+      :font-size 10px
+      :color #666
+      ul
+        li
+          :list-style none inside
+    .admin
+      :position absolute
+      :bottom 2.5px
+      :right 2.5px
+    
+  
+#mentors-show #content
+  .data
+    :position relative
+    .instruments 
+      :position absolute
+      :top 0px
+      :right 0px
+      +instruments_table
+    .locations
+      :margin 20px 0
+      ul
+        :margin 0 9px
+  .about
+    :margin 20px 0
+    
+  .facebook_myspace
+    :margin-top 5px
+  
+      
+  a.lightbox
+    :float right
+    :display block
+    :margin 0 0 0 5px
+    img
+      :border 4px solid #ccc

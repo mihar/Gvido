@@ -1,0 +1,12 @@
+= simple_form_for resource do |f|
+  %p
+    = f.input :title
+  %p
+    = f.input :description
+  %p
+    = f.association :album_category
+  %p
+    = f.input :position
+  %p.submit
+    = f.button :submit
+

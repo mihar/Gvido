@@ -1,0 +1,20 @@
+= simple_form_for resource do |f|
+  %p
+    = f.input :title
+  %p
+    = f.input :subtitle
+  %p
+    = f.input :address
+  %p
+    = f.input :zip
+  %p
+    = f.input :city
+  %p
+    = f.input :uri
+  %p
+    = f.association :location_section
+  %p
+    = f.input :about
+    
+  %p.submit
+    = f.button :submit

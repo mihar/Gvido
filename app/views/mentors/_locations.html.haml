@@ -1,0 +1,5 @@
+.locations
+  %strong Lokacije:
+  %ul
+    - @mentor.locations.each do |l|
+      %li= link_to l.title, location_path(l)

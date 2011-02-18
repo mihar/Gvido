@@ -1,0 +1,6 @@
+.schedule
+  %h2= schedule.title
+  - unless schedule.body.blank?
+    .body= schedule.body
+    
+  %p= link_to "Prenos urnika", schedule.file.url

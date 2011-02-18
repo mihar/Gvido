@@ -1,0 +1,2 @@
+- album.first_photos.each_with_index do |p, idx|
+  = image_tag p.photo.url(:square), :class => "img#{idx}"

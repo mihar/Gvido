@@ -1,0 +1,7 @@
+.instrument
+  .icon= image_tag instrument.icon_medium
+  = link_to instrument.title, instrument_path(instrument)
+  - admin_section do
+    = link_to "Uredi", edit_instrument_path(instrument)
+    |
+    = link_to "Odstrani", instrument, :confirm => 'Ste prepričani?', :method => :delete
