@@ -30,6 +30,7 @@ module ApplicationHelper
   	ret = "<a href='#{image}' rel='lightbox[#{album}]'"
   	ret += " title='#{title}'" unless title.blank?
   	ret += "class='lightbox'>#{string}</a>"
+  	ret.html_safe
   end
   
   def admin_section(&block)

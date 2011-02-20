@@ -1,8 +1,8 @@
-- title "Nakupovalni nasveti za #{parent_object.title}"
+- title "Nakupovalni nasveti za #{parent.title}"
 - @lightbox = true
 
 .instructions
-  = parent_object.shop_instructions_html
+  = (textilize parent.shop_instructions_html).html_safe
 .instrument_image= image_tag @instrument.icon
 
 

@@ -1,6 +1,6 @@
 .question
   %h3= question.question
-  .answer= textilize question.answer
+  .answer= (textilize question.answer).html_safe
   - admin_section do
     = link_to "Uredi", edit_question_path(question)
     |

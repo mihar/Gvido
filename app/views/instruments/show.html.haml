@@ -14,7 +14,7 @@
 - if @instrument.shop_instructions
   .shop_instructions
     %h3 Nasveti za nakup
-    = @instrument.shop_instructions_html_short
+    = @instrument.shop_instructions_html_short.html_safe
     - unless @instrument.shop_advices.empty?
       = link_to "Podrobni nasveti za nakup", instrument_shop_advices_path(@instrument)
     - admin_section do

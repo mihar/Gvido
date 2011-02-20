@@ -1,7 +1,7 @@
 .reference
   %h3= reference.title
   - unless reference.body.blank?
-    .body= reference.body_html
+    .body= (textilize reference.body_html).html_safe
 
   - admin_section do
     = link_to "Edit", edit_reference_path(reference);

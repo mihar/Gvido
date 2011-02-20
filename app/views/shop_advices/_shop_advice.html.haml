@@ -2,7 +2,7 @@
   - if shop_advice.photo.file?
     .image= link_to_lightbox image_tag(shop_advice.photo.url(:square)), shop_advice.photo.url(:normal), shop_advice.id, ""
   - if shop_advice.description
-    .body= shop_advice.description_html
+    .body= (textilize shop_advice.description_html).html_safe
   - if shop_advice.url
     .link= link_to "Povezava", shop_advice.url
   
