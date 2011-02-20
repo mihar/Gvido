@@ -22,7 +22,7 @@
 
 - unless @mentor.about.blank?
   = link_to_lightbox image_tag(@mentor.photo.url(:medium)), @mentor.photo.url(:normal), @mentor.permalink, @mentor.full_name
-  .about.textilize= textilize @mentor.about
+  .about.textilize= (textilize @mentor.about).html_safe
 
 
 - admin_section do

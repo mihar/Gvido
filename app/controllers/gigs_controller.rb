@@ -2,8 +2,9 @@ class GigsController < InheritedResources::Base
   before_filter :set_section
   respond_to :html
   
-  def before_edit 
-    @mentors = Mentor.all.reject { |m| current_object.mentors.include?(m) }
+  def edit 
+    @mentors = Mentor.all.reject { |m| resource.mentors.include?(m) }
+    edit!
   end
   
   def add_mentor

@@ -10,13 +10,10 @@ class AlbumCategoriesController < InheritedResources::Base
   end
   
   def destroy
-    destroy! { albums_path }
-  end
-  
-  def before_destroy
-    current_object.albums.each do |a|
+    resource.albums.each do |a|
       a.album_category_id = nil
       a.save
     end
+    destroy! { albums_path }
   end
 end

@@ -11,15 +11,15 @@
 - if @gig.description
   %div.description
     %strong Opis:
-    = textilize h @gig.description
+    = (textilize @gig.description).html_safe
 
 - unless @gig.mentors.empty?
   %p.mentors
     %strong Nastopajoči mentorji:
     = spit_with_links @gig, :mentors
-
+= link_to "Uredi", edit_gig_path(@gig)
 - admin_section do
-  = link_to "Uredi", edit_gig_path(@gig)
+  
   |
   = link_to "Izbrisi", @gig, :confirm => 'Ste prepričani?', :method => :delete
   |

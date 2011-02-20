@@ -3,12 +3,9 @@ class ContactsController < InheritedResources::Base
   respond_to :html
 
   def create
-    create! { new_report_contacts_path }
-  end
-  
-  def before_create
     params[:contact][:instrument_ids] ||= []
     params[:contact][:location_ids] ||= []
+    create! { new_report_contacts_path }
   end
     
   private

@@ -4,8 +4,8 @@ class InstrumentsController < InheritedResources::Base
   
   protected
   
-  def current_object
-    @current_object ||= Instrument.find_by_permalink params[:id]
+  def resource
+    @instrument ||= end_of_association_chain.find_by_permalink params[:id]
   end
   
   def set_section

@@ -2,18 +2,19 @@ class MentorsController < InheritedResources::Base
   before_filter :set_section
   respond_to :html
   
-  def before_edit
-    @instruments = Instrument.all.reject { |i| current_object.instruments.include?(i) }
+  def edit
+    @instruments = Instrument.all.reject { |i| resource.instruments.include?(i) }
+    edit!
   end
 
   def add_instrument
-    current_object.instruments << Instrument.find(params[:instrument][:id])
+    resource.instruments << Instrument.find(params[:instrument][:id])
     flash[:notice] = "Instrument dodan mentorju"
     redirect_to edit_mentor_path(params[:id])
   end
   
   def destroy_instrument
-    current_object.instruments.delete(Instrument.find_by_permalink(params[:instrument_id]))
+    resource.instruments.delete(Instrument.find_by_permalink(params[:instrument_id]))
     flash[:notice] = "Instrument odstranjen od mentorja"
     redirect_to edit_mentor_path(params[:id])
   end

@@ -5,7 +5,7 @@ gem 'sqlite3', '1.3.3'
 gem 'mysql2'
 gem 'haml'
 gem "simple_form"
-gem "paperclip"
+gem "paperclip", "~> 2.3"
 gem "geokit"
 gem "RedCloth"
 gem "will_paginate", "~> 3.0.pre2"

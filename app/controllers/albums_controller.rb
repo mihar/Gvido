@@ -6,7 +6,7 @@ class AlbumsController < InheritedResources::Base
     @albums_by_category = AlbumCategory.includes('albums')
     @albums_no_category = Album.not_categorized
     @movies = Movie.all
-    super
+    index! #super
   end
   
   private

@@ -9,7 +9,6 @@
   
 - else
   - title "Fotografije"
-  
   = render :partial => "album_category", :collection => @albums_by_category
   - unless @albums_no_category.empty?
     .not_categorized

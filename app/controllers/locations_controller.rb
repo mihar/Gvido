@@ -7,18 +7,18 @@ class LocationsController < InheritedResources::Base
   end
   
   def edit
-    @mentors = Mentor.all.reject { |m| current_object.mentors.include?(m) }
+    @mentors = Mentor.all.reject { |m| resource.mentors.include?(m) }
     super
   end
   
   def add_mentor
-    current_object.mentors << Mentor.find(params[:mentor][:id])
+    resource.mentors << Mentor.find(params[:mentor][:id])
     flash[:notice] = "Mentor dodan lokaciji"
     redirect_to edit_location_path(params[:id])    
   end
   
   def destroy_mentor
-    current_object.mentors.delete(Mentor.find_by_permalink(params[:mentor_id]))
+    resource.mentors.delete(Mentor.find_by_permalink(params[:mentor_id]))
     flash[:notice] = "Mentor odstranjen iz lokacije"
     redirect_to edit_location_path(params[:id])    
   end

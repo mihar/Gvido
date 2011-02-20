@@ -1,9 +1,9 @@
--# title "O nas"
+- title "O nas"
 
 = render_misc 'post'
 
 - unless @abouts.empty?
-  .abouts.textilize= textilize @abouts.first.text 
+  .abouts.textilize= (textilize @abouts.first.text).html_safe
   
   - admin_section do
     = link_to "Uredi", edit_about_path(@abouts.first)

@@ -106,7 +106,7 @@ DEPENDENCIES
   haml
   inherited_resources (~> 1.2.1)
   mysql2
-  paperclip
+  paperclip (~> 2.3)
   rails (= 3.0.4)
   rspec-rails (~> 2.4)
   simple_form

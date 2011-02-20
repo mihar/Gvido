@@ -1,6 +1,6 @@
 class CreateLinkCategories < ActiveRecord::Migration
   def self.up
-    create_table :link_categories, :id => false do |t|
+    create_table :link_categories do |t|
       t.string :title
       t.integer :position
 

@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(:version => 20110218110604) do
     t.integer "mentor_id"
   end
 
-  create_table "link_categories", :id => false, :force => true do |t|
+  create_table "link_categories", :force => true do |t|
     t.string   "title"
     t.integer  "position"
     t.datetime "created_at"
