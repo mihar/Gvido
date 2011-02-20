@@ -59,8 +59,7 @@ module ApplicationHelper
         path = send("#{link.to_s.singularize}_path", i)
       end
       link_to i, path 
-    end.join(", ").to_s + '. Jebi se!'
-    Rails.logger.info 'tule bi moru prit skoz'
+    end.join(", ")
     return tmp.to_s.html_safe
   end
   
