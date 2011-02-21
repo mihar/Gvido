@@ -12,8 +12,11 @@ gem "will_paginate", "~> 3.0.pre2"
 gem "haml"
 gem 'inherited_resources', '~> 1.2.1'
 gem 'json'
+gem 'hoptoad_notifier'
 
 group :development, :test do
+  gem 'capistrano'
+  gem 'capistrano-ext'
   gem "rspec-rails", "~> 2.4"
   gem "fuubar"
   gem "autotest"

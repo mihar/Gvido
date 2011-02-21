@@ -1,0 +1,15 @@
+base: &base
+  adapter: mysql2
+  username: <%= Capistrano::CLI.ui.ask("Enter DB username: ") %>
+  password: <%= Capistrano::CLI.ui.ask("Enter DB password: ") %>
+  database: <%= Capistrano::CLI.ui.ask("Enter DB name: ") %>
+development:
+  <<: *base
+test:
+  <<: *base
+production:
+  <<: *base
+<% unless rails_env == "production" %><% if Capistrano::CLI.ui.ask("Add special environment '#{rails_env}' to DB config? [y/N]: ") == "y" %>
+<%= rails_env %>:
+  <<: *base
+<% end %><% end %>
