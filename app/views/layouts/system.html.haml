@@ -1,0 +1,57 @@
+!!! Strict
+%html
+  %head
+    %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "Content-Type" }/
+    %title
+      = yield(:title).empty?? "Gvido" : yield(:title)
+    = stylesheet_link_tag "application"
+    = javascript_include_tag :defaults
+    = csrf_meta_tag
+    - if @lightbox
+      = stylesheet_link_tag 'lightbox'
+  %body{body_attrs}
+    #wrapper
+      #header
+        = link_to image_tag("header_photos/#{random_image}"), root_path
+        %ul#nav
+          = menu_item "Domov", :root
+          %li{:id => ("current" if current_section == :abouts)}
+            = link_to "O nas", abouts_path
+            %ul
+              = menu_item "Aktualno", :notices
+              = menu_item "Mentorji", :mentors
+              = menu_item "Lokacije", :location_sections
+              = menu_item "Pogosta vprašanja", :questions
+              = menu_item "Reference", :references
+              = menu_item "Urniki", :schedules
+          = menu_item "Programi", :instruments
+          %li{:id => ("current" if current_section == :albums)}
+            = link_to "Galerija", albums_path
+            %ul
+              = menu_item "Fotografije", :albums
+              %li= link_to "Video", albums_path(:video => true)
+          = menu_item "Povezave", :links
+          = menu_item "Koncerti", :gigs
+          = menu_item "Kontakt / Vpis", :contact, :new
+      %h1 Gvido
+      %h2= yield :title
+      %br.clear
+      #sidebar
+        .information
+          %strong GVIDO
+          %br
+          Glasbeno vzgojno izobraževalno društvo
+          %br
+          T: (031) 34-36-30
+          %br
+          E: 
+          = link_to "info@gvido.si", "mailto:info@gvido.si"
+        .social
+          = link_to image_tag('icons/facebook_large.png'), "http://www.facebook.com/pages/GVIDO-Music/123760304306980", :title => "Gvido na Facebook"
+          = link_to image_tag('icons/myspace_large.png'), "http://www.myspace.com/gvidomusic", :title => "Gvido na MySpace"
+          = link_to image_tag('icons/jazoo.png'), "http://jazoo.si", :title => "Jazoo band"
+        = yield :sidebar
+      #content= yield
+      #footer
+        &copy;2010 GVIDO 
+        %span.production &mdash; produkcija: <a href="http://miha.rebernik.info">Miha Rebernik</a>
