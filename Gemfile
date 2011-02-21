@@ -14,4 +14,5 @@ gem 'inherited_resources', '~> 1.2.1'
 
 group :development, :test do
   gem "rspec-rails", "~> 2.4"
+  gem "fuubar"
 end
