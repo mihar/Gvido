@@ -137,9 +137,9 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   autotest
-  factory_girl_rails
   capistrano
   capistrano-ext
+  factory_girl_rails
   fuubar
   geokit
   haml
