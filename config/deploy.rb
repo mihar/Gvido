@@ -32,6 +32,3 @@ require 'config/boot'
 # Hoptoad
 require 'hoptoad_notifier/capistrano'
 after "deploy:update", "deploy:notify_hoptoad"
-
-        require 'config/boot'
-        require 'hoptoad_notifier/capistrano'

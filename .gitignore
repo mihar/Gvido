@@ -1,7 +1,6 @@
 .DS_Store
 .eprj
 public/assets/*
-config/initializers/gmaps.rb
 log/*.log
 tmp/**/*
 nbproject
