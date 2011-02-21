@@ -1,42 +1,6 @@
 module ApplicationHelper
-  def menu_item(caption, obj=nil, action=nil)
-    param = {}
-    unless obj
-      link = link_to caption, '#'
-    else
-      route = "#{obj}_path"
-      route = "#{action}_#{route}" if action
-      param = {:id => "current"} if current_section == obj
-      link = link_to(caption, send(route))
-    end
-    content_tag :li, link, param
-  end
-  
   def random_image
     (1..18).map { |num| "#{num}.jpg" }[rand(14)]
-  end
-  
-  def display_flash(*indexes)
-    output = ""
-    indexes.each do |idx|
-      if flash[idx]
-        output += content_tag :span, flash[idx], :id => idx.to_s
-      end
-    end
-    output
-  end
-  
-  def link_to_lightbox(string, image, album = 'album', title = '')
-  	ret = "<a href='#{image}' rel='lightbox[#{album}]'"
-  	ret += " title='#{title}'" unless title.blank?
-  	ret += "class='lightbox'>#{string}</a>"
-  	ret.html_safe
-  end
-  
-  def admin_section(&block)
-    if admin?
-      content_tag(:div, capture(&block), :class => 'admin')
-    end
   end
   
   def spit(klass, field, tag = :p, textlze = false)

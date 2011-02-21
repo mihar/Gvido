@@ -21,4 +21,10 @@ group :development, :test do
   gem "fuubar"
   gem "autotest"
   gem 'factory_girl_rails'
+  gem 'shoulda'
+  gem 'rcov'
+  gem 'launchy'
+  gem 'steak'
+  gem 'swinger'
+  gem 'capybara'
 end

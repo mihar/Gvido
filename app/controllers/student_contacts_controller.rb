@@ -1,0 +1,2 @@
+class StudentContactsController < ApplicationController
+end

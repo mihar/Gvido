@@ -1,4 +1,6 @@
 App::Application.routes.draw do
+  resources :student_contacts
+
   resources :students
 
   resources :abouts

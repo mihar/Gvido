@@ -14,25 +14,25 @@
       #header
         = link_to image_tag("header_photos/#{random_image}"), root_path
         %ul#nav
-          = menu_item "Domov", "Root", root_path
-          %li{:class => ("active" if current_section == :abouts)}
+          = menu_item "Domov", :root
+          %li{:id => ("current" if current_section == :abouts)}
             = link_to "O nas", abouts_path
             %ul
-              = menu_item "Aktualno", "Notices", notices_path
-              = menu_item "Mentorji", "Mentors", mentors_path
-              = menu_item "Lokacije", "Locations", location_sections_path
-              = menu_item "Pogosta vprašanja", "Questions", questions_path
-              = menu_item "Reference", "References", references_path
-              = menu_item "Urniki", "Schedules", schedules_path
-          = menu_item "Programi", "Instruments", instruments_path
-          %li{:class => ("active" if current_section == :albums)}
+              = menu_item "Aktualno", :notices
+              = menu_item "Mentorji", :mentors
+              = menu_item "Lokacije", :location_sections
+              = menu_item "Pogosta vprašanja", :questions
+              = menu_item "Reference", :references
+              = menu_item "Urniki", :schedules
+          = menu_item "Programi", :instruments
+          %li{:id => ("current" if current_section == :albums)}
             = link_to "Galerija", albums_path
             %ul
-              = menu_item "Fotografije", "albums", albums_path
-              = menu_item "Video", "albums", albums_path(:video => true)
-          = menu_item "Povezave", "Links", links_path
-          = menu_item "Koncerti", "Gigs", gigs_path
-          = menu_item "Kontakt / Vpis", "contact", new_contact_path
+              = menu_item "Fotografije", :albums
+              %li= link_to "Video", albums_path(:video => true)
+          = menu_item "Povezave", :links
+          = menu_item "Koncerti", :gigs
+          = menu_item "Kontakt / Vpis", :contact, :new
       %h1 Gvido
       %h2= yield :title
       %br.clear
@@ -55,6 +55,3 @@
       #footer
         &copy;2010 GVIDO 
         %span.production &mdash; produkcija: <a href="http://miha.rebernik.info">Miha Rebernik</a>
-        
-        - if Rails.env.production?
-          = render "layouts/analytics"
