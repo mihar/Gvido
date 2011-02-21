@@ -1,7 +1,8 @@
 App::Application.routes.draw do
+  resources :students
+
   resources :abouts
   resources :notices
-  resources :location_sections
   resources :questions
   resources :references
   resources :schedules
@@ -22,6 +23,10 @@ App::Application.routes.draw do
   
   resources :instruments do
     resources :shop_advices
+  end
+  
+  resources :location_sections do
+    resources :locations
   end
   
   resources :locations do

@@ -1,4 +1,5 @@
 class LocationsController < InheritedResources::Base
+  belongs_to :location_section, :optional => true
   before_filter :set_section
   belongs_to :location_sections
   

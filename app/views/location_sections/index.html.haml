@@ -1,20 +1,17 @@
 - title "Lokacije"
 
-- map = GoogleMap.new
-- @locations.each do |loc|
-  - map.markers << GoogleMapMarker.new( :map => map, :lat => loc.lat, :lng => loc.lng, :html => render(:partial => 'locations/info', :locals => {:location => loc, :link => true}), :marker_hover_text => location_tooltip(loc))
-= map.to_html
-#map= map.div
+= admin_section do
+  = link_to "Nova skupina lokacij", new_location_section_path
 
 
-- @location_sections.in_groups_of(2).each do |row|
+- collection.in_groups_of(2).each do |row|
   .row
     - row.each do |section|
       - if section
         .section
           %h3
             = link_to section.title, location_section_locations_path(section)
-            - admin_section do
+            = admin_section do
               = link_to "Uredi", edit_location_section_path(section)
               |
               = link_to "Odstrani", section, :method => :delete, :confirm => "Ste prepričani?"
@@ -24,5 +21,3 @@
                 = link_to location.title, location
 
   
-- admin_section do
-  = link_to "Nova skupina lokacij", new_location_section_path

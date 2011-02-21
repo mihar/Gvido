@@ -35,7 +35,7 @@ module ApplicationHelper
   
   def admin_section(&block)
     if admin?
-      concat content_tag(:div, capture(&block), :class => 'admin')
+      content_tag(:div, capture(&block), :class => 'admin')
     end
   end
   
