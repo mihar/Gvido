@@ -1,18 +1,20 @@
-class CreateStudentContacts < ActiveRecord::Migration
+class CreatePeople < ActiveRecord::Migration
   def self.up
-    create_table :student_contacts do |t|
-      t.string :title
+    create_table :people do |t|
+      t.string :first_name
+      t.string :last_name
       t.string :address
       t.integer :post_id
       t.string :place
       t.string :mobile
       t.string :email
       t.string :landline
-      t.string :student_id
+
+      t.timestamps
     end
   end
 
   def self.down
-    drop_table :student_contacts
+    drop_table :people
   end
 end

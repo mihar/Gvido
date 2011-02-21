@@ -1,2 +1,0 @@
-class StudentContactsController < ApplicationController
-end

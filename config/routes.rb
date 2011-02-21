@@ -1,7 +1,7 @@
 App::Application.routes.draw do
-  resources :student_contacts
+  resources :personal_relations
 
-  resources :students
+  resources :people
 
   resources :abouts
   resources :notices

@@ -172,6 +172,27 @@ ActiveRecord::Schema.define(:version => 20110221142008) do
     t.datetime "updated_at"
   end
 
+  create_table "people", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "address"
+    t.integer  "post_id"
+    t.string   "place"
+    t.string   "mobile"
+    t.string   "email"
+    t.string   "landline"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "personal_relations", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "related_person_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "photos", :force => true do |t|
     t.integer  "album_id"
     t.string   "photo_file_name"
@@ -225,23 +246,5 @@ ActiveRecord::Schema.define(:version => 20110221142008) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "student_contacts", :force => true do |t|
-    t.string  "title"
-    t.string  "address"
-    t.integer "post_id"
-    t.string  "place"
-    t.string  "mobile"
-    t.string  "email"
-    t.string  "landline"
-    t.string  "student_id"
-  end
-
-  create_table "students", :force => true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
+  
 end
