@@ -1,11 +1,12 @@
 - title "Lokacije"
 
-- map = GoogleMap.new
+- @map = Cartographer::Gmap.new( 'map' )
+- @map.zoom = :bound
 - @locations.each do |loc|
-  - icon = GoogleMapLetterIcon.new(loc.letter)
-  - map.markers << GoogleMapMarker.new( :map => map, :icon => icon, :lat => loc.lat, :lng => loc.lng, :html => render(:partial => 'info', :locals => {:location => loc, :link => true}), :marker_hover_text => location_tooltip(loc))
-= map.to_html
-#map= map.div
+  / - icon = GoogleMapLetterIcon.new(loc.letter)
+  / - map.markers << GoogleMapMarker.new( :map => map, :icon => icon, :lat => loc.lat, :lng => loc.lng, :html => render(:partial => 'info', :locals => {:location => loc, :link => true}), :marker_hover_text => location_tooltip(loc))
+  - @map.markers << Cartographer::Gmarker.new(:name => loc.title, :marker_type => "Building", :position => [loc.lat, loc.lng])
+
 
 
 - @locations.in_groups_of(3).each do |row|
@@ -16,4 +17,4 @@
   
 
 - admin_section do
-  = link_to "Nova lokacija", new_location_path
+  = link_to "Nova lokacija", new_location_section_location_path

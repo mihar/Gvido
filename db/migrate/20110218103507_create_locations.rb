@@ -6,7 +6,7 @@ class CreateLocations < ActiveRecord::Migration
       t.string :city
       t.integer :zip
       t.float :lat
-      t.float :lang
+      t.float :lng
       t.integer :location_section_id
       t.string :subtitle
       t.text :about

@@ -1,6 +1,6 @@
 class CreateLocationSections < ActiveRecord::Migration
   def self.up
-    create_table :location_sections, :id => false do |t|
+    create_table :location_sections do |t|
       t.string :title
 
       t.timestamps

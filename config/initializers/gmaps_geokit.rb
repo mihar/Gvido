@@ -25,7 +25,7 @@ GeoKit::Geocoders::proxy_pass = nil
 # See http://www.google.com/apis/maps/signup.html
 # and http://www.google.com/apis/maps/documentation/#Geocoding_Examples
 # GeoKit::Geocoders::google = 'ABQIAAAABEmbjQh6zAYV3ShPr7wPKhTpgDiBGF-UhW-yh_utsSRSrQ6FJBQBrV9pXSDprGWTly9zb8jttwkU6g'
-GeoKit::Geocoders::google = ""#GOOGLE_APPLICATION_ID
+GeoKit::Geocoders::google = GOOGLE_APPLICATION_ID
     
 # This is your username and password for geocoder.us.
 # To use the free service, the value can be set to nil or false.  For 

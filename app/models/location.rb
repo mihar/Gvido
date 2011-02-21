@@ -31,6 +31,10 @@ class Location < ActiveRecord::Base
     end.flatten.uniq
   end
   
+  def gmaps4rails_address
+    [self.address, self.city, self.zip].join(" ")
+  end
+  
   protected
   
   def normalize_uri

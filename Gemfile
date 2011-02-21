@@ -11,6 +11,7 @@ gem "RedCloth"
 gem "will_paginate", "~> 3.0.pre2"
 gem "haml"
 gem 'inherited_resources', '~> 1.2.1'
+gem 'json'
 
 group :development, :test do
   gem "rspec-rails", "~> 2.4"

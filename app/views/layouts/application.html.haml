@@ -9,6 +9,7 @@
     = csrf_meta_tag
     - if @lightbox
       = stylesheet_link_tag 'lightbox'
+    = yield :head
   %body{body_attrs}
     
     #wrapper
@@ -59,3 +60,4 @@
         
         - if Rails.env.production?
           = render "layouts/analytics"
+        = yield :scripts

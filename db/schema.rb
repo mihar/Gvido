@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110218110604) do
+ActiveRecord::Schema.define(:version => 20110221114809) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(:version => 20110218110604) do
     t.datetime "updated_at"
   end
 
-  create_table "location_sections", :id => false, :force => true do |t|
+  create_table "location_sections", :force => true do |t|
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -119,13 +119,18 @@ ActiveRecord::Schema.define(:version => 20110218110604) do
     t.string   "city"
     t.integer  "zip"
     t.float    "lat"
-    t.float    "lang"
+    t.float    "lng"
     t.integer  "location_section_id"
     t.string   "subtitle"
     t.text     "about"
     t.string   "uri"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "locations_mentors", :id => false, :force => true do |t|
+    t.integer "location_id"
+    t.integer "mentor_id"
   end
 
   create_table "mentors", :force => true do |t|
