@@ -1,5 +1,8 @@
 # encoding: utf-8
 class String
+  def make_websafe
+    self.strip.gsub('d.d.', '').gsub('d.o.o.', '').strip.debalkanize.downcase.gsub(' ', '-').gsub(',', '').gsub('.', '').gsub('---', '-').gsub('--', '-').strip
+  end
   
   def debalkanic
     self.gsub(/š/, "ssss").gsub(/č/, "cccc").gsub(/ž/, "zzzz").gsub(/ć/, "csss").gsub(/đ/, "dzzz").gsub(/Š/, "SSSS").gsub(/Č/, "CCCC").gsub(/Ž/, "ZZZZ").gsub(/Ć/, "CSSS").gsub(/Đ/, "DZZZ")
