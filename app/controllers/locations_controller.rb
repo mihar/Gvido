@@ -1,5 +1,6 @@
 class LocationsController < InheritedResources::Base
   before_filter :set_section
+  belongs_to :location_sections
   
   def index
     @locations_grouped = collection.group_by { |l| l.location_section }

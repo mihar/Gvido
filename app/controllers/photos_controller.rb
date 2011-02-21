@@ -1,16 +1,17 @@
 class PhotosController < InheritedResources::Base
+  belongs_to :album
   before_filter :set_section
   
   def create
-    create! { album_path(parent_object) }
+    create! { album_path(parent) }
   end
   
   def update
-    update! { album_path(parent_object) }
+    update! { album_path(parent) }
   end
   
   def destroy
-    destroy! { album_path(parent_object) }
+    destroy! { album_path(parent) }
   end
   
   private

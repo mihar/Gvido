@@ -16,4 +16,5 @@ group :development, :test do
   gem "rspec-rails", "~> 2.4"
   gem "fuubar"
   gem "autotest"
+  gem 'factory_girl_rails'
 end
