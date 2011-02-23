@@ -1,12 +1,7 @@
 require 'spec_helper'
 
 describe Instrument do
-  subject do
-    instrument = Factory.build :instrument
-    instrument.mentors << Factory(:mentor)
-    instrument.contacts << Factory(:contact)
-    instrument
-  end
+  subject { Factory :instrument }
   
   it { should be_valid }
   it { should have_many :shop_advices }
