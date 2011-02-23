@@ -1,7 +1,6 @@
 class LocationsController < InheritedResources::Base
   belongs_to :location_section, :optional => true
   before_filter :set_section
-  belongs_to :location_sections
   
   def index
     @locations_grouped = collection.group_by { |l| l.location_section }
@@ -29,7 +28,7 @@ class LocationsController < InheritedResources::Base
   
   def collection
     @locations ||= if params[:location_section_id]
-      end_of_association_chain.find_all_by_location_section_id(params[:location_section_id])
+      LocationSection.find(params[:location_section_id]).locations
     else
       end_of_association_chain.all
     end
