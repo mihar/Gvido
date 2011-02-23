@@ -1,5 +1,10 @@
 require 'spec_helper'
 
 describe PersonalRelation do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { Factory :personal_relation }
+  
+  it { should be_valid }
+  it { should belong_to :person }
+  it { should belong_to :related_person }
+  
 end

@@ -1,5 +1,8 @@
 require 'spec_helper'
 
 describe ShopAdvice do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { Factory :shop_advice }
+  
+  it { should be_valid }
+  it { should belong_to :instrument }
 end

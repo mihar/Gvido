@@ -1,6 +1,6 @@
 class Instrument < ActiveRecord::Base
   has_and_belongs_to_many :mentors
-  has_many :contacts
+  has_and_belongs_to_many :contacts
   has_many :shop_advices, :dependent => :destroy
   
   validates_presence_of :title

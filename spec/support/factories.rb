@@ -17,20 +17,22 @@ Factory.define :album do |f|
   f.association :album_category
 end
 
-Factory.define :contact do |f|
-  f.name 'Josko Simac'
-  f.email 'josko@fmail.com'
-  #f.instruments { [Factory.create(:instrument)] }
-  #f.locations { [Factory.create(:location)] }
-end
-
 Factory.define :instrument do |f|
   f.title 'Habala babala'
-  f.uri 'google.si'
 end
 
 Factory.define :location do |f|
-  f.title 'Hungala bungala'
+  f.title 'Hungala famfarabis'
+  f.association :location_section
+end
+
+Factory.define :location_section do |f|
+  f.title 'Dungala bungala hungala'
+end
+
+Factory.define :contact do |f|
+  f.name 'Josko Simac'
+  f.email 'josko@fmail.com'
 end
 
 Factory.define :gig do |f|
@@ -42,15 +44,12 @@ end
 Factory.define :link do |f|
   f.title 'The pejidz'
   f.uri 'pejidz.com'
-  f.association :link_category
+  f.association :category, :factory => :link_category
 end
 
 Factory.define :mentor do |f|
   f.name 'Mentor'
   f.surname 'Joza'
-  #f.instruments { [Factory.create(:instrument)] }
-  #f.locations { [Factory.create(:location)] }
-  #f.gigs { [Factory.create(:gig)] }
 end
 
 Factory.define :movie do |f|
@@ -59,19 +58,22 @@ Factory.define :movie do |f|
 end
 
 
-#Factory.define :link_category 
+Factory.define :link_category do |f|
+  f.title 'Semenicenje'
+end
   
-Factory.define :notices do |f|
+Factory.define :notice do |f|
   f.title 'Special notice'
   f.body 'Tijelo iz neba'
 end
 
 Factory.define :personal_relation do |f|
   f.association :person
-  f.association :person
+  f.association :related_person, :factory => :person
 end
 
 Factory.define :photo do |f|
+  f.photo_file_name 'fajl.jpg'
   f.association :album
 end
 
@@ -80,14 +82,18 @@ Factory.define :post do |f|
   f.text 'O post, ti ki si na strani'
 end
 
-#Factory.define :question
+Factory.define :question do |f|
+  f.question 'kaj?'
+  f.answer 'ne ti men kaj.'
+end
 
 Factory.define :reference do |f|
   f.title 'ref'
 end
 
 Factory.define :schedule do |f|
-  f.title 'Getin real'
+  f.title 'Getting real'
+  f.file_file_name 'aye.pdf'
 end
 
 Factory.define :shop_advice do |f|

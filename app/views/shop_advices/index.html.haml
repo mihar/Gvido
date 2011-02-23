@@ -3,7 +3,7 @@
 
 .instructions
   = (textilize parent.shop_instructions_html).html_safe
-.instrument_image= image_tag @instrument.icon
+.instrument_image= (image_tag @instrument.icon).html_safe
 
 
 = render :partial => @shop_advices

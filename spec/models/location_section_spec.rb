@@ -1,5 +1,8 @@
 require 'spec_helper'
 
 describe LocationSection do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { Factory :location_section}
+  
+  it { should be_valid }
+  it { should have_many :locations}
 end

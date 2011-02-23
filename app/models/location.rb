@@ -38,12 +38,12 @@ class Location < ActiveRecord::Base
   protected
   
   def normalize_uri
-    self.uri = uri_normalize(self.uri)
+    self.uri = uri_normalize(self.uri) if uri
   end
   
   # Function automatically checks if URI has protocol specified, if not it adds the http.
 	def uri_normalize(uri)
-  	return 'http://' + uri unless uri =~ /http:\/\//
+  	return "http://#{uri}" unless uri =~ /http:\/\//
   	uri
 	end
 end

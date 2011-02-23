@@ -1,5 +1,7 @@
 require 'spec_helper'
 
 describe Reference do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { Factory :reference }
+  
+  it { should be_valid }
 end

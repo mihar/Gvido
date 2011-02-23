@@ -26,8 +26,8 @@ module LayoutHelper
   end
 
   def title(_title, heading = true)
-    default = "DoubleRecall"
-    title = (_title) ? "#{_title} (#{default})" : default
+    default = "Gvido"
+    title = (_title) ? _title : default
     content_for(:title) { title }
 
     if heading
@@ -42,8 +42,8 @@ module LayoutHelper
   end
 
   def home_title(_title)
-    default = "DoubleRecall"
-    title = (_title) ? "#{_title} (#{default})" : default
+    default = "Gvdio"
+    title = (_title) ? _title : default
     content_for(:title) { title }
 
     return content_tag(:a, "", :name => "top") + content_tag(:h1, link_to(_title, root_page)) 
