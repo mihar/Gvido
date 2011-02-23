@@ -24,7 +24,7 @@ class Mentor < ActiveRecord::Base
  
   def full_name
     if name and surname
-      "#{name} #{surname}"
+      "#{name} #{surname}".titleize
     end
   end
   alias_method :title, :full_name

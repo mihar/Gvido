@@ -54,7 +54,7 @@ end
 
 Factory.define :movie do |f|
   f.title 'jutub'
-  f.youtube 'http://www.youtube.com/watch?v=KCT7aB36klo'
+  f.youtube 'http://www.youtube.com/watch?v=KmukuBm7Rjs'
 end
 
 

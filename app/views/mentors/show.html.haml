@@ -9,9 +9,9 @@
     %p.email= link_to @mentor.email, "mailto:#{@mentor.email}"
   
   .facebook_myspace
-    - if @mentor.facebook
+    - unless @mentor.facebook.blank?
       = link_to image_tag('icons/facebook_mini.png'), @mentor.facebook, :title => "#{@mentor.full_name} na Facebook"
-    - if @mentor.myspace
+    - unless @mentor.myspace.blank?
       = link_to image_tag('icons/myspace_mini.png'), @mentor.myspace, :title => "#{@mentor.full_name} na MySpace"
 
   .instruments
@@ -21,7 +21,7 @@
 
 
 - unless @mentor.about.blank?
-  = link_to_lightbox image_tag(@mentor.photo.url(:medium)), @mentor.photo.url(:normal), @mentor.permalink, @mentor.full_name
+  = raw(link_to_lightbox image_tag(@mentor.photo.url(:medium)), @mentor.photo.url(:normal), @mentor.permalink, @mentor.full_name)
   .about.textilize= (textilize @mentor.about).html_safe
 
 
