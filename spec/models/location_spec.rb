@@ -13,7 +13,7 @@ describe Location do
   
   it "http should be added to uri if not present" do
     l = Factory(:location, :uri => 'gugl.si')
-    l.uri.eql?('http://gugl.si').should be_true
+    l.uri.should eql('http://gugl.si')
   end
   
   it "uri should stay the same if http is present" do

@@ -9,13 +9,13 @@ describe Instrument do
   it { should have_and_belong_to_many :contacts }
   
   it "should create proper image titles" do
-    subject.icon.eql?("instruments/habala-babala.png").should be_true
-    subject.icon_medium.eql?("instruments/medium/habala-babala.png").should be_true
-    subject.icon_small.eql?("instruments/small/habala-babala.png").should be_true
+    subject.icon.should eql("instruments/habala-babala.png")
+    subject.icon_medium.should eql("instruments/medium/habala-babala.png")
+    subject.icon_small.should eql("instruments/small/habala-babala.png")
   end
   
   it "should crate websafe permalink" do
-    subject.permalink.eql?("habala-babala").should be_true
+    subject.permalink.should eql("habala-babala")
   end
   
 end
