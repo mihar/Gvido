@@ -1,4 +1,12 @@
 class Person < ActiveRecord::Base
-  has_many :relations, :class_name => "PersonalRelation"
-  has_many :people, :through => :relations, :foreign_key => "related_person_id"
+  belongs_to :mother, :class_name => 'Person'
+  belongs_to :father, :class_name => 'Person'
+  belongs_to :social_role
+  validates_presence_of :first_name, :last_name
+  
+  #Sign up statuses
+  UNPROCESSED = 1
+  ADDED = 2
+  PENDING = 3
+  UNSUBSCRIBED = 4
 end

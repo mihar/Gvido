@@ -1,8 +1,5 @@
 App::Application.routes.draw do
-  resources :personal_relations
-
   resources :people
-
   resources :abouts
   resources :notices
   resources :questions
