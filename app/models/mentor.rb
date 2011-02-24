@@ -10,8 +10,8 @@ class Mentor < ActiveRecord::Base
   
   has_attached_file :photo, 
                     :styles => { :square => "75x75#", :small => "150x150#", :medium => "180x180#", :normal => "550x550>" },
-                    :url  => "/assets/mentors/:id/:style/:basename.:extension",
-                    :path => ":rails_root/public/assets/mentors/:id/:style/:basename.:extension"
+                    :url  => "/system/mentors/:id/:style/:basename.:extension",
+                    :path => ":rails_root/public/system/mentors/:id/:style/:basename.:extension"
 
  
   def locations_by_city

@@ -4,8 +4,8 @@ class Notice < ActiveRecord::Base
   validates_presence_of :title, :body
   has_attached_file :photo, 
                     :styles => { :square => "75x75#", :small => "150x150#", :medium => "180x180#", :normal => "550x550>" },
-                    :url  => "/assets/notices/:id/:style/:basename.:extension",
-                    :path => ":rails_root/public/assets/notices/:id/:style/:basename.:extension"
+                    :url  => "/system/notices/:id/:style/:basename.:extension",
+                    :path => ":rails_root/public/system/notices/:id/:style/:basename.:extension"
                 
   
   
