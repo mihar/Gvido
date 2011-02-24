@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110223171325) do
+ActiveRecord::Schema.define(:version => 20110224231917) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -182,14 +182,9 @@ ActiveRecord::Schema.define(:version => 20110223171325) do
     t.string   "landline"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "personal_relations", :force => true do |t|
-    t.integer  "person_id"
-    t.integer  "related_person_id"
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "sign_up_status"
+    t.integer  "mother_id"
+    t.integer  "father_id"
   end
 
   create_table "photos", :force => true do |t|
