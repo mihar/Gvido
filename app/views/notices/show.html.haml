@@ -9,7 +9,7 @@
 -#del
 = link_to "Uredi", edit_notice_path(@notice)
 
-- admin_section do
+= admin_section do
   = link_to "Uredi", edit_notice_path(@notice)
   |
   = link_to "Odstrani", @notice, :confirm => 'Ste prepričani?', :method => :delete

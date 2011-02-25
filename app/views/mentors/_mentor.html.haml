@@ -7,7 +7,7 @@
     %ul
       - mentor.locations_by_city.each do |l|
         %li= l
-  - admin_section do
+  = admin_section do
     = link_to "Uredi", edit_mentor_path(mentor)
     |
     = link_to "Odstrani", mentor, :confirm => 'Ste prepričani?', :method => :delete

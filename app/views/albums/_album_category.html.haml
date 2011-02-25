@@ -1,7 +1,7 @@
 - unless album_category.albums.empty?
   %h3
     = album_category.title 
-    - admin_section do
+    = admin_section do
       = link_to "Uredi", edit_album_category_path(album_category)
       |
       = link_to "Odstrani", album_category, :confirm => "Ste prepričani", :method => :delete

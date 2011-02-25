@@ -1,5 +1,5 @@
 %li.link
   = link_to link.title, link.uri
-  - admin_section do
+  = admin_section do
     = link_to "Uredi", edit_link_path(link)
     = link_to "Odstrani", link, :confirm => 'Ste prepričani?', :method => :delete

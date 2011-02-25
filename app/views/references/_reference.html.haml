@@ -3,7 +3,7 @@
   - unless reference.body.blank?
     .body= (textilize reference.body_html).html_safe
 
-  - admin_section do
+  = admin_section do
     = link_to "Edit", edit_reference_path(reference);
     |
     = link_to "Destroy", reference, :confirm => 'Are you sure?', :method => :delete

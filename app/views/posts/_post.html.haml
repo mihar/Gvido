@@ -6,7 +6,7 @@
       %em= post.created_at.to_s :simple
   .text.textilize= (textilize post.text_html).html_safe
   
-  - admin_section do
+  = admin_section do
     = link_to "Uredi", edit_post_path(post)
     |
     = link_to "Izbriši", post, :confirm => 'Ste prepričani?', :method => :delete
