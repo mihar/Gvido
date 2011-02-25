@@ -88,6 +88,9 @@ sl:
       person:
         first_name: "Ime"
         last_name: "Priimek"
+    errors:
+      messages:
+        record_invalid: "Vpis ni možen zaradi napak!"
         
   errors:
     template:
