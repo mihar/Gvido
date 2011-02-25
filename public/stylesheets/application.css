@@ -1,3 +1,21 @@
+form.simple_form {
+  padding: 10px 0; }
+  form.simple_form label {
+    display: block;
+    font-weight: bold; }
+  form.simple_form p {
+    margin: 4px 0;
+    padding: 4px 0; }
+  form.simple_form textarea {
+    width: 99%;
+    height: 400px; }
+    #contacts-new.contacts form.simple_form textarea {
+      height: 100px; }
+  form.simple_form p.submit {
+    margin-top: 10px;
+    background: white url("../images/submit_bkg.png") repeat-y;
+    padding: 20px; }
+
 .references #content .reference {
   margin-bottom: 30px; }
   .references #content .reference h3 {
@@ -367,24 +385,6 @@
       list-style: none inside; }
       #contacts-new form #contact ul li label, #contacts-new form #instruments ul li label, #contacts-new form #locations ul li label {
         font-weight: normal; }
-
-form.nice {
-  padding: 10px 0; }
-  form.nice label {
-    display: block;
-    font-weight: bold; }
-  form.nice p {
-    margin: 4px 0;
-    padding: 4px 0; }
-  form.nice textarea {
-    width: 99%;
-    height: 400px; }
-    #contacts-new.contacts form.nice textarea {
-      height: 100px; }
-  form.nice p.submit {
-    margin-top: 10px;
-    background: white url("../images/submit_bkg.png") repeat-y;
-    padding: 20px; }
 
 .albums#albums-index h3 {
   clear: both; }
