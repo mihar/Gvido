@@ -45,6 +45,8 @@ end
 Factory.define :contact do |f|
   f.name 'Josko Simac'
   f.email 'josko@fmail.com'
+  f.after_build { |contact| contact.instruments << Factory(:instrument) }
+  f.after_build { |contact| contact.locations << Factory(:location) }
 end
 
 Factory.define :gig do |f|
