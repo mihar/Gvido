@@ -9,11 +9,6 @@ class ApplicationController < ActionController::Base
   
   protected
   
-  # Set Slovenian locale
-  def set_locale
-    I18n.locale = "sl"
-  end
-  
   # Current section accessor.
   def current_section
     @section
