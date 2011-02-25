@@ -10,8 +10,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20110224231917) do
 
+=======
+ActiveRecord::Schema.define(:version => 20110221154630) do
+>>>>>>> 772a760a6295451135512c4d2ec8830ce55606ee
   create_table "abouts", :force => true do |t|
     t.text     "text"
     t.text     "contact"
@@ -240,5 +244,13 @@ ActiveRecord::Schema.define(:version => 20110224231917) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+  
+=======
+
+>>>>>>> More person tests.
+>>>>>>> 772a760a6295451135512c4d2ec8830ce55606ee
 end
