@@ -11,3 +11,4 @@ config/database.yml
 config/double_recall.yml
 .sass-cache
 coverage
+.gitattributes
