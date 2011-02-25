@@ -16,23 +16,6 @@ form.simple_form {
     background: white url("../images/submit_bkg.png") repeat-y;
     padding: 20px; }
 
-.references #content .reference {
-  margin-bottom: 30px; }
-  .references #content .reference h3 {
-    font: bold 14px/19px Helvetica, Arial, sans-serif; }
-  .references #content .reference .body {
-    border-left: 7px solid #eeeeee;
-    padding-left: 5px;
-    margin: 5px 0 15px 0; }
-
-#schedules-index.schedules .schedule {
-  margin-bottom: 20px; }
-  #schedules-index.schedules .schedule h2 {
-    margin: 0;
-    padding: 0; }
-#schedules-index.schedules .admin {
-  margin-top: 30px; }
-
 .sessions form {
   margin: 20px 0; }
   .sessions form label {
@@ -124,6 +107,37 @@ form.simple_form {
   padding: 2px;
   margin: 0;
   display: table; }
+
+#content .pagination {
+  padding: 10px 0; }
+  #content .pagination a, #content .pagination .current {
+    padding: 5px 10px;
+    background: #eeeeee;
+    color: black;
+    font-weight: bold;
+    text-decoration: none; }
+  #content .pagination a:hover {
+    background: #dddddd; }
+  #content .pagination .current {
+    background: #666666;
+    color: white; }
+
+.references #content .reference {
+  margin-bottom: 30px; }
+  .references #content .reference h3 {
+    font: bold 14px/19px Helvetica, Arial, sans-serif; }
+  .references #content .reference .body {
+    border-left: 7px solid #eeeeee;
+    padding-left: 5px;
+    margin: 5px 0 15px 0; }
+
+#schedules-index.schedules .schedule {
+  margin-bottom: 20px; }
+  #schedules-index.schedules .schedule h2 {
+    margin: 0;
+    padding: 0; }
+#schedules-index.schedules .admin {
+  margin-top: 30px; }
 
 #content .post {
   margin: 0 0 40px 0; }
@@ -479,20 +493,6 @@ form.simple_form {
     position: absolute;
     bottom: 2.5px;
     right: 2.5px; }
-
-#content .pagination {
-  padding: 10px 0; }
-  #content .pagination a, #content .pagination .current {
-    padding: 5px 10px;
-    background: #eeeeee;
-    color: black;
-    font-weight: bold;
-    text-decoration: none; }
-  #content .pagination a:hover {
-    background: #dddddd; }
-  #content .pagination .current {
-    background: #666666;
-    color: white; }
 
 * {
   margin: 0;
