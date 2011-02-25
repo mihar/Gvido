@@ -11,18 +11,14 @@ describe Person do
   
   it "should have momma and poppa if added" do
     tata = Factory :parent
-    mama = Factory :parent, :first_name => "Mata"
-    student = Factory :student
-    
-    student.mother= mama
-    student.father= tata
-    student.save
+    mama = Factory :parent
+    student = Factory :student, :mother => mama, :father => tata
     
     student.mother.should eql(mama)
     student.father.should eql(tata)
   end
   
-  it "shouldnt have parents if not added" do
+  it "should not have parents if not added" do
     student = Factory :student
     student.mother.should eql(nil)
     student.father.should eql(nil)
@@ -33,8 +29,7 @@ describe Person do
   end
   
   it "should properly titelize first and last name" do
-    student = Factory.build(:person, :first_name => 'mala', :last_name => 'slova')
-    student.save
+    student = Factory :person, :first_name => 'mala', :last_name => 'slova'
     
     student.first_name.should eql('Mala')
     student.last_name.should eql('Slova')
