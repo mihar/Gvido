@@ -1,22 +1,16 @@
-%table
-  %thead
-    %tr
-      %th
-        Ime
-      %th
-        Telefon
-      %th
-        Email
-      %th
-        Datum kontakta
-  %tbody
-    - @contacts.each do |contact|
+%section
+  %h2 Neobdelani kontakti
+  %table
+    %thead
       %tr
-        %td
-          = contact.name
-        %td
-          = contact.phone
-        %td
-          = contact.email
-        %td
-          = contact.created_at
+        %th Ime
+        %th Telefon
+        %th Email
+        %th Datum kontakta
+    %tbody
+      - @contacts.each do |contact|
+        %tr.clickable
+          %td= link_to contact.name, contact
+          %td= contact.phone
+          %td= contact.email
+          %td= contact.created_at
