@@ -16,6 +16,13 @@ sl:
     name: "Naziv"
     image: "Grafika"
     remember_me: "Zapomni si me na tem računalniku"
+    body: "Vsebina"
+    description: "Opis"
+    created_at: "Objavljeno"
+    updated_at: "Posodobljeno"
+    photo: "Fotografija"
+    title: "Naslov"
+    email: "E-pošta"
   crud:
     archive: "Arhiviraj"
     dearchive: "Dearhiviraj"
@@ -82,36 +89,37 @@ sl:
 
   activerecord:
     models:
-      person: "Oseba"
-      post: "Novica"
       about: "Pogosta vprašanja"
       album_category: "Kategorije albumov"
       album: "Albumi"
       contact: "Kontakt"
       gig: "Koncerti"
+      instument: "Inštrumenti"
+      link_category: "Kategorije povezav"
+      link: "Povezave"
+      location_section: "Skupina lokacij"
+      location: "Lokacije"
+      mentor: "Mentorji"
+      movie: "Videi"
+      notice: "Obvestila"
+      person: "Osebe"
+      post: "Novice"
+      photo: "Fotografije"
+      question: "Pogosta vprašanja"
+      reference: "Reference"
+      schedule: "Urniki"
+      shop_advice: "Nasveti za nakup"
       
     attributes:
-      person:
-        first_name: "Ime"
-        last_name: "Priimek"
-        address:    "Naslov"
-        place: "Kraj"
-        mobile: "Mobitel"
-        email: "E-pošta"
-        landline: "Telefonska št."
-        notes: "Opombe"
-        date_of_birth: "Datum rojstva"
       album:
         title: "Naziv albuma"
         position: "Pozicija"
-        description: "Opis albuma"
       about:
         text: "Vsebina"
         contact: "Kontakt"
       album_category:
         title: "Naziv kategorije"
       contact:
-        email: "E-pošta"
         phone: "Telefonska št."
         experience: "Izkušnje"
         name: "Ime in priimek"
@@ -122,7 +130,67 @@ sl:
         venue: "Prireditveni prostor"
         address: "Naslov"
         when: "Datum koncerta"
-        
+      instrument:
+        title: "Naziv inštrumenta"
+        permalink: "Spletni naslov"
+        goals: "Cilji"
+        activities: "Dejavnosti"
+        introduction: "Uvod"
+        shop_instructions: "Navodila za nakup"
+      link_category:
+        title: "Naziv kategorije povezav"
+        position: "Št. vrstnega reda"  
+      link:
+        title: "Naziv povezave"
+        uri: "Spletni naslov"
+      location_section:
+        title: "Skupina lokacij"
+      location:
+        title: "Naziv"
+        subtitle: "Podnaziv"
+        city: "Mesto"
+        zip: "Poštna številka"
+        about: "Podrobnosti"
+        uri: "Spletni naslov"
+        lng: "Geografska dolžina"
+        lat: "Geografska širina"
+      mentor:
+        name: "Ime"
+        surname: "Priimek"
+        phone: "Telefonska št."
+        about: "Podrobnosti"
+        permalink: "Spletni naslov"
+        position: "Pozicija"
+        facebook: "Facebook naslov"
+        myspace: "Myspace naslov"    
+      movie:
+        youtube: "Spletni naslov"
+      notice:
+        expires_at: "Datum poteka"
+      person:
+        first_name: "Ime"
+        last_name: "Priimek"
+        address:    "Naslov"
+        place: "Kraj"
+        mobile: "Mobitel"
+        landline: "Telefonska št."
+        notes: "Opombe"
+        student: "Je učenec?"
+        date_of_birth: "Datum rojstva"
+      post:
+        text: "Vsebina"
+      photo:
+        title: "Naziv fotografije"
+      question:
+        question: "Vprašanje"
+        answer: "Odgovor"
+      reference:
+        title: "Referenca"
+      schedule:
+        file: "Datoteka z urnikom"
+      shop_advice:
+        url: "Splenti naslov"
+ 
     errors:
       messages:
         record_invalid: "Vpis ni možen zaradi napak!"
