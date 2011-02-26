@@ -251,9 +251,7 @@ table {
     margin: 0;
     border-bottom: 1px solid #efefef; }
     table tbody tr td:last-child {
-      border: 0;
-      padding-right: 0;
-      background: none !important; }
+      padding-right: 0; }
   table tbody tr:last-child td {
     border: 0; }
   table tbody tr:nth-child(odd) td {
@@ -264,7 +262,7 @@ table {
     cursor: pointer; }
     table tbody tr.clickable td a {
       text-decoration: none;
-      color: black; }
+      color: black !important; }
   table tbody tr.clickable:hover td {
     background: #eeeeee; }
   table tfoot tr td {
