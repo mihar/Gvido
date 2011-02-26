@@ -29,6 +29,7 @@ module LayoutHelper
     default = "Gvido"
     title = (_title) ? "#{_title} (#{default})" : default
     content_for(:title) { title }
+    content_for(:heading) { _title }
 
     if heading
       return content_tag(:a, "", :name => "top") + content_tag(:h1, _title)
