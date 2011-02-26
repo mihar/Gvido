@@ -8,6 +8,7 @@ describe Person do
   it { should validate_presence_of(:last_name) }
   it { should belong_to(:mother) }
   it { should belong_to(:father) }
+  it { should belong_to(:post_office) }
   
   it "should have momma and poppa if added" do
     tata = Factory :parent

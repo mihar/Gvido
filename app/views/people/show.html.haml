@@ -1,4 +1,4 @@
-= title 'Pregled ucenca'
+= title 'Pregled učenca'
 
 .crud
   = link_to "Odstrani", @person, :confirm => 'Ste prepričani?', :method => :delete
@@ -37,7 +37,7 @@
       = @person.mother.full_name
     
     - if @person.father_id
-      %strong Oce:
+      %strong Oče:
       = @person.father.full_name
       
 = link_to_back people_path

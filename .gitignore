@@ -5,6 +5,7 @@ log/*.log
 tmp/**/*
 nbproject
 db/*.sqlite3
+public/stylesheets/*.css
 public/stylesheets/compiled
 public/system/*
 config/database.yml

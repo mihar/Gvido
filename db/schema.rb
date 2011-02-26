@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110225132335) do
+ActiveRecord::Schema.define(:version => 20110226170025) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(:version => 20110225132335) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "address"
-    t.integer  "post_id"
+    t.integer  "post_office_id"
     t.string   "place"
     t.string   "mobile"
     t.string   "email"
@@ -186,7 +186,7 @@ ActiveRecord::Schema.define(:version => 20110225132335) do
     t.integer  "sign_up_status"
     t.integer  "mother_id"
     t.integer  "father_id"
-    t.boolean  "student",        :default => false
+    t.boolean  "student"
     t.text     "notes"
     t.date     "date_of_birth"
   end
@@ -200,6 +200,11 @@ ActiveRecord::Schema.define(:version => 20110225132335) do
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "post_offices", :id => false, :force => true do |t|
+    t.integer "id"
+    t.string  "name"
   end
 
   create_table "posts", :force => true do |t|
