@@ -1,10 +1,7 @@
 = simple_form_for [parent, resource], :class => :simple, :html => {:multipart => true} do |f|
-  %p
-    = f.input :url
-  %p
-    = f.input :description
-  %p
-    = f.input :photo
-  %p.submit
+  = f.input :url
+  = f.input :description
+  = f.input :photo
+  .submit
     = f.button :submit
 

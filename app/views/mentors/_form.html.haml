@@ -1,25 +1,14 @@
 = simple_form_for resource, :class => :simple, :html => {:multipart => true} do |f|
-  %p
-    = f.input :name
-  %p
-    = f.input :surname
-  %p
-    = f.input :phone
-  %p
-    = f.input :email
-  %p
-    = f.input :address
-  %p
-    = f.input :photo
-  %p
-    = f.input :about
-  %p
-    = f.input :facebook
-  %p
-    = f.input :myspace
-  %p
-    = f.input :position
-
-  %p.submit
+  = f.input :name
+  = f.input :surname
+  = f.input :phone
+  = f.input :email
+  = f.input :address
+  = f.input :photo
+  = f.input :about
+  = f.input :facebook
+  = f.input :myspace
+  = f.input :position
+  .submit
     = f.button :submit
 

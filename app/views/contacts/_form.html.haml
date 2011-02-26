@@ -1,13 +1,9 @@
 = simple_form_for @contact, :class => :simple do |f|
   #contact
-    %p
-      = f.input :name
-    %p
-      = f.input :address
-    %p
-      = f.input :phone
-    %p
-      = f.input :email
+    = f.input :name
+    = f.input :address
+    = f.input :phone
+    = f.input :email
   #instruments
     = f.label "Zanimam se za program"
     %p.notice Obvezno izberite vsaj enega.
@@ -30,9 +26,7 @@
             
   %br.clear
 
-  %p
-    = f.input :experience
-  %p
-    = f.input :text
-  %p.submit
+  = f.input :experience
+  = f.input :text
+  .submit
     = f.button :submit

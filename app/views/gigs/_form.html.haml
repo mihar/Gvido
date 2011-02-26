@@ -1,13 +1,8 @@
 = simple_form_for resource, :class => :simple do |f|
-  %p
-    = f.input :title
-  %p
-    = f.input :venue
-  %p
-    = f.input :address
-  %p
-    = f.input :description
-  %p
-    = f.input :when
-  %p.submit
+  = f.input :title
+  = f.input :venue
+  = f.input :address
+  = f.input :description
+  = f.input :when
+  .submit
     = f.button :submit
