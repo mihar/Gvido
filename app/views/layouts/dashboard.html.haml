@@ -9,8 +9,8 @@
     = csrf_meta_tag
   %body{body_attrs}
     %header
-      %h1 GVIDO
-      %h2 Informacijski sistem
+      %h1= link_to "GVIDO", dashboard_path
+      %h2= link_to "Informacijski sistem", dashboard_path
       %nav
         = menu_item "Učenci", people_path, :people, false
         = menu_item "Mentorji", mentors_path, :mentors, false
