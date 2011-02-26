@@ -51,7 +51,9 @@
           = link_to image_tag('icons/myspace_large.png'), "http://www.myspace.com/gvidomusic", :title => "Gvido na MySpace"
           = link_to image_tag('icons/jazoo.png'), "http://jazoo.si", :title => "Jazoo band"
         = yield :sidebar
-      #content= yield
+      #content
+        = yield
+        %br.clear
       #footer
         &copy;2011 GVIDO 
         %span.production 
