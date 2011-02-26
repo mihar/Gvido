@@ -81,13 +81,17 @@ module LinkHelper
     link_to content_tag(:span, caption), "##{lang}", :class => lang
   end
   
-  def menu_item(text, section, url, &block)
+  def menu_item(text, section, url, wrapper = true, &block)
     klass = text.to_permalink
     klass += (@section == section.downcase.debalkanize.to_sym) ? " active" : ""
     
-    content_tag :li, :class => klass do
-      concat capture(&block) if block_given?
-      concat link_to(text, url)
+    if wrapper
+      content_tag :li, :class => klass do
+        concat capture(&block) if block_given?
+        concat link_to(text, url)
+      end
+    else
+      link_to(text, url, :class => klass)
     end
   end
 end
