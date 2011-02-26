@@ -1,6 +1,8 @@
-- title "Koncerti"
+= title "Koncerti"
 
-= render_misc 'gig'
+.crud
+  .master
+    = link_to "Nov koncert", new_gig_path
 
 %table
   %thead
@@ -10,3 +12,4 @@
     %td
   %tbody
     = render collection
+

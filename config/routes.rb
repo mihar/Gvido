@@ -45,6 +45,7 @@ App::Application.routes.draw do
   end
   
   resources :gigs do
+    get :all, :on => :collection
     member do
       post :add_mentor
       post :destroy_mentor
