@@ -287,6 +287,53 @@ table {
   table th .crud, table td .crud {
     float: right; }
 
+form.simple_form {
+  padding: 10px 0;
+  float: none !important;
+  clear: both !important; }
+  form.simple_form div.input {
+    display: inline-block;
+    display: block; }
+    form.simple_form div.input:after {
+      clear: both;
+      content: " ";
+      display: block;
+      font-size: 0;
+      line-height: 0;
+      visibility: hidden;
+      width: 0;
+      height: 0; }
+    * html form.simple_form div.input {
+      height: 1%; }
+    form.simple_form div.input label {
+      display: block;
+      font-weight: bold;
+      width: 175px; }
+    form.simple_form div.input label, form.simple_form div.input input.string, form.simple_form div.input input.boolean, form.simple_form div.input select, form.simple_form div.input textarea {
+      display: block;
+      float: left;
+      padding: 2px;
+      height: 14px;
+      line-height: 14px;
+      margin: 4px; }
+    form.simple_form div.input textarea {
+      width: 550px;
+      height: 180px; }
+      form.simple_form div.input textarea.large {
+        height: 400px;
+        width: 99%; }
+    form.simple_form div.input.boolean input.boolean {
+      margin-left: 190px; }
+    form.simple_form div.input.boolean label {
+      padding: 0;
+      margin-top: 2px; }
+  form.simple_form div.submit {
+    clear: both;
+    border-top: 2px solid #d7cfcd;
+    margin-top: 25px;
+    padding: 25px 0;
+      padding-left: 190px; }
+
 .contacts table td, .contacts table th {
   padding: 3px; }
 .contacts table td {
@@ -427,3 +474,6 @@ footer {
   padding: 20px;
   text-align: center;
   color: #999999; }
+
+#dashboard-index #content section h2 {
+  margin: 15px 0; }

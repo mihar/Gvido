@@ -1,27 +1,15 @@
 = simple_form_for resource, :class => :simple do |f|
-  %p
-    = f.input :first_name
-  %p
-    = f.input :last_name
-  %p
-    = f.input :address
-  %p
-    = f.input :place
-  %p
-    = f.input :landline
-  %p
-    = f.input :mobile
-  %p
-    = f.input :email
-  %p
-    = f.input :notes
-  %p
-    = f.input :student
-  %p
-    = f.association :mother, :collection => Person.others, :label_method => :full_name, :prompt => 'Izberite mamo'
-  %p
-    = f.association :father, :collection => Person.others, :label_method => :full_name, :prompt => 'Izberite oceta'
-
-  %p.submit
-    = f.button :submit
+  = f.input :first_name
+  = f.input :last_name
+  = f.input :address
+  = f.input :place
+  = f.association :post_office
+  = f.input :landline
+  = f.input :mobile
+  = f.input :email
+  = f.input :notes
+  = f.input :student
+  = f.association :mother, :collection => Person.others, :label_method => :full_name, :prompt => 'Izberite mamo'
+  = f.association :father, :collection => Person.others, :label_method => :full_name, :prompt => 'Izberite oceta'
+  .submit= f.button :submit
 

@@ -2,18 +2,36 @@ form.simple_form
   :padding 10px 0
   float: none !important
   clear: both !important
-  label
-    :display block
-    :font-weight bold
-  p
-    :margin 4px 0
-    :padding 4px 0
-  textarea
-    :width 99%
-    :height 400px
-    #contacts-new.contacts &
-      :height 100px
-  p.submit
-    :margin-top 10px
-    :background #fff url("../images/submit_bkg.png") repeat-y
-    :padding 20px
+  div.input
+    +clearfix
+    label
+      display: block
+      font-weight: bold
+      width: 175px
+    label, input.string, input.boolean, select, textarea
+      display: block
+      float: left
+      padding: 2px
+      height: 14px
+      line-height: 14px
+      margin: 4px
+    textarea
+      :width 550px
+      :height 180px
+      &.large
+        height: 400px
+        width: 99%
+        
+    &.boolean
+      input.boolean
+        margin-left: 190px
+      label
+        padding: 0
+        margin-top: 2px
+        
+  div.submit
+    clear: both
+    border-top: 2px solid $gvido_gray
+    margin-top: 25px
+    padding: 25px 0
+      left: 190px
