@@ -1,5 +1,5 @@
 $gvido_red: #591F16
-$gvido_gray: #AF928B
+$gvido_gray: #D7CFCD
 $gvido_light_blue: #B2DCFE
 
 @import "common/floats"
@@ -12,6 +12,8 @@ $gvido_light_blue: #B2DCFE
 @import "common/flash"
 @import "common/notice"
 @import "common/tables"
+
+@import "controllers/contacts"
 
 *
   padding: 0
@@ -28,12 +30,19 @@ header
   position: relative
   height: 54px
   h1, h2
-    +dark-shadow
+    a
+      +dark-shadow
+      color: #fff
+      text-decoration: none
   h1
-    font-size: 30px
+    height: 30px
+    a
+      font-size: 30px
   h2
-    font: normal 18px/18px Times, Times New Roman, serif
-    font-style: italic
+    height: 18px
+    a
+      font: normal 18px/18px Times, Times New Roman, serif
+      font-style: italic
   nav
     position: absolute
     top: 0px
@@ -63,6 +72,16 @@ header
   &>h1
     font-size: 28px
     margin-bottom: 14px
+    
+  a
+    color: $gvido_red
+    &:hover
+      color: #812717
+    &:active
+      color: red
+  
+  p
+    margin: 10px 0
 
 footer
   padding: 20px

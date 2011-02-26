@@ -34,6 +34,8 @@
     - if @person.father_id
       %strong Oce:
       = @person.father.full_name
+      
+
 = link_to "Odstrani", @person, :confirm => 'Ste prepričani?', :method => :delete
 |
 = link_to 'Uredi', edit_person_path(@person)
