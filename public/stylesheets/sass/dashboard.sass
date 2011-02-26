@@ -1,3 +1,70 @@
+$gvido_red: #591F16
+$gvido_gray: #AF928B
+$gvido_light_blue: #B2DCFE
+
+@import "common/floats"
+@import "common/font-style"
+@import "common/radius"
+@import "common/shadows"
+@import "common/buttons"
+@import "common/crud"
+@import "common/fields"
+@import "common/flash"
+@import "common/notice"
+@import "common/tables"
+
 *
   padding: 0
   margin: 0
+
+body
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif
+  font-size: 90%
+  
+header
+  background: $gvido_red url("../images/back.gif") repeat
+  color: #fff
+  padding: 20px
+  position: relative
+  height: 54px
+  h1, h2
+    +dark-shadow
+  h1
+    font-size: 30px
+  h2
+    font: normal 18px/18px Times, Times New Roman, serif
+    font-style: italic
+  nav
+    position: absolute
+    top: 0px
+    left: 250px
+    a
+      display: block
+      float: left
+      padding: 20px
+      height: 54px
+      line-height: 54px
+      color: #fff
+      text-decoration: none
+      font-size: 16px
+      +dark-shadow
+      &:hover
+        background: url("../images/backgrounds/25white.png")
+      &:active, &.active
+        background: url("../images/backgrounds/50white.png")
+    
+
+#content
+  position: relative
+  padding: 20px
+  
+  &>h1, &>h2, &>h3, &>h4
+    +mid-shadow
+  &>h1
+    font-size: 28px
+    margin-bottom: 14px
+
+footer
+  padding: 20px
+  text-align: center
+  color: #999

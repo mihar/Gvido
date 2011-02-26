@@ -1,0 +1,34 @@
+#content
+  .crud
+    +pie-clearfix
+    input
+      +button
+    a
+      :margin-left 7.5px
+      :float left
+      +button
+  .to_back
+    :clear both
+    :margin-top 50px
+    +lite-button
+    
+  & > .crud
+    position: absolute
+    top: 0px
+    right: 0px
+    padding: 15px
+    a
+      display: none
+      float: left
+      &.super, &.secondary
+        +lite-button
+    .master
+      float: right
+      a
+        display: table !important
+    &:hover
+      z-index: 999
+      overflow: auto
+      background: url('/images/backgrounds/gvido_gray_gradient.png') left top repeat-y
+      a
+        display: table !important

@@ -1,0 +1,27 @@
+=radius($radius)
+  :border-radius $radius
+  -moz-border-radius: $radius
+  -webkit-border-radius: $radius
+=mid-radius
+  +radius(7px)
+=small-radius
+  +radius(5px)
+=micro-radius
+  +radius(3px)
+
+=straight-tr-corner
+  :border-top-right-radius 0	
+  -moz-border-radius-topright: 0
+  -webkit-border-top-right-radius: 0
+=straight-tl-corner
+  :border-top-left-radius 0	
+  -moz-border-radius-topleft: 0
+  -webkit-border-top-left-radius: 0
+=straight-br-corner
+  :border-bottom-right-radius 0	
+  -moz-border-radius-bottomright: 0
+  -webkit-border-bottom-right-radius: 0
+=straight-bl-corner
+  :border-bottom-left-radius 0	
+  -moz-border-radius-bottomleft: 0
+  -webkit-border-bottom-left-radius: 0
