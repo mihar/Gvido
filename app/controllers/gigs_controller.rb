@@ -1,6 +1,12 @@
 class GigsController < InheritedResources::Base
   before_filter :set_section
-  respond_to :html
+  
+  # Different layouts here.
+  layout :pick_layout
+  
+  def index
+    @gigs = Gig.recent.with_mentors
+  end
   
   def edit 
     @mentors = Mentor.all.reject { |m| resource.mentors.include?(m) }
@@ -19,13 +25,21 @@ class GigsController < InheritedResources::Base
     redirect_to edit_gig_path(params[:id])
   end
   
+  def update
+    update! { all_gigs_path }
+  end
+  
+  def create
+    create! { all_gigs_path }
+  end
+  
   protected
+  
+  def pick_layout
+    [:index].include?(action_name.to_sym) ? "application" : "dashboard"
+  end
   
   def set_section
     @section = :gigs
-  end
-  
-  def collection
-    @gigs ||= end_of_association_chain.recent.with_mentors
   end
 end

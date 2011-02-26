@@ -12,8 +12,9 @@
       %h1= link_to "GVIDO", dashboard_path
       %h2= link_to "Informacijski sistem", dashboard_path
       %nav
-        = menu_item "Učenci", people_path, :people, false
-        = menu_item "Mentorji", mentors_path, :mentors, false
+        = menu_item "Učenci", "People", people_path, false
+        = menu_item "Mentorji", "Mentors", mentors_path, false
+        = menu_item "Koncerti", "Gigs", all_gigs_path, false
     #content
       = yield
     %footer
@@ -21,4 +22,3 @@
       %span.production
         &mdash; produkcija:
         = link_to image_tag("disrupt.png"), "http://disru.pt", :title => "Produkcija: DISRU.PT - Agile thinking (http://disru.pt)"
-
