@@ -114,3 +114,8 @@ Factory.define :shop_advice do |f|
   f.association :instrument
 end
 
+Factory.define :post_office do |f|
+  f.id 3320
+  f.name "Velenje"
+end
+
