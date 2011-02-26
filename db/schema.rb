@@ -186,7 +186,7 @@ ActiveRecord::Schema.define(:version => 20110226170025) do
     t.integer  "sign_up_status"
     t.integer  "mother_id"
     t.integer  "father_id"
-    t.boolean  "student"
+    t.boolean  "student",        :default => false
     t.text     "notes"
     t.date     "date_of_birth"
   end
