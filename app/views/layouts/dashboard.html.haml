@@ -5,7 +5,7 @@
     %title
       = yield(:title).empty?? "GVIDO Informacijski sistem" : yield(:title)
     = stylesheet_link_tag "dashboard"
-    = javascript_include_tag :defaults
+    = javascript_include_tag 'lib/jquery.min', 'lib/slimbox2', 'lib/rails', 'application', :cache => true
     = csrf_meta_tag
   %body{body_attrs}
     %header
@@ -13,23 +13,29 @@
       %h2= link_to "Informacijski sistem", dashboard_path
       - if user_signed_in?
         %nav
-          = menu_item "O nas", "About", all_abouts_path, false
-          = menu_item "Osebe", "People", people_path, false
-          = menu_item "Mentorji", "Mentors", all_mentors_path, false
-          = menu_item "Koncerti", "Gigs", all_gigs_path, false
-          = menu_item "Kategorije albumov", "AlbumCategories", all_album_categories_path, false
-          = menu_item "Albumi", "Albums", all_albums_path, false
-          = menu_item "Programi", "Instruments", all_instruments_path, false
-          = menu_item "Obvestila", "Notices", all_notices_path, false
-          = menu_item "Novice", "Posts", all_posts_path, false
-          = menu_item "Vprašanja", "Questions", all_questions_path, false
-          = menu_item "Reference", "References", all_references_path, false
-          = menu_item "Urniki", "Schedules", all_schedules_path, false
-          = menu_item "Videi", "Movies", all_movies_path, false
-          = menu_item "Kategorije povezav", "LinkCategories", all_link_categories_path, false
-          = menu_item "Povezave", "Links", all_links_path, false
-          = menu_item "Skupine lokacij", "LocationSections", all_location_sections_path, false
-          = menu_item "Lokacije", "Locations", all_locations_path, false
+          #submenu
+            %span Spletna stran
+            %ul
+              = menu_item "O nas", "About", all_abouts_path
+              = menu_item "Koncerti", "Gigs", all_gigs_path
+              = menu_item "Kategorije albumov", "AlbumCategories", all_album_categories_path
+              = menu_item "Albumi", "Albums", all_albums_path
+              = menu_item "Obvestila", "Notices", all_notices_path
+              = menu_item "Novice", "Posts", all_posts_path
+              = menu_item "Vprašanja", "Questions", all_questions_path
+              = menu_item "Reference", "References", all_references_path
+              = menu_item "Urniki", "Schedules", all_schedules_path
+              = menu_item "Videi", "Movies", all_movies_path
+              = menu_item "Kategorije povezav", "LinkCategories", all_link_categories_path
+              = menu_item "Povezave", "Links", all_links_path
+              = menu_item "Skupine lokacij", "LocationSections", all_location_sections_path
+          %ul#main
+            = menu_item "Osebe", "People", people_path
+            = menu_item "Mentorji", "Mentors", all_mentors_path
+            = menu_item "Programi", "Instruments", all_instruments_path
+            = menu_item "Lokacije", "Locations", all_locations_path
+            
+
         
       - if user_signed_in?
         #user
