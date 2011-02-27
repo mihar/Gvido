@@ -1,5 +1,6 @@
 class SchedulesController < InheritedResources::Base
   layout :pick_layout
+  skip_load_resource :only => :all
   load_and_authorize_resource
   
   def create
