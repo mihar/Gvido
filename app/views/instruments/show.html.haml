@@ -23,9 +23,3 @@
 = spit @instrument, :goals, :div, true
 = spit @instrument, :activities, :div, true
 
-
-
-= admin_section do
-  = link_to "Uredi", edit_instrument_path(@instrument)
-  |
-  = link_to "Odstrani", @instrument, :confirm => 'Ste prepričani?', :method => :delete

@@ -1,0 +1,30 @@
+= title "Programi"
+
+.crud
+  .master
+    = link_to "Dodaj program", new_instrument_path
+    
+%table
+  %thead
+    %tr
+      %th Naziv inštrumenta
+      %th Opis
+      %th Cilji
+      %th Dejavnosti
+      %th Uvod
+      %th Navodila za nakup
+      %td
+  %tbody
+    - collection.each do |instrument|
+      %tr.clickable
+        %td= instrument.title 
+        %td= instrument.description
+        %td= instrument.goals
+        %td= instrument.activities
+        %td= instrument.introduction
+        %td= instrument.shop_instructions
+        %td
+          .crud
+            = link_to "Uredi", edit_instrument_path(instrument)
+            = link_to "Odstrani", instrument, :confirm => 'Ste prepričani?', :method => :delete        
+
