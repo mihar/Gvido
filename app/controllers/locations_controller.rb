@@ -1,5 +1,6 @@
 class LocationsController < InheritedResources::Base
   load_and_authorize_resource
+  skip_load_resource :only => [:all]
   belongs_to :location_section, :optional => true
   layout :pick_layout
   
