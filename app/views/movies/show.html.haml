@@ -6,10 +6,3 @@
   %param{:name => "allowscriptaccess", :value => "always"}
   %embed{:src => "http://www.youtube.com/v/#{@movie.youtube}&amp;hl=en&amp;fs=1&amp;rel=0", :type => "application/x-shockwave-flash", :allowscriptaccess => "always", :allowfullscreen => "true", :width => "425", :height => "344"}
 
-
-= admin_section do
-  = link_to "Uredi", edit_movie_path(@movie)
-  |
-  = link_to "Odstrani", @movie, :confirm => 'Ste prepričani?', :method => :delete
-  |
-  = link_to_back albums_path
