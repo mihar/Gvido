@@ -1,0 +1,19 @@
+= title "Reference"
+.crud
+  .master
+    = link_to "Nova referenca", new_reference_path
+    
+%table
+  %thead
+    %th Referenca
+    %th Vsebina
+    %th
+  %tbody
+    - for reference in collection
+      %tr.clickable
+        %td= reference.title
+        %td= (textilize reference.body).html_safe
+        %td
+          .crud
+            = link_to "Uredi", edit_reference_path(reference)
+            = link_to "Odstrani", reference, :confirm => 'Ste prepričani?', :method => :delete

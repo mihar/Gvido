@@ -1,16 +1,24 @@
 class ReferencesController < InheritedResources::Base
   before_filter :set_section
-  respond_to :html
+  layout :pick_layout
    
   def create
-    create! { references_path }
+    create! { all_references_path }
   end
   
   def update
-    update! { references_path }
+    update! { all_references_path }
+  end
+  
+  def destroy
+    destroy! { all_references_path }
   end
   
   private
+  
+  def pick_layout
+    [:index].include?(action_name.to_sym) ? "application" : "dashboard"
+  end
   
   def set_section
     @section = :references
