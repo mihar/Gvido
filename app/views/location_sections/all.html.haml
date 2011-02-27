@@ -1,0 +1,18 @@
+= title "Skupine lokacij"
+
+.crud
+  .master
+    = link_to "Nova skupina lokacij", new_location_section_path
+
+%table
+  %thead
+    %th Naziv skupine lokacij
+    %td
+  %tbody
+    - for location_section in collection
+      %tr.clickable
+        %td= location_section.title
+        %td
+          .crud
+            = link_to "Uredi", edit_location_section_path(location_section)
+            = link_to "Odstrani", location_section, :confirm => 'Ste prepričani?', :method => :delete

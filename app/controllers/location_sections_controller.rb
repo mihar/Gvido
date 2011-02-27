@@ -1,5 +1,5 @@
 class LocationSectionsController < InheritedResources::Base
-  respond_to :html
+  layout :pick_layout
   
   def index
     @locations = Location.all
@@ -7,11 +7,21 @@ class LocationSectionsController < InheritedResources::Base
   end
   
   def create
-    create! { location_sections_path}
+    create! { all_location_sections_path }
   end
   
   def update
-    update! { location_sections_path}
+    update! { all_location_sections_path }
+  end
+  
+  def destroy
+    destroy! { all_location_sections_path }
+  end
+  
+  private
+  
+  def pick_layout
+    [:index].include?(action_name.to_sym) ? "application" : "dashboard"
   end
   
 end

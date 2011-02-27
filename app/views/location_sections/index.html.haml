@@ -1,9 +1,5 @@
 - title "Lokacije"
 
-= admin_section do
-  = link_to "Nova skupina lokacij", new_location_section_path
-
-
 - collection.in_groups_of(2).each do |row|
   .row
     - row.each do |section|
@@ -11,10 +7,6 @@
         .section
           %h3
             = link_to section.title, location_section_locations_path(section)
-            = admin_section do
-              = link_to "Uredi", edit_location_section_path(section)
-              |
-              = link_to "Odstrani", section, :method => :delete, :confirm => "Ste prepričani?"
           %ul.locations
             - section.locations.each do |location|
               %li
