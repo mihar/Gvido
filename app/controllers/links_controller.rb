@@ -1,13 +1,29 @@
 class LinksController < InheritedResources::Base
   before_filter :set_section
-  respond_to :html
+  layout :pick_layout
   
   def index
     @links = LinkCategory.includes(:links)
     super
   end
   
-  protected
+  def create
+    create! { all_links_path }
+  end
+  
+  def update
+    update! { all_links_path }
+  end
+  
+  def destroy
+    destroy! { all_links_path }
+  end
+  
+  private
+  
+  def pick_layout
+    [:index].include?(action_name.to_sym) ? "application" : "dashboard"
+  end
   
   def set_section
     @section = :links

@@ -1,0 +1,20 @@
+= title "Povezave"
+
+.crud
+  .master
+    = link_to "Nova povezava", new_link_path
+
+%table
+  %thead
+    %th Naziv povezave
+    %th Spletni naslov
+    %td
+  %tbody
+    - for link in collection
+      %tr.clickable
+        %td= link.title
+        %td= link.uri
+        %td
+          .crud
+            = link_to "Uredi", edit_link_path(link)
+            = link_to "Odstrani", link, :confirm => 'Ste prepričani?', :method => :delete
