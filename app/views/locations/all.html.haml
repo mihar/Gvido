@@ -1,0 +1,34 @@
+= title "Lokacije"
+
+.crud
+  .master
+    = link_to "Nova lokacija", new_location_path
+
+%table
+  %thead
+    %th Naziv lokacije
+    %th Podnaziv
+    %th Naslov
+    %th Mesto
+    %th Poštna številka
+    %th Spletni naslov
+    %th Skupina lokacij
+    %th Podrobnosti
+    %td
+  %tbody
+    - for location in collection
+      %tr.clickable
+        %td= location.title
+        %td= location.subtitle
+        %td= location.address
+        %td= location.city
+        %td= location.post_office
+        %td= location.uri
+        %td
+          - if location.location_section
+            = location.location_section.title
+        %td= location.about
+        %td
+          .crud
+            = link_to "Uredi", edit_location_path(location)
+            = link_to "Odstrani", location, :confirm => 'Ste prepričani?', :method => :delete
