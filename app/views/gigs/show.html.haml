@@ -1,4 +1,10 @@
-- title "Koncert #{@gig.title}"
+= title "Koncert #{@gig.title}"
+
+.crud
+  = link_to "Uredi", edit_gig_path(@gig)
+  = link_to "Izbrisi", @gig, :confirm => 'Ste prepričani?', :method => :delete
+  .master
+    = link_to_back all_gigs_path
 
 = spit @gig, :title, :h3
 
@@ -17,10 +23,4 @@
   %p.mentors
     %strong Nastopajoči mentorji:
     = spit_with_links @gig, :mentors
-= link_to "Uredi", edit_gig_path(@gig)
-= admin_section do
-  
-  |
-  = link_to "Izbrisi", @gig, :confirm => 'Ste prepričani?', :method => :delete
-  |
-  = link_to_back gigs_path
+

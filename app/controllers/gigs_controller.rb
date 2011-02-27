@@ -33,7 +33,11 @@ class GigsController < InheritedResources::Base
     create! { all_gigs_path }
   end
   
-  protected
+  def destroy
+    destroy! { all_gigs_path }
+  end
+  
+  private
   
   def pick_layout
     [:index].include?(action_name.to_sym) ? "application" : "dashboard"
