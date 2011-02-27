@@ -16,6 +16,8 @@
   %td
     = h person.created_at.to_s :simple
   %td
-    = link_to "Podrobnosti", person
+    .crud
+      = link_to "Podrobnosti", person
   %td
-    = link_to "Odstrani", person, :confirm => 'Ste prepričani?', :method => :delete
+    .crud
+      = link_to "Odstrani", person, :confirm => 'Ste prepričani?', :method => :delete
