@@ -89,7 +89,7 @@ sl:
 
   activerecord:
     models:
-      about: "Pogosta vprašanja"
+      about: "O nas"
       album_category: "Kategorije albumov"
       album: "Albumi"
       contact: "Kontakt"
@@ -148,7 +148,7 @@ sl:
       location:
         title: "Naziv"
         subtitle: "Podnaziv"
-        city: "Mesto"
+        city: "Kraj"
         zip: "Poštna številka"
         about: "Podrobnosti"
         uri: "Spletni naslov"
