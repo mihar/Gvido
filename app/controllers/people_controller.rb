@@ -1,5 +1,6 @@
 class PeopleController < InheritedResources::Base
   layout "dashboard"
+  before_filter :set_section
   
   def new
     @person = Person.new
@@ -14,6 +15,10 @@ class PeopleController < InheritedResources::Base
   end
   
   private
+  def set_section
+    @section = :people
+  end
+
   def collection
     @people = end_of_association_chain.students
   end
