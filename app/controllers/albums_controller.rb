@@ -21,7 +21,7 @@ class AlbumsController < InheritedResources::Base
   private
     
   def pick_layout
-    [:index].include?(action_name.to_sym) ? "application" : "dashboard"
+    [:index, :show].include?(action_name.to_sym) ? "application" : "dashboard"
   end
   
   def set_section
