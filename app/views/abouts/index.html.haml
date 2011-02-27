@@ -4,11 +4,5 @@
 
 - unless @abouts.empty?
   .abouts.textilize= (textilize @abouts.first.text).html_safe
-  
-  = admin_section do
-    = link_to "Uredi", edit_about_path(@abouts.first)
-- else
-  = admin_section do
-    = link_to "Uredi", new_about_path
-    
+      
 = image_tag "Gvido_Tomaz.jpg"

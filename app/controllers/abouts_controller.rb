@@ -1,16 +1,21 @@
 class AboutsController < InheritedResources::Base
   before_filter :set_section
-  respond_to :html
+  
+  layout :pick_layout
   
   def create
-    create! { abouts_path }
+    create! { all_abouts_path }
   end
   
   def update
-    update! { abouts_path }
+    update! { all_abouts_path }
   end
   
-  private 
+  private
+  
+  def pick_layout
+    [:index].include?(action_name.to_sym) ? "application" : "dashboard"
+  end
   
   def set_section
     @section = :abouts
