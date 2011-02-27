@@ -1,0 +1,17 @@
+= title "Nasveti za nakup"
+.crud
+  .master
+    = link_to "Nov nasvet", new_shop_advice_path
+
+%table
+  %thead
+    %th Nasvet
+    %th
+  %tbody
+    - for shop_advice in collection
+      %tr.clickable
+        %td
+        %td
+          .crud
+            = link_to "Uredi", edit_shop_advice_path(shop_advice)
+            = link_to "Odstrani", shop_advice, :confirm => 'Ste prepričani?', :method => :delete

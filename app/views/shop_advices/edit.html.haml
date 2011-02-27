@@ -1,5 +1,6 @@
-- title "Uredi nasvet"
+= title "Uredi nasvet"
 
-= render :partial => 'form'
-%p
-  = link_to_back instrument_shop_advices_path
+= render 'form'
+
+= link_to_back all_instrument_shop_advices_path(parent)
+  
