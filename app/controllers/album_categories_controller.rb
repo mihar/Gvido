@@ -1,12 +1,12 @@
 class AlbumCategoriesController < InheritedResources::Base
-  respond_to :html
+  layout :pick_layout
    
   def create
-    create! { albums_path }
+    create! { all_album_categories_path }
   end
   
   def update
-    update! { albums_path }
+    update! { all_album_categories_path }
   end
   
   def destroy
@@ -14,6 +14,12 @@ class AlbumCategoriesController < InheritedResources::Base
       a.album_category_id = nil
       a.save
     end
-    destroy! { albums_path }
+    destroy! { all_album_categories_path }
+  end
+  
+  private
+  
+  def pick_layout
+    [:index].include?(action_name.to_sym) ? "application" : "dashboard"
   end
 end
