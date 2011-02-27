@@ -22,12 +22,4 @@
       
 %p= textilize(@location.about) unless @location.about.blank?
 
-- map = GoogleMap.new(:zoom => 15)
-- map.markers << GoogleMapMarker.new( :map => map, :lat => @location.lat, :lng => @location.lng, :html => location_html(@location))
-= map.to_html
-#map= map.div
 
-= admin_section do
-  = link_to "Uredi", edit_location_path(@location)
-  |
-  = link_to "Odstrani", @location, :confirm => 'Ste prepričani?', :method => :delete

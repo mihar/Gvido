@@ -1,6 +1,6 @@
 class LocationsController < InheritedResources::Base
   belongs_to :location_section, :optional => true
-  before_filter :set_section
+  layout :pick_layout
   
   def index
     @locations_grouped = collection.group_by { |l| l.location_section }
@@ -24,7 +24,23 @@ class LocationsController < InheritedResources::Base
     redirect_to edit_location_path(params[:id])    
   end
   
-  protected
+  def create
+    create! { all_locations_path }
+  end
+  
+  def update
+    update! { all_locations_path }
+  end
+  
+  def destroy
+    destroy! { all_locations_path }
+  end
+  
+  private
+  
+  def pick_layout
+    [:index].include?(action_name.to_sym) ? "application" : "dashboard"
+  end
   
   def collection
     @locations ||= if params[:location_section_id]
