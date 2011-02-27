@@ -1,0 +1,23 @@
+= title "Novice"
+.crud
+  .master
+    = link_to "Ustvari novico", new_post_path
+
+%table
+  %thead
+    %th Naslov
+    %th Datum objave
+    %th Vsebina
+    %td
+    %td
+  %tbody
+    - for post in collection
+      %tr.clickable
+        %td= post.title
+        %td= post.created_at.to_s :simple
+        %td= (textilize post.text).html_safe
+        %td
+          .crud
+            = link_to "Uredi", edit_post_path(post)
+            = link_to "Odstrani", post, :confirm => 'Ste prepričani?', :method => :delete
+
