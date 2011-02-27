@@ -1,6 +1,7 @@
 class Location < ActiveRecord::Base
   has_and_belongs_to_many :mentors
   belongs_to :location_section
+  belongs_to :post_office
   before_save :geocode, :normalize_uri
   validates_presence_of :title
   
