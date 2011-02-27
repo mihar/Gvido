@@ -1,4 +1,5 @@
 class PhotosController < InheritedResources::Base
+  load_and_authorize_resource
   belongs_to :album
   before_filter :set_section
   

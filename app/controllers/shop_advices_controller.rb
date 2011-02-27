@@ -1,4 +1,5 @@
 class ShopAdvicesController < InheritedResources::Base
+  load_and_authorize_resource
   belongs_to :instrument, :finder => :find_by_permalink!
   respond_to :html
   

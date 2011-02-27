@@ -1,4 +1,5 @@
 class ContactsController < InheritedResources::Base
+  load_and_authorize_resource
   before_filter :set_section
   respond_to :html
 

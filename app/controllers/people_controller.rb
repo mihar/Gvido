@@ -1,4 +1,5 @@
 class PeopleController < InheritedResources::Base
+  load_and_authorize_resource
   layout "dashboard"
   before_filter :set_section
   

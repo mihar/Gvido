@@ -1,5 +1,6 @@
 class LocationSectionsController < InheritedResources::Base
   layout :pick_layout
+  load_and_authorize_resource
   
   def index
     @locations = Location.all

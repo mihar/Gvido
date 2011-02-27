@@ -1,5 +1,6 @@
 class SchedulesController < InheritedResources::Base
   layout :pick_layout
+  load_and_authorize_resource
   
   def create
     create! { all_schedules_path }
