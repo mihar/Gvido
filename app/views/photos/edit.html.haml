@@ -1,10 +1,9 @@
-- title "Urejanje fotografije"
+= title "Urejanje fotografije"
 
 %h3 Trenutna fotografija
-- if @photo.photo
-  = image_tag @photo.photo.url(:medium)
+- if resource.photo
+  = image_tag resource.photo.url(:medium)
 
-= render :partial => 'form'
+= render 'form'
 
-%p
-  = link_to_back album_path(parent)
+= link_to_back album_path(parent)
