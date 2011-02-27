@@ -1,42 +1,76 @@
 App::Application.routes.draw do
   match 'dashboard', :to => 'dashboard#index'
-  resources :people
-  resources :abouts
-  resources :notices
-  resources :questions
-  resources :references
-  resources :schedules
-  resources :posts
-  resources :notices
-  resources :movies
-  resources :links
-  resources :link_categories
-  resources :album_categories
+  resources :people do 
+    get :all, :on => :collection
+  end
+  
+  resources :abouts do
+    get :all, :on => :collection
+  end
+  
+  resources :notices do
+    get :all, :on => :collection
+  end
+  
+  resources :questions do
+    get :all, :on => :collection
+  end
+  
+  resources :references do
+    get :all, :on => :collection
+  end
+  
+  resources :schedules do
+    get :all, :on => :collection
+  end
+  
+  resources :posts do
+    get :all, :on => :collection
+  end
+  
+  resources :movies do
+    get :all, :on => :collection
+  end
+  
+  resources :links do
+    get :all, :on => :collection
+  end
+  
+  resources :link_categories do
+    get :all, :on => :collection
+  end
+  
+  resources :album_categories do
+    get :all, :on => :collection
+  end
   
   resources :location_sections do
-    resources :locations
-  end
-   
-  resources :albums do
-    resources :photos
-  end
-  
-  resources :instruments do
-    resources :shop_advices
-  end
-  
-  resources :location_sections do
+    get :all, :on => :collection
     resources :locations
   end
   
   resources :locations do
+    get :all, :on => :collection
     member do
       post 'add_mentor'
       post 'destroy_mentor'
     end
   end
+  
+  resources :albums do
+    get :all, :on => :collection
+    resources :photos
+  end
+  
+  resources :instruments do
+    get :all, :on => :collection
+    resources :shop_advices do
+      get :all, :on => :collection
+    end
+  end
     
   resources :mentors do
+    get :all, :on => :collection
     member do
       post 'add_instrument'
       post 'destroy_instrument'
