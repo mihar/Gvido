@@ -13,6 +13,9 @@ gem "haml"
 gem 'inherited_resources', '~> 1.2.1'
 gem 'json'
 gem 'hoptoad_notifier'
+gem 'devise'
+gem 'cancan'
+gem 'jquery-rails'
 
 group :development, :test do
   gem 'capistrano'

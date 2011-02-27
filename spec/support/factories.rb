@@ -119,3 +119,10 @@ Factory.define :post_office do |f|
   f.name "Velenje"
 end
 
+Factory.define :user do |f|
+  f.first_name "Mikhailo"
+  f.last_name "Ajnspigler"
+  f.sequence(:email) { |n| "mikhailo#{n}@ajnspilger.si" }
+  f.password "SimonTalek"
+  f.password_confirmation "SimonTalek"
+end

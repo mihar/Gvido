@@ -1,5 +1,9 @@
 App::Application.routes.draw do
+  devise_for :users, :controllers => { :sessions => "sessions" }
+
   match 'dashboard', :to => 'dashboard#index'
+  match 'dashboard', :to => 'dashboard#index', :as => 'user_root'
+  
   resources :people do 
     get :all, :on => :collection
   end

@@ -1,11 +1,15 @@
 class ApplicationController < ActionController::Base
-  #before_filter :set_locale
-  helper :all # include all helpers, all the time
+  helper :all
   helper_method :current_section, :admin?, :body_attrs
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  before_filter :authenticate_user!, :except => [:index, :show]
+  protect_from_forgery
+  
+  # Cancan
+  check_authorization
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to user_session_path, :error => exception.message
+  end
 
-  # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
   
   protected
   
@@ -14,22 +18,8 @@ class ApplicationController < ActionController::Base
     @section
   end
   
-  # Admin status determinator
   def admin?
-    true # session[:passphrase] == current_password
-  end
-  
-  # Verify administrator status, otherwise save current path for returning and redirect to login page.
-  def authenticate
-    if not admin?
-      flash[:notice] = "Prosimo prijavite se z ustreznim geslom."
-      session[:return_path] = request.env["REQUEST_URI"] || '/'
-      redirect_to new_session_path
-    end
-  end
-
-  def current_password
-    "roland2000"
+    current_user and current_user.admin?
   end
   
   def body_attrs
