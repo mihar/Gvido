@@ -1,0 +1,36 @@
+= title "Mentorji"
+.crud
+  .master
+    = link_to "Dodaj mentorja", new_mentor_path
+
+%table
+  %thead
+    %th Ime
+    %th Priimek
+    %th Telefonska številka
+    %th Naslov
+    %th Email
+    %th Podrobnosti
+    %th Facebook
+    %th Myspace
+    %th Pozicija
+  %tbody
+    - for mentor in collection
+      %tr.clickable
+        %td= mentor.name
+        %td= mentor.surname
+        %td= mentor.phone
+        %td= mentor.address
+        %td= mentor.email
+        %td= (textilize mentor.about).html_safe
+        %td= mentor.myspace
+        %td= mentor.facebook
+        %td= mentor.position
+        %td
+          - if mentor.photo.file?
+            .photo= (image_tag(mentor.photo.url(:small))).html_safe
+        %td
+          .crud
+            = link_to "Uredi", edit_mentor_path(mentor)
+            = link_to "Odstrani", mentor, :confirm => 'Ste prepričani?', :method => :delete
+

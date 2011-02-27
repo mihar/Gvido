@@ -1,6 +1,6 @@
 class MentorsController < InheritedResources::Base
   before_filter :set_section
-  respond_to :html
+  layout :pick_layout
   
   def edit
     @instruments = Instrument.all.reject { |i| resource.instruments.include?(i) }
@@ -24,6 +24,24 @@ class MentorsController < InheritedResources::Base
       Mentor.update(id, :position => position)
     end
     render :nothing => true
+  end
+  
+  def create
+    create! { all_mentors_path }
+  end
+  
+  def update
+    update! { all_mentors_path }
+  end
+  
+  def destroy
+    destroy! { all_mentors_path }
+  end
+  
+  private
+  
+  def pick_layout
+    [:index].include?(action_name.to_sym) ? "application" : "dashboard"
   end
   
   protected

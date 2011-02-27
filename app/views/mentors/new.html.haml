@@ -1,4 +1,6 @@
-- title "New Mentor"
-= render :partial => 'form'
-%p
-  = link_to "Back to List", mentors_path
+= title "New Mentor"
+
+= render 'form'
+
+= link_to_back all_mentors_path
+
