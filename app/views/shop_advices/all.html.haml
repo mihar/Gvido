@@ -5,12 +5,17 @@
 
 %table
   %thead
-    %th Nasvet
-    %th
+    %th Opis
+    %th Spletna povezava
+    %th Fotografija
   %tbody
     - for shop_advice in collection
       %tr.clickable
+        %td= (textilize shop_advice.description).html_safe
+        %td= shop_advice.url
         %td
+          - if shop_advice.photo.file?
+            .photo= (image_tag(shop_advice.photo.url(:small))).html_safe
         %td
           .crud
             = link_to "Uredi", edit_shop_advice_path(shop_advice)
