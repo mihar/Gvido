@@ -5,5 +5,7 @@ class PostOffice < ActiveRecord::Base
   validates_uniqueness_of :name, :id
   validates_numericality_of :id
   
+  attr_accessible :id, :name
+  
   default_scope order("name")
 end
