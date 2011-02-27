@@ -22,7 +22,9 @@
         %td= location.subtitle
         %td= location.address
         %td= location.city
-        %td= location.post_office
+        %td
+          - if location.post_office
+            = location.post_office.id
         %td= location.uri
         %td
           - if location.location_section

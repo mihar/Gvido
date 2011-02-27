@@ -12,7 +12,7 @@ class Location < ActiveRecord::Base
   end
   
   def geocode
-    geo = !address.blank? && Geocoder.geocode(self.address, self.city, self.zip)
+    geo = !address.blank? && !self.post_office.nil? && Geocoder.geocode(self.address, self.city, self.post_office.id)
     
     if geo
       self.lat, self.lng = geo.lat, geo.lng
@@ -33,7 +33,7 @@ class Location < ActiveRecord::Base
   end
   
   def gmaps4rails_address
-    [self.address, self.city, self.zip].join(" ")
+    [self.address, self.city, self.post_office.id].join(" ")
   end
   
   protected
