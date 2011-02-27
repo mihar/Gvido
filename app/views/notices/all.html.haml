@@ -1,0 +1,26 @@
+= title "Obvestila"
+.crud
+  .master
+    = link_to "Ustvari obvestilo", new_notice_path
+
+%table
+  %thead
+    %th Naslov obvestila
+    %th Datum objave
+    %th Vsebina
+    %th Fotografija
+    %td
+  %tbody
+    - for notice in collection
+      %tr.clickable
+        %td= notice.title
+        %td= notice.created_at.to_s :simple
+        %td= (textilize notice.body_html).html_safe
+        %td
+          - if notice.photo.file?
+            .photo= (image_tag(notice.photo.url(:small))).html_safe
+        %td
+          .crud
+            = link_to "Uredi", edit_notice_path(notice)
+            = link_to "Odstrani", notice, :confirm => 'Ste prepričani?', :method => :delete
+

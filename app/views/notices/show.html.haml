@@ -6,10 +6,4 @@
 .text.textilize= (textilize @notice.body_html).html_safe
 - if @notice.photo.file?
   .photo= (link_to_lightbox image_tag(@notice.photo.url(:small)), @notice.photo.url(:normal), 'obvestilo', @notice.title).html_safe
--#del
-= link_to "Uredi", edit_notice_path(@notice)
 
-= admin_section do
-  = link_to "Uredi", edit_notice_path(@notice)
-  |
-  = link_to "Odstrani", @notice, :confirm => 'Ste prepričani?', :method => :delete

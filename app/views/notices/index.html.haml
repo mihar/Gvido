@@ -1,8 +1,4 @@
 - title "Aktualno"
 
-= render :partial => collection
+= render collection
 
-= admin_section do
-  = link_to "Ustvari obvestilo", new_notice_path
-  |
-  = link_to "Prikaži vse", notices_path(:all => true)
