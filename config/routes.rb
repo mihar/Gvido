@@ -63,7 +63,9 @@ App::Application.routes.draw do
   
   resources :albums do
     get :all, :on => :collection
-    resources :photos
+    resources :photos do
+      get :all, :on => :collection
+    end
   end
   
   resources :instruments do
