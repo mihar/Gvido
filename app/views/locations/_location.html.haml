@@ -17,8 +17,4 @@
       - location.instruments.each do |i|
         = link_to image_tag(i.icon_small), instrument_path(i)
       
-    = admin_section do
-      = link_to "Uredi", edit_location_path(location)
-      |
-      = link_to "Odstrani", location, :confirm => 'Ste prepričani?', :method => :delete
   %br
