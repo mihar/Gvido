@@ -1,7 +1,7 @@
 - if params[:video]
   - title "Video"
   - unless @movies.empty?
-    = render :partial => @movies  
+    = render @movies  
   
 - else
   - title "Fotografije"

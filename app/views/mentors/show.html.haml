@@ -17,7 +17,7 @@
   .instruments
     = render :partial => "instruments/table", :locals => {:instruments => @mentor.instruments}
 
-  = render :partial => "locations"
+  = render "locations"
 
 
 - unless @mentor.about.blank?
