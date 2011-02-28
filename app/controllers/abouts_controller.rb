@@ -1,7 +1,6 @@
 class AboutsController < InheritedResources::Base
   load_and_authorize_resource
   skip_load_resource :only => :all
-
   before_filter :set_section
   layout :pick_layout
   
