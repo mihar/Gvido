@@ -25,7 +25,3 @@
   .about.textilize= (textilize @mentor.about).html_safe
 
 
-= admin_section do
-  = link_to "Uredi", edit_mentor_path(@mentor)
-  |
-  = link_to "Odstrani", @mentor, :confirm => 'Ste prepričani?', :method => :delete

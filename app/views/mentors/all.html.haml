@@ -31,6 +31,6 @@
             .photo= (image_tag(mentor.photo.url(:small))).html_safe
         %td
           .crud
-            = link_to "Uredi", edit_mentor_path(mentor)
             = link_to "Odstrani", mentor, :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Uredi", edit_mentor_path(mentor)
 
