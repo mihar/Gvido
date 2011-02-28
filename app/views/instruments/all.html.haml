@@ -25,6 +25,7 @@
         %td= instrument.shop_instructions
         %td
           .crud
-            = link_to "Uredi", edit_instrument_path(instrument)
+            = link_to "Nasveti za nakup", all_instrument_shop_advices_path(instrument)
             = link_to "Odstrani", instrument, :confirm => 'Ste prepričani?', :method => :delete        
+            = link_to "Uredi", edit_instrument_path(instrument)
 
