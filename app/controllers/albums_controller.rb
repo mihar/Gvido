@@ -19,6 +19,10 @@ class AlbumsController < InheritedResources::Base
     update! { all_albums_path }
   end
   
+  def destroy
+    destroy! { all_albums_path }
+  end
+  
   private
     
   def pick_layout

@@ -1,0 +1,29 @@
+= title "Albumi"
+.crud
+  .master
+    = link_to "Nov album", new_album_path
+    
+%table
+  %thead
+    %th Naslov albuma
+    %th Opis
+    %th Kategorija
+    %th Pozicija
+    %td
+  %tbody
+    - for album in collection
+      %tr.clickable
+        %td= album.title
+        %td= (textilize album.description).html_safe
+        %td
+          - if album.album_category
+            = album.album_category.title
+          - else
+            Brez kategorije
+        %td= album.position
+        %td
+          .crud
+            = link_to "Fotografije", all_album_photos_path(album)
+            = link_to "Odstrani", album, :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Uredi", edit_album_path(album)
+

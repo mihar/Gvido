@@ -8,12 +8,5 @@
   = render :partial => @album.photos
   %li.clear
 
-= admin_section do
-  = link_to "Uredi", edit_album_path(@album)
-  |
-  = link_to "Odstrani", @album, :confirm => 'Ste prepričani?', :method => :delete
-  %br
-  = link_to "Dodaj fotografijo", new_album_photo_path(@album)
-
 %p.goback
   =link_to "Nazaj", albums_path

@@ -1,11 +1,7 @@
 - if params[:video]
   - title "Video"
   - unless @movies.empty?
-    = render :partial => @movies
-  
-  = admin_section do
-    = link_to "Nov video", new_movie_path
-    
+    = render :partial => @movies  
   
 - else
   - title "Fotografije"
@@ -14,8 +10,4 @@
     .not_categorized
       %h3 Ostali albumi
       = render :partial => "album", :collection => @albums_no_category
-
-  = admin_section do
-    = link_to "Nova kategorija", new_album_category_path
-    %br
-    = link_to "Nov album", new_album_path
+      
