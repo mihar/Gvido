@@ -2,7 +2,7 @@
 
 %p.date
   %strong Oddano:
-  = @contact.created_at.to_s :simple
+  = @contact.created_at.to_s :short
   
 .data
   %p
@@ -42,7 +42,7 @@
 #start
   = link_to "Začni vpis", new_person_path(:contact_id => resource)
   %span ali
-  = link_to "Odstrani", resource, :confirm => 'Ste prepričani?', :method => :delete
+  = link_to "Odstrani", resource, :confirm => destroy_confirmation(resource), :method => :delete
 
 
 = link_to_back contacts_path

@@ -20,6 +20,6 @@
             %embed{:src => "http://www.youtube.com/v/#{movie.youtube}&amp;hl=en&amp;fs=1&amp;rel=0", :type => "application/x-shockwave-flash", :allowscriptaccess => "always", :allowfullscreen => "true", :width => "425", :height => "344"}
         %td
           .crud
-            = link_to "Odstrani", movie, :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Odstrani", movie, :confirm => destroy_confirmation(movie), :method => :delete
             = link_to "Uredi", edit_movie_path(movie)
             

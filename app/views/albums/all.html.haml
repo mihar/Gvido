@@ -24,6 +24,6 @@
         %td
           .crud
             = link_to "Fotografije", all_album_photos_path(album)
-            = link_to "Odstrani", album, :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Odstrani", album, :confirm => destroy_confirmation(album), :method => :delete
             = link_to "Uredi", edit_album_path(album)
 

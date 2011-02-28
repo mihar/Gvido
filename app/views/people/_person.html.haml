@@ -14,10 +14,9 @@
   %td
     = person.notes  
   %td
-    = h person.created_at.to_s :simple
+    = h person.created_at.to_s :short
   %td
     .crud
+      = link_to "Odstrani", person, :confirm => destroy_confirmation(person), :method => :delete
       = link_to "Podrobnosti", person
-  %td
-    .crud
-      = link_to "Odstrani", person, :confirm => 'Ste prepričani?', :method => :delete
+

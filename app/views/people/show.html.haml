@@ -1,13 +1,13 @@
 = title 'Pregled učenca'
 
 .crud
-  = link_to "Odstrani", @person, :confirm => 'Ste prepričani?', :method => :delete
   .master
+    = link_to "Odstrani", @person, :confirm => destroy_confirmation(@person), :method => :delete
     = link_to 'Uredi', edit_person_path(@person)
     
 %p.date
   %strong Datum dodajanja:
-  = @person.created_at.to_s :simple
+  = @person.created_at.to_s :short
 .data
   %p
     %strong Ime in priimek:
@@ -40,5 +40,5 @@
       %strong Oče:
       = @person.father.full_name
       
-= link_to_back people_path
+= link_to_back all_people_path
 

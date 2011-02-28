@@ -32,6 +32,6 @@
         %td= location.about
         %td
           .crud
-            = link_to "Odstrani", location, :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Odstrani", location, :confirm => destroy_confirmation(location), :method => :delete
             = link_to "Uredi", edit_location_path(location)
 

@@ -15,6 +15,6 @@
         %td= (textilize reference.body).html_safe
         %td
           .crud
-            = link_to "Odstrani", reference, :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Odstrani", reference, :confirm => destroy_confirmation(reference), :method => :delete
             = link_to "Uredi", edit_reference_path(reference)
 

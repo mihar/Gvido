@@ -14,13 +14,13 @@
     - for notice in collection
       %tr.clickable
         %td= notice.title
-        %td= notice.created_at.to_s :simple
+        %td= notice.created_at.to_s :short
         %td= (textilize notice.body_html).html_safe
         %td
           - if notice.photo.file?
             .photo= (image_tag(notice.photo.url(:small))).html_safe
         %td
           .crud
-            = link_to "Odstrani", notice, :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Odstrani", notice, :confirm => destroy_confirmation(notice), :method => :delete
             = link_to "Uredi", edit_notice_path(notice)
 

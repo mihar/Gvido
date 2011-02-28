@@ -20,6 +20,6 @@
     = render :partial => "instruments/table", :locals => {:instruments => @location.instruments}
 
       
-%p= textilize(@location.about) unless @location.about.blank?
+%p= textilize(@location.about).html_safe unless @location.about.blank?
 
 

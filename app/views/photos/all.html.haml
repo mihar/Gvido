@@ -17,7 +17,7 @@
             .photo= (image_tag(photo.photo.url(:small))).html_safe
         %td
           .crud
-            = link_to "Odstrani", [photo.album, photo], :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Odstrani", [photo.album, photo], :confirm => destroy_confirmation(photo), :method => :delete
             = link_to "Uredi", edit_album_photo_path(photo.album, photo)
 
 = link_to_back all_albums_path

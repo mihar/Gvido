@@ -16,6 +16,6 @@
         %td= link_category.position
         %td
           .crud
-            = link_to "Odstrani", link_category, :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Odstrani", link_category, :confirm => destroy_confirmation(link_category), :method => :delete
             = link_to "Uredi", edit_link_category_path(link_category)
 

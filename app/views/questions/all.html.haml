@@ -15,6 +15,6 @@
         %td= (textilize question.answer).html_safe
         %td
           .crud
-            = link_to "Odstrani", question, :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Odstrani", question, :confirm => destroy_confirmation(question), :method => :delete
             = link_to "Uredi", edit_question_path(question)
 
