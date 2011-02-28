@@ -1,7 +1,7 @@
 class ContactsController < InheritedResources::Base
   load_and_authorize_resource
   before_filter :set_section
-  skip_load_resource :only => :all
+  skip_load_resource :only => [:all, :new_report]
   respond_to :html
 
   # Different layouts here.
