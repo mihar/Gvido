@@ -1,0 +1,23 @@
+= title "Fotografije"
+.crud
+  .master
+    = link_to "Dodaj fotografijo", new_album_photo_path(parent)
+
+%table
+  %thead
+    %th Naslov fotografije
+    %th Fotografija
+    %td
+  %tbody
+    - for photo in collection
+      %tr.clickable
+        %td= photo.title
+        %td
+          - if photo.photo.file?
+            .photo= (image_tag(photo.photo.url(:small))).html_safe
+        %td
+          .crud
+            = link_to "Odstrani", [photo.album, photo], :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Uredi", edit_album_photo_path(photo.album, photo)
+
+= link_to_back all_albums_path

@@ -1,6 +1,2 @@
 %li
   = raw(link_to_lightbox image_tag(photo.photo.url(:small)), photo.photo.url(:normal), photo.album_id, photo.title)
-  = admin_section do
-    = link_to "Uredi", edit_album_photo_path(photo.album, photo)
-    |
-    = link_to "Odstrani", [photo.album, photo], :confirm => 'Ste prepričani?', :method => :delete
