@@ -16,5 +16,6 @@
         %td= link.uri
         %td
           .crud
-            = link_to "Uredi", edit_link_path(link)
             = link_to "Odstrani", link, :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Uredi", edit_link_path(link)
+
