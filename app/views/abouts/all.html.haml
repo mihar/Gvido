@@ -5,7 +5,7 @@
     - unless collection.empty?
       = link_to "Uredi", edit_about_path(collection.first)
     - else
-      = link_to "Uredi", new_about_path
+      = link_to "Nov opis", new_about_path
 
 - unless collection.empty?
   = (textilize collection.first.text).html_safe
