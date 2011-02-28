@@ -21,6 +21,6 @@
             .photo= (image_tag(notice.photo.url(:small))).html_safe
         %td
           .crud
-            = link_to "Uredi", edit_notice_path(notice)
             = link_to "Odstrani", notice, :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Uredi", edit_notice_path(notice)
 

@@ -18,6 +18,6 @@
         %td= (textilize post.text).html_safe
         %td
           .crud
-            = link_to "Uredi", edit_post_path(post)
             = link_to "Odstrani", post, :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Uredi", edit_post_path(post)
 
