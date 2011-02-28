@@ -7,9 +7,25 @@
 %table
   %thead
     %th Izvajalec
-    %th Lokacija
+    %th Kraj
+    %th Naslov
     %th Datum in ura
+    %th Opis
+    %th Nastopajoči mentorji
     %td
   %tbody
-    = render collection
-
+    - for gig in collection
+      %tr
+        %td= gig.title
+        %td= gig.venue
+        %td= gig.address
+        %td= gig.when.to_s(:simple)
+        %td= (textilize gig.description).html_safe
+        %td
+          - unless gig.mentors.empty?
+            = gig.mentors.map { |m| m.name }.join(', ')
+        %td 
+          .crud
+            .master
+              = link_to "Izbrisi", gig, :confirm => 'Ste prepričani?', :method => :delete
+              = link_to "Uredi", edit_gig_path(gig)

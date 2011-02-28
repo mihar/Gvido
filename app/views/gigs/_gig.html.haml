@@ -1,8 +1,8 @@
 - attrs = (gig.upcoming?) ?  {:class => "upcoming"} : {}
 %tr{attrs}
-  %td.title= h gig.title
-  %td.venue= h gig.venue
-  %td= h gig.when.to_s(:simple)
+  %td.title= gig.title
+  %td.venue= gig.venue
+  %td= gig.when.to_s(:simple)
 
   %td
     .crud
