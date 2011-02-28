@@ -1,7 +1,7 @@
 = title "Nasveti za nakup"
 .crud
   .master
-    = link_to "Nov nasvet", new_shop_advice_path
+    = link_to "Nov nasvet", new_instrument_shop_advice_path(parent)
 
 %table
   %thead
@@ -18,5 +18,7 @@
             .photo= (image_tag(shop_advice.photo.url(:small))).html_safe
         %td
           .crud
-            = link_to "Uredi", edit_shop_advice_path(shop_advice)
-            = link_to "Odstrani", shop_advice, :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Odstrani", [shop_advice.instrument, shop_advice], :confirm => 'Ste prepričani?', :method => :delete
+            = link_to "Uredi", edit_instrument_shop_advice_path(shop_advice.instrument, shop_advice)
+
+=link_to_back all_instruments_path
