@@ -2,7 +2,3 @@
   %h3= link_to movie.title, movie
   = link_to image_tag(movie.thumbnail), movie 
   
-  = admin_section do
-    = link_to "Uredi", edit_movie_path(movie)
-    |
-    = link_to "Odstrani", movie, :confirm => 'Ste prepričani?', :method => :delete
