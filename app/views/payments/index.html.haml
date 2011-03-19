@@ -35,9 +35,17 @@
         %td= full_address(student)
         %td= student.reference_number
         - if exception
-          %td= l exception.payment_date, :format => :short
+          %td= l exception.payment_date
           %td= exception.lessons_per_month 
         - else 
-          %td= l payment.payment_date, :format => :short
-          %td= enrollment.lessons_per_month
+          %td= l payment.payment_date
+          %td= enrollment.lessons_per_period
         %td= number_to_currency(payment.calculated_price)
+        %td
+          - if payment.settled
+            &#10003;
+          - else
+            ✗
+        %td
+          .crud
+            = link_to 'Prikaži', payment_path(payment)

@@ -1,0 +1,32 @@
+= title "Pregled plačila"
+
+.crud
+  .master
+    - if @payment.settled
+      = link_to 'Ne plačano', unsettle_payment_path(@payment)
+    - else
+      = link_to 'Plačano', settle_payment_path(@payment)
+    
+%p
+  %strong Ime in priimek plačnika
+  = @student.full_name
+%p
+  %strong Naslov plačnika
+  = full_address(@student)
+%p
+  %strong Referenčna številka
+  = @student.reference_number
+%p
+  %strong Datum plačila
+  - if @exception
+    = l @exception.payment_date
+  - else
+    = l @payment.payment_date
+%p
+  %strong Število predavanj
+  = @enrollment.lessons_per_period
+
+%p
+  %strong Znesek
+  = number_to_currency(@payment.calculated_price)
+
