@@ -29,10 +29,12 @@ class Enrollment < ActiveRecord::Base
     self.discount = discount_without_percent / 100
   end
   
+  def lessons_per_period
+    return lessons_per_month * payment_period
+  end
+  
   private
-  
-
-  
+    
   def create_payments
     set_billable_months
     create_new_payments
