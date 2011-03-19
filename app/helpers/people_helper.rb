@@ -7,6 +7,12 @@ module PeopleHelper
     end
   end
   
+  def program_mentor(enrollments)
+    unless enrollments.empty?
+      return raw(enrollments.each.map { |e| "#{e.mentor.full_name} / #{e.instrument.title}" }.join(', '))
+    end
+  end
+  
   def full_address(person)
     post_office = '' #string format: po_number city
     
