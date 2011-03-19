@@ -1,0 +1,19 @@
+= title "Statusi dodajanja oseb"
+.crud
+  .master
+    = link_to "Nov status dodajanja", new_status_path
+
+%table
+  %thead
+    %th Opis
+    %th Kratek opis
+  %tbody
+    - for status in collection
+      %tr.clickable
+        %td= (textilize status.description).html_safe
+        %td= status.short_description
+        %td
+          .crud
+            - if status.id > 4
+              = link_to "Odstrani", status, :confirm => destroy_confirmation(status), :method => :delete
+            = link_to "Uredi", edit_status_path(status)

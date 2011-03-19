@@ -1,0 +1,30 @@
+= title 'Pregled kontakta'
+
+.crud
+  .master
+    = link_to "Odstrani", [resource.student, resource], :confirm => destroy_confirmation(resource), :method => :delete
+    = link_to 'Uredi', edit_student_personal_contact_path(resource.student, resource)
+    
+.data
+  %p
+    %strong Ime in priimek:
+    = resource.full_name
+  %p
+    %strong Naslov:
+    = full_address(resource)
+  %p
+    %strong Email:
+    = mail_to resource.email
+  %p
+    %strong Telefon:
+    = resource.landline
+  %p
+    %strong Mobitel:
+    = resource.mobile
+  %p
+    %strong Opombe:
+    %br
+    = resource.notes
+ 
+= link_to_back students_path
+

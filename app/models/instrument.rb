@@ -2,6 +2,7 @@ class Instrument < ActiveRecord::Base
   has_and_belongs_to_many :mentors
   has_and_belongs_to_many :contacts
   has_many :shop_advices, :dependent => :destroy
+  has_many :enrollments
   
   validates_presence_of :title
   before_save :make_permalink

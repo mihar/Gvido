@@ -29,13 +29,14 @@
               = menu_item "Kategorije povezav", "LinkCategories", all_link_categories_path
               = menu_item "Povezave", "Links", all_links_path
               = menu_item "Skupine lokacij", "LocationSections", all_location_sections_path
+              = menu_item "Način izstavljanja položnic", "BillingOptions", billing_options_path
+              = menu_item "Statusi dodajanja oseb", "Statuses", statuses_path
           %ul#main
-            = menu_item "Osebe", "People", people_path
+            = menu_item "Učenci", "Students", students_path
             = menu_item "Mentorji", "Mentors", all_mentors_path
             = menu_item "Programi", "Instruments", all_instruments_path
             = menu_item "Lokacije", "Locations", all_locations_path
-            
-
+            = menu_item "Plačila", "Payments", payments_path
         
       - if user_signed_in?
         #user

@@ -1,0 +1,12 @@
+= simple_form_for [parent, resource], :class => :simple do |f|
+  = f.input :first_name
+  = f.input :last_name
+  = f.input :address
+  = f.input :place
+  = f.association :post_office
+  = f.input :landline
+  = f.input :mobile
+  = f.input :email
+  = f.input :notes
+  .submit
+    = f.button :submit

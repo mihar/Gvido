@@ -8,9 +8,9 @@
   = f.input :mobile
   = f.input :email
   = f.input :notes
-  = f.input :student
-  = f.association :mother, :collection => Person.others, :label_method => :full_name, :prompt => 'Izberite mamo'
-  = f.association :father, :collection => Person.others, :label_method => :full_name, :prompt => 'Izberite oceta'
+  = f.input :date_of_birth, :start_year => Date.today.year - 3, :end_year => Date.today.year - 90, :prompt => ['dan', 'mesec', 'leto']
+  = f.association :status, :collection => Status.all, :label_method => :short_description, :prompt => 'Izberite status dodajanja'
+  
   .submit
     = f.button :submit
 

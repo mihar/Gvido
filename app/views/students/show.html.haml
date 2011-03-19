@@ -1,0 +1,74 @@
+= title 'Pregled učenca'
+
+.crud
+  .master
+    = link_to "Odstrani", @student, :confirm => destroy_confirmation(@student), :method => :delete
+    = link_to 'Uredi', edit_student_path(@student)
+    = link_to "Dodaj vpisnino", new_student_enrollment_path(@student)
+    = link_to "Dodaj kontakt", new_student_personal_contact_path(@student)
+    
+.data
+  %p
+    %strong Ime in priimek:
+    = @student.full_name
+  %p
+    %strong Referenčna številka:
+    = @student.reference_number
+  %p.date
+    %strong Datum dodajanja:
+    = @student.created_at.to_s :short
+  %p
+    %strong Naslov:
+    = full_address(@student)
+  %p
+    %strong Email:
+    = mail_to @student.email
+  %p
+    %strong Telefon:
+    = @student.landline
+  %p
+    %strong Mobitel:
+    = @student.mobile
+  - if @student.date_of_birth
+    %p
+      %strong Datum rojstva:
+      = @student.date_of_birth.to_s :long
+  %p
+    %strong Opombe:
+    %br
+    = (textilize @student.notes).html_safe
+
+- unless @student.enrollments.empty?
+
+  %h3 Vpisnine
+  %table
+    %thead
+      %th Veljavnost vpisnine
+      %th Inštrument
+      %th Mentor
+      %th Št. mesecev na obrok
+      %th Št. predavanj/mesec
+      %th Cena vpisnine
+      %th Cena predavanja
+      %th Popust
+    %tbody
+    = render @student.enrollments
+
+
+- if not @student.personal_contacts.empty?
+  
+  %h3 Osebni kontakti učenca
+  %table
+    %thead
+      %th Ime in priimek
+      %th Naslov
+      %th Telefonska številka
+      %th Mobitel
+      %th Email
+      %th Opombe
+    %tbody
+    = render @student.personal_contacts
+  
+ 
+= link_to_back students_path
+

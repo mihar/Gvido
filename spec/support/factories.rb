@@ -1,6 +1,43 @@
+Factory.define :payment do |f|
+  f.association :enrollment
+end
+
+Factory.define :payment_exception do |f|
+  f.association :enrollment
+end
+
 Factory.define :about do |f|
   f.text     "Thats what its all *about*"
   f.contact  "Mikake mikakhil 0316655332"
+end
+
+Factory.define :enrollment do |f|
+  f.association :instrument
+  f.association :mentor
+  f.association :student
+  f.enrollment_date Date.new(2011, 9, 1)
+  f.cancel_date Date.new(2012, 5, 1)
+  f.price_per_lesson 10
+  f.prepayment 45
+  f.payment_period 1
+  f.lessons_per_month 5
+  f.discount 0.0
+end
+
+Factory.define :jan_to_may_enrollment, :class => 'enrollment' do |f|
+  f.enrollment_date Date.new(2011, 1, 1)
+  f.cancel_date Date.new(2011, 5, 1)
+end
+
+Factory.define :oct_to_feb_enrollment, :class => 'enrollment' do |f|
+  f.enrollment_date Date.new(2011, 10, 1)
+  f.cancel_date Date.new(2012, 2, 1)
+end
+
+Factory.define :jan_to_may_with_three_month_payment_period, :class => 'enrollment' do |f|
+  f.enrollment_date Date.new(2011, 1, 1)
+  f.cancel_date Date.new(2011, 5, 1)
+  f.payment_period 3
 end
 
 Factory.define :person do |f|
@@ -8,16 +45,20 @@ Factory.define :person do |f|
   f.last_name  'Mekakil'
 end
 
-Factory.define :student, :class => 'person' do |f|
+Factory.define :student do |f|
   f.first_name 'Mikakhil'
   f.last_name  'Mekakil'
-  f.student     true
+  f.association :status
 end
 
-Factory.define :parent, :class => 'person' do |f|
-  f.first_name 'Tata'
+Factory.define :personal_contact do |f|
+  f.first_name 'Grenpa'
   f.last_name  'Mekakil'
-  f.student     false
+  f.association :student
+end
+
+Factory.define :parent, :class => 'personal_contact' do |f|
+  f.first_name 'Tata'
 end
 
 Factory.define :album_category do |f|
@@ -125,4 +166,38 @@ Factory.define :user do |f|
   f.sequence(:email) { |n| "mikhailo#{n}@ajnspilger.si" }
   f.password "SimonTalek"
   f.password_confirmation "SimonTalek"
+end
+
+Factory.define :billing_option do |f|
+  f.description 'Kes na roko preko mentorja na zadnjem predavanju v mescu.'
+  f.short_description 'Kes na roko'
+end
+
+#Factory.define :payment_order do |f|
+#  f.association :originator, :factory => :student
+#  f.association :recipient,  :factory => :person
+#  f.description 'Obican racun'
+#  f.deadline_at Time.now.next_month
+#end
+#
+#Factory.define :payment_type do |f|
+#  f.description 'Placilo po urni postavki'
+#  f.base_price BigDecimal('10')
+#  f.association :tax_type
+#end
+#
+#Factory.define :payment do |f|
+#  f.association :payment_order
+#  f.association :payment_type
+#  f.quantity 5
+#end
+#
+#Factory.define :tax_type do |f|
+#  f.description 'Davek na ucno uro'
+#  f.tax BigDecimal.new('0.2')
+#end
+
+Factory.define :status do |f|
+  f.description 'Oseba je aktiven ucenec, ki rad zapoje kako domaco.'
+  f.short_description 'Aktiven'
 end

@@ -30,4 +30,5 @@ group :development, :test do
   gem 'steak'
   gem 'swinger'
   gem 'capybara'
+  gem "rails-erd"
 end

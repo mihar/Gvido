@@ -1,8 +1,8 @@
 class ContactsController < InheritedResources::Base
   load_and_authorize_resource
+  skip_load_resource :only => [:new_report]
+  skip_before_filter :authenticate_user!, :only => [:new, :create, :new_report]
   before_filter :set_section
-  skip_load_resource :only => [:all, :new_report]
-  respond_to :html
 
   # Different layouts here.
   layout :pick_layout
@@ -11,6 +11,10 @@ class ContactsController < InheritedResources::Base
     params[:contact][:instrument_ids] ||= []
     params[:contact][:location_ids] ||= []
     create! { new_report_contacts_path }
+  end
+  
+  def destroy
+    destroy! { dashboard_path}
   end
     
   private

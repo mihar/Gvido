@@ -1,0 +1,18 @@
+%tr
+  %td
+    = personal_contact.full_name
+  %td
+    = full_address(personal_contact)
+  %td
+    = personal_contact.landline
+  %td
+    = personal_contact.mobile
+  %td
+    = personal_contact.email
+  %td
+    = (textilize personal_contact.notes).html_safe
+  %td
+    .crud
+      = link_to "Odstrani", [personal_contact.student, personal_contact], :confirm => destroy_confirmation(personal_contact), :method => :delete
+      = link_to "Uredi", edit_student_personal_contact_path(personal_contact.student, personal_contact)
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110227161424) do
+ActiveRecord::Schema.define(:version => 20110316054508) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -34,6 +34,11 @@ ActiveRecord::Schema.define(:version => 20110227161424) do
     t.datetime "updated_at"
   end
 
+  create_table "billing_options", :force => true do |t|
+    t.text   "description"
+    t.string "short_description"
+  end
+
   create_table "contacts", :force => true do |t|
     t.string   "email"
     t.text     "text"
@@ -54,6 +59,21 @@ ActiveRecord::Schema.define(:version => 20110227161424) do
   create_table "contacts_locations", :id => false, :force => true do |t|
     t.integer "contact_id"
     t.integer "location_id"
+  end
+
+  create_table "enrollments", :force => true do |t|
+    t.integer  "instrument_id"
+    t.integer  "mentor_id"
+    t.integer  "student_id"
+    t.date     "enrollment_date"
+    t.date     "cancel_date"
+    t.decimal  "price_per_lesson",  :precision => 8, :scale => 2
+    t.decimal  "prepayment",        :precision => 8, :scale => 2, :default => 45.0
+    t.integer  "payment_period",                                  :default => 1
+    t.integer  "lessons_per_month"
+    t.decimal  "discount",          :precision => 6, :scale => 4, :default => 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "gigs", :force => true do |t|
@@ -172,6 +192,24 @@ ActiveRecord::Schema.define(:version => 20110227161424) do
     t.datetime "updated_at"
   end
 
+  create_table "payment_exceptions", :force => true do |t|
+    t.integer  "payment_id"
+    t.date     "payment_date"
+    t.integer  "lessons_per_month"
+    t.decimal  "discount",          :precision => 6, :scale => 4, :default => 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "payments", :force => true do |t|
+    t.integer  "enrollment_id"
+    t.decimal  "calculated_price", :precision => 8, :scale => 2
+    t.date     "payment_date"
+    t.boolean  "settled"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "people", :force => true do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -183,12 +221,13 @@ ActiveRecord::Schema.define(:version => 20110227161424) do
     t.string   "landline"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "sign_up_status"
-    t.integer  "mother_id"
-    t.integer  "father_id"
-    t.boolean  "student"
+    t.integer  "status_id"
     t.text     "notes"
     t.date     "date_of_birth"
+    t.string   "reference_number"
+    t.integer  "billing_option_id"
+    t.integer  "student_id"
+    t.string   "type"
   end
 
   create_table "photos", :force => true do |t|
@@ -248,6 +287,11 @@ ActiveRecord::Schema.define(:version => 20110227161424) do
     t.datetime "photo_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "statuses", :force => true do |t|
+    t.text   "description"
+    t.string "short_description"
   end
 
   create_table "users", :force => true do |t|

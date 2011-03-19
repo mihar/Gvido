@@ -13,7 +13,7 @@
           %td= link_to contact.name, contact
           %td= contact.phone
           %td= contact.email
-          %td= contact.created_at.to_s :short
+          %td= l contact.created_at, :format => :simple
           %td
             .crud
               = link_to "Odpri", contact

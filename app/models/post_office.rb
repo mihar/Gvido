@@ -1,5 +1,6 @@
 class PostOffice < ActiveRecord::Base
   has_many :people
+  has_many :locations
   
   validates_presence_of :name, :id
   validates_uniqueness_of :name, :id

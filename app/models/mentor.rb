@@ -2,6 +2,7 @@ class Mentor < ActiveRecord::Base
   has_and_belongs_to_many :instruments
   has_and_belongs_to_many :locations
   has_and_belongs_to_many :gigs
+  has_many :enrollments
 
   default_scope order('position')
 

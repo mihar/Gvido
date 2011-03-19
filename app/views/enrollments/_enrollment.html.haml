@@ -1,0 +1,14 @@
+%tr
+  %td= "#{ l enrollment.enrollment_date, :format => :month_year} - #{l enrollment.cancel_date, :format => :month_year}"
+  %td= enrollment.instrument.title
+  %td= enrollment.mentor.full_name
+  %td= enrollment.payment_period
+  %td= enrollment.lessons_per_month
+  %td= number_to_currency(enrollment.prepayment, :precision => 2)
+  %td= number_to_currency(enrollment.price_per_lesson, :precision => 2)
+  %td= number_to_percentage(enrollment.discount * 100, :precision => 2)
+  %td
+    .crud
+      = link_to "Odstrani", [enrollment.student, enrollment], :confirm => destroy_confirmation(enrollment), :method => :delete
+      = link_to "Uredi", edit_student_enrollment_path(enrollment.student, enrollment)
+

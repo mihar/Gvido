@@ -1,11 +1,19 @@
 App::Application.routes.draw do
   devise_for :users, :controllers => { :sessions => "sessions" }
-
+  
   match 'dashboard', :to => 'dashboard#index'
   match 'dashboard', :to => 'dashboard#index', :as => 'user_root'
+
+  get 'payments/index', :as => "payments"
+  get 'payments/create_payments', :as => "create_payments"
   
-  resources :people do 
-    get :all, :on => :collection
+  resources :statuses
+
+  resources :billing_options  
+  
+  resources :students do
+    resources :personal_contacts
+    resources :enrollments
   end
   
   resources :abouts do

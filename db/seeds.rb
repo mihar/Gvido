@@ -1,3 +1,27 @@
+#rake db:setup to set this baby up
+
+u = User.new(:first_name => "Tomaž", :last_name => "Pačnik", :email => "tomaz.pacnik@gvido.si", :password => "roland2000", :password_confirmation => "roland2000", :admin => true)
+u.save
+
+u = User.new(:first_name => "Ljubomir", :last_name => "Marković", :email => "ljm@disru.pt", :password => "ljmljm", :password_confirmation => "ljmljm", :admin => true)
+u.save
+
+u = User.new(:first_name => "Miha", :last_name => "Rebernik", :email => "mre@disru.pt", :password => "mremre", :password_confirmation => "mremre", :admin => true)
+u.save
+
+BillingOption.create([
+  {:short_description => 'Po pošti', :description => 'Učenec želi prejemati položnice na svoj hišni naslov'},
+  {:short_description => 'Po Emailu', :description => 'Učenec želi prejemati položnice na email'},
+  {:short_description => 'Preko mentorja', :description => 'Učenec bo položnico prejel preko mentorja'}
+])
+
+Status.create([
+  {:short_description => 'V dodajanju', :description => 'Učenec še ni vpisan in potrebno mu je poslati ponudbo.'},
+  {:short_description => 'V čakanju', :description => 'Učenec se namerava vpisati vendar je potrebno počakati na potrdilo o vpisu'},
+  {:short_description => 'Vpisan', :description => 'Učenec je redno vpisan'},
+  {:short_description => 'Izpisan', :description => 'Učenec je izpisan'}
+])
+
 PostOffice.create([
   {:id => 1000, :name => 'Ljubljana'}, 
   {:id => 1210, :name => 'Ljubljana - Šentvid'}, 

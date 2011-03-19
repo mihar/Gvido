@@ -40,9 +40,9 @@
           %li= link_to location.title, location_path(location)
 
 #start
-  = link_to "Začni vpis", new_person_path(:contact_id => resource)
+  = link_to "Dodaj učenca", new_student_path(:contact_id => resource)
   %span ali
   = link_to "Odstrani", resource, :confirm => destroy_confirmation(resource), :method => :delete
 
 
-= link_to_back contacts_path
+= link_to_back dashboard_path

@@ -19,11 +19,10 @@
         %td= gig.title
         %td= gig.venue
         %td= gig.address
-        %td= gig.when.to_s(:simple)
+        %td= gig.when.to_s(:long)
         %td= (textilize gig.description).html_safe
         %td
-          - unless gig.mentors.empty?
-            = gig.mentors.map { |m| m.name }.join(', ')
+          = preforming_mentors(gig)
         %td 
           .crud
             .master

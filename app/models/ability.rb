@@ -7,7 +7,9 @@ class Ability
       can :manage, :all
     else
       can :read, :all
+      can [:create, :new_report], Contact
       cannot :read, Person
+      cannot :manage, Payment
     end
   end
 end

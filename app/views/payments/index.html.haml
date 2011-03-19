@@ -1,0 +1,43 @@
+= title "Plačila"
+
+- @payable_months.each do |year, payable_months|
+  %strong= "#{year} > "
+  - payable_months.each do |pm|
+    - date = l pm, :format => :short
+    = link_to date, :action => "index", :payable_month => pm.to_s
+  %br
+  
+
+%table
+  %thead
+    %tr
+      %th
+        Ime in priimek
+      %th
+        Naslov
+      %th
+        Ref. številka
+      %th
+        Rok plačila
+      %th
+        Št. predavanj
+      %th
+        Znesek
+      %th
+        Plačano
+  %tbody
+    - for payment in @payments
+      - enrollment = payment.enrollment
+      - student    = enrollment.student
+      - exception  = payment.payment_exception
+      %tr.clickable
+        %td= student.full_name
+        %td= full_address(student)
+        %td= student.reference_number
+        - if exception
+          %td= l exception.payment_date, :format => :short
+          %td= exception.lessons_per_month 
+        - else 
+          %td= l payment.payment_date, :format => :short
+          %td= enrollment.lessons_per_month
+        %td= number_to_currency(payment.calculated_price)

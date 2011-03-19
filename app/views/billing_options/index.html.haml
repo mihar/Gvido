@@ -1,0 +1,20 @@
+= title "Načini izstavljanja položnic"
+.crud
+  .master
+    = link_to "Nov način izstavljanja", new_billing_option_path
+
+%table
+  %thead
+    %th Opis
+    %th Kratek opis
+  %tbody
+    - for billing_option in collection
+      %tr.clickable
+        %td= (textilize billing_option.description).html_safe
+        %td= billing_option.short_description
+        %td
+          .crud
+            - if billing_option.id > 3
+              = link_to "Odstrani", billing_option, :confirm => destroy_confirmation(billing_option), :method => :delete
+            = link_to "Uredi", edit_billing_option_path(billing_option)
+

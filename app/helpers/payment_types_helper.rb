@@ -1,0 +1,4 @@
+module PaymentTypesHelper
+  
+  
+end

@@ -55,6 +55,7 @@ sl:
       short: "%d. %b"
       long: "%d. %b %Y"
       simple: "%d. %b %Y"
+      month_year: "%b %Y"
 
     day_names: [nedelja, ponedeljek, torek, sreda, četrtek, petek, sobota]
     abbr_day_names: [ned, pon, tor, sre, čet, pet, sob]
@@ -93,6 +94,7 @@ sl:
       album_category: "Kategorije albumov"
       album: "Albumi"
       contact: "Kontakt"
+      enrollment: "Vpis"
       gig: "Koncerti"
       instument: "Inštrumenti"
       link_category: "Kategorije povezav"
@@ -125,6 +127,14 @@ sl:
         name: "Ime in priimek"
         address:    "Naslov"
         text:  "Dodatne informacije"
+      enrollment:
+        enrollment_date: "Datum vpisa"
+        cancel_date: "Datum izpisa"
+        prepayment: "Cena vpisnine (€)"
+        price_per_lesson: "Cena predavanja (€)"
+        payment_period: "Št. mesecev na obrok"
+        lessons_per_month: "Št. predavanj na mesec"
+        discount: "Popust (%)"
       gig:
         title: "Naziv koncerta"
         venue: "Prireditveni prostor"
@@ -177,6 +187,8 @@ sl:
         notes: "Opombe"
         student: "Je učenec?"
         date_of_birth: "Datum rojstva"
+        father: "Oče"
+        mother: "Mati"
       post:
         text: "Vsebina"
       photo:

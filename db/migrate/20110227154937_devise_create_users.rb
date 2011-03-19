@@ -12,13 +12,6 @@ class DeviseCreateUsers < ActiveRecord::Migration
     end
 
     add_index :users, :email,                :unique => true
-    
-    u = User.new(:first_name => "Tomaž", :last_name => "Pačnik", :email => "tomaz.pacnik@gvido.si", :password => "roland2000", :password_confirmation => "roland2000", :admin => true)
-    u.save
-    u = User.new(:first_name => "Ljubomir", :last_name => "Marković", :email => "ljm@disru.pt", :password => "ljmljm", :password_confirmation => "ljmljm", :admin => true)
-    u.save
-    u = User.new(:first_name => "Miha", :last_name => "Rebernik", :email => "mre@disru.pt", :password => "mremre", :password_confirmation => "mremre", :admin => true)
-    u.save
   end
 
   def self.down

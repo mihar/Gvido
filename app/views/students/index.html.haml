@@ -2,7 +2,7 @@
 
 .crud
   .master
-    = link_to 'Nova oseba', new_person_path
+    = link_to 'Nov učenec', new_student_path
 
 %table
   %thead
@@ -10,17 +10,18 @@
       %th
         Ime in priimek
       %th
+        Kontaktne osebe
+      %th
         Naslov
       %th
-        Kraj
-      %th
-        Telefonska stevilka
+        Telefonska številka
       %th
         Mobitel
       %th
         Email
       %th
-        Opombe
+        Status vpisa
       %th
         Datum dodajanja
   %tbody= render collection
+  

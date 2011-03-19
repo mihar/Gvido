@@ -18,11 +18,11 @@
     - collection.each do |instrument|
       %tr.clickable
         %td= instrument.title 
-        %td= instrument.description
-        %td= instrument.goals
-        %td= instrument.activities
-        %td= instrument.introduction
-        %td= instrument.shop_instructions
+        %td= (textilize instrument.description).html_safe
+        %td= (textilize instrument.goals).html_safe
+        %td= (textilize instrument.activities).html_safe
+        %td= (textilize instrument.introduction).html_safe
+        %td= (textilize instrument.shop_instructions).html_safe
         %td
           .crud
             = link_to "Nasveti za nakup", all_instrument_shop_advices_path(instrument)
