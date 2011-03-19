@@ -9,7 +9,7 @@ module PeopleHelper
   
   def program_mentor(enrollments)
     unless enrollments.empty?
-      return raw(enrollments.each.map { |e| "#{e.mentor.full_name} / #{e.instrument.title}" }.join(', '))
+      return raw(enrollments.each.map { |e| "#{e.mentor.full_name}/#{e.instrument.title}" }.join(', '))
     end
   end
   
