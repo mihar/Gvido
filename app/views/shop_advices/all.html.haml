@@ -21,4 +21,4 @@
             = link_to "Odstrani", [shop_advice.instrument, shop_advice], :confirm => destroy_confirmation(shop_advice), :method => :delete
             = link_to "Uredi", edit_instrument_shop_advice_path(shop_advice.instrument, shop_advice)
 
-=link_to_back all_instruments_path
+= link_to_back detail_instrument_path(parent)

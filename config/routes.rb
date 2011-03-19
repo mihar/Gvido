@@ -85,6 +85,7 @@ App::Application.routes.draw do
   
   resources :instruments do
     get :all, :on => :collection
+    get :detail, :on => :member
     resources :shop_advices do
       get :all, :on => :collection
     end

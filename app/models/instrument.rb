@@ -44,6 +44,10 @@ class Instrument < ActiveRecord::Base
     RedCloth.new(shop_instructions_short).to_html unless shop_instructions.nil?    
   end
   
+  def to_s
+    title
+  end
+  
   private
   
   def make_permalink
