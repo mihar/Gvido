@@ -1,6 +1,6 @@
-%tr
+%tr.clickable
   %td
-    = student.full_name
+    = link_to student.full_name, student
   %td
     = contact_links(student.personal_contacts)
   %td
@@ -17,9 +17,4 @@
     = student.status.short_description
   %td
     = l student.created_at, :format => :short
-  %td
-    .crud
-      = link_to "Odstrani", student, :confirm => destroy_confirmation(student), :method => :delete
-      = link_to "Uredi", edit_student_path(student)
-      = link_to "Podrobnosti", student
 

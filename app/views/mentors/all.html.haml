@@ -14,10 +14,11 @@
     %th Facebook
     %th Myspace
     %th Pozicija
+    %th Foto
   %tbody
     - for mentor in collection
       %tr.clickable
-        %td= mentor.name
+        %td= link_to mentor.name, mentor
         %td= mentor.surname
         %td= mentor.phone
         %td= mentor.address
@@ -28,9 +29,4 @@
         %td= mentor.position
         %td
           - if mentor.photo.file?
-            .photo= (image_tag(mentor.photo.url(:small))).html_safe
-        %td
-          .crud
-            = link_to "Odstrani", mentor, :confirm => destroy_confirmation(mentor), :method => :delete
-            = link_to "Uredi", edit_mentor_path(mentor)
-
+            .photo= image_tag mentor.photo.url(:square), :width => 50, :height => 50
