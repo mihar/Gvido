@@ -59,39 +59,46 @@ header
     position: absolute
     top: 0px
     left: 250px
-    #main
-      position: absolute
-      width: 500px
-      top: 0px
-      left: 135px
-      li
+    &>ul
+      float: left
+      &>li
         float: left
         list-style: none
-        a
+        position: relative
+        &>a
           +nav_link
           &:hover
             background: url("../images/backgrounds/25white.png")
-          &:active, &.active
+          &:active
             background: url("../images/backgrounds/50white.png")
-    #submenu
-      span
-        +nav_link
-      ul
-        display: none
-        li
-          background: url("../images/backgrounds/25white.png")
-          a
-            display: block
-            padding: 5px 20px
-            text-decoration: none
-            color: #000
-            +mid-shadow
-            &:hover
-              background: url("../images/backgrounds/50black.png")
-      &:hover
-        background: url("../images/backgrounds/25white.png")
+        &.active a
+          background: #fff
+          color: #000
+          +mid-shadow
+        span
+          +nav_link
         ul
-          display: block
+          display: none
+          position: absolute
+          li
+            background: url("../images/backgrounds/90red.png")
+            float: none
+            a
+              display: block
+              padding: 7.5px 20px
+              text-decoration: none
+              color: #fff
+              width: 180px
+              +dark-shadow
+              &:hover
+                background: url("../images/backgrounds/25white.png")
+              &:active
+                background: url("../images/backgrounds/50white.png")
+        &:hover
+          span
+            background: url("../images/backgrounds/25white.png")
+          ul
+            display: block
         
         
   

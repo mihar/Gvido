@@ -1,6 +1,7 @@
 class PaymentsController < ApplicationController
   load_and_authorize_resource
   layout "dashboard"
+  before_filter :set_section
   
   def index
     @payable_months = Payment.all_payment_dates
@@ -33,5 +34,9 @@ class PaymentsController < ApplicationController
     payment.settled = settled
     payment.save
     redirect_to payments_path(:payable_month => payment.payment_date.to_s)
-  end 
+  end
+  
+  def set_section
+    @section = :payments
+  end
 end

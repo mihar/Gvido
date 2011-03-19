@@ -1,11 +1,11 @@
 = title 'Pregled učenca'
 
 .crud
+  = link_to "Dodaj vpisnino", new_student_enrollment_path(@student)
+  = link_to "Dodaj kontakt", new_student_personal_contact_path(@student)
+  = link_to "Odstrani", @student, :confirm => destroy_confirmation(@student), :method => :delete
   .master
-    = link_to "Odstrani", @student, :confirm => destroy_confirmation(@student), :method => :delete
     = link_to 'Uredi', edit_student_path(@student)
-    = link_to "Dodaj vpisnino", new_student_enrollment_path(@student)
-    = link_to "Dodaj kontakt", new_student_personal_contact_path(@student)
     
 .data
   %p

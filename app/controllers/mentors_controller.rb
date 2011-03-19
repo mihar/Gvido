@@ -1,6 +1,5 @@
 class MentorsController < InheritedResources::Base
   load_and_authorize_resource
-  before_filter :set_section
   layout :pick_layout
   
   def edit
@@ -42,14 +41,16 @@ class MentorsController < InheritedResources::Base
   private
   
   def pick_layout
-    [:index, :show].include?(action_name.to_sym) ? "application" : "dashboard"
+    if [:index, :show].include?(action_name.to_sym)
+      @section = :abouts
+      "application"
+    else
+      @section = :mentors
+      "dashboard"
+    end
   end
   
   protected
-  
-  def set_section
-    @section = :abouts
-  end
   
   def resource
     @mentor ||= end_of_association_chain.find_by_permalink params[:id]

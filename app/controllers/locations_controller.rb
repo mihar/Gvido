@@ -41,7 +41,13 @@ class LocationsController < InheritedResources::Base
   private
   
   def pick_layout
-    [:index, :show].include?(action_name.to_sym) ? "application" : "dashboard"
+    if [:index, :show].include?(action_name.to_sym)
+      @section = :abouts
+      "application"
+    else
+      @section = :locations
+      "dashboard"
+    end
   end
   
   def collection
@@ -53,9 +59,5 @@ class LocationsController < InheritedResources::Base
     
     letter = "A"
     @locations = @locations.each { |l| l.letter = letter; letter = letter.next; l }
-  end
-    
-  def set_section
-    @section = :abouts
   end
 end

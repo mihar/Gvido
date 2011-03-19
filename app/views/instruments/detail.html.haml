@@ -1,0 +1,32 @@
+= title resource
+
+.crud
+  = link_to "Nasveti za nakup", all_instrument_shop_advices_path(resource)
+  = link_to "Odstrani", resource, :confirm => destroy_confirmation(resource), :method => :delete
+  .master
+    = link_to 'Uredi', edit_resource_path
+    
+.data
+  %p
+    %strong Naziv:
+    = resource.title
+  %p
+    %strong Opis:
+    %br
+    = resource.description
+  %p
+    %strong Cilji:
+    %br
+    = resource.goals
+  %p
+    %strong Aktivnosti:
+    %br
+    = resource.activities
+  %p
+    %strong Uvod:
+    %br
+    = resource.introduction
+  %p
+    %strong Nasveti:
+    %br
+    = resource.shop_instructions
