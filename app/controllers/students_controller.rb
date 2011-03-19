@@ -16,6 +16,6 @@ class StudentsController < InheritedResources::Base
   
   private
   def set_section
-    @section = :people
+    @section = :students
   end
 end

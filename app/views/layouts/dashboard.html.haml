@@ -13,31 +13,33 @@
       %h2= link_to "Informacijski sistem", dashboard_path
       - if user_signed_in?
         %nav
-          #submenu
-            %span Spletna stran
-            %ul
-              = menu_item "O nas", "About", all_abouts_path
-              = menu_item "Koncerti", "Gigs", all_gigs_path
-              = menu_item "Kategorije albumov", "AlbumCategories", all_album_categories_path
-              = menu_item "Albumi", "Albums", all_albums_path
-              = menu_item "Obvestila", "Notices", all_notices_path
-              = menu_item "Novice", "Posts", all_posts_path
-              = menu_item "Vprašanja", "Questions", all_questions_path
-              = menu_item "Reference", "References", all_references_path
-              = menu_item "Urniki", "Schedules", all_schedules_path
-              = menu_item "Videi", "Movies", all_movies_path
-              = menu_item "Kategorije povezav", "LinkCategories", all_link_categories_path
-              = menu_item "Povezave", "Links", all_links_path
-              = menu_item "Skupine lokacij", "LocationSections", all_location_sections_path
-              = menu_item "Način izstavljanja položnic", "BillingOptions", billing_options_path
-              = menu_item "Statusi dodajanja oseb", "Statuses", statuses_path
           %ul#main
             = menu_item "Učenci", "Students", students_path
             = menu_item "Mentorji", "Mentors", all_mentors_path
             = menu_item "Programi", "Instruments", all_instruments_path
             = menu_item "Lokacije", "Locations", all_locations_path
             = menu_item "Plačila", "Payments", payments_path
-        
+          %ul#support
+            %li
+              %span Ostalo
+              %ul
+                = menu_item "Način izstavljanja položnic", "BillingOptions", billing_options_path
+                = menu_item "Statusi dodajanja oseb", "Statuses", statuses_path
+          %ul#site
+            %li
+              %span Spletna stran
+              %ul
+                = menu_item "O nas", "About", all_abouts_path
+                = menu_item "Koncerti", "Gigs", all_gigs_path
+                = menu_item "Kategorije albumov", "AlbumCategories", all_album_categories_path
+                = menu_item "Albumi", "Albums", all_albums_path
+                = menu_item "Obvestila", "Notices", all_notices_path
+                = menu_item "Novice", "Posts", all_posts_path
+                = menu_item "Vprašanja", "Questions", all_questions_path
+                = menu_item "Reference", "References", all_references_path
+                = menu_item "Urniki", "Schedules", all_schedules_path
+                = menu_item "Videi", "Movies", all_movies_path
+                = menu_item "Povezave", "Links", all_links_path
       - if user_signed_in?
         #user
           %span Prijavljen
