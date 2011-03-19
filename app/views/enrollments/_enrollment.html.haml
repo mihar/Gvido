@@ -3,7 +3,7 @@
   %td= enrollment.instrument.title
   %td= enrollment.mentor.full_name
   %td= enrollment.payment_period
-  %td= enrollment.lessons_per_month
+  %td= enrollment.lessons_per_period
   %td= number_to_currency(enrollment.prepayment, :precision => 2)
   %td= number_to_currency(enrollment.price_per_lesson, :precision => 2)
   %td= number_to_percentage(enrollment.discount * 100, :precision => 2)
