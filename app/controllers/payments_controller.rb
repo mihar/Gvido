@@ -27,6 +27,14 @@ class PaymentsController < ApplicationController
     @exception  = if @payment.payment_exception then @payment.payment_exception else nil end
   end
   
+  def destroy
+    @payment = Payment.find(params[:id])
+    @payment_date = @payment.payment_date.to_s
+    @payment.destroy
+    
+    redirect_to payments_path(:payable_month => @payment_date)
+  end
+  
   private
   
   def settle_it(id, settled = true)
