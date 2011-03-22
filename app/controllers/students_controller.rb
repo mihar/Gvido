@@ -12,6 +12,7 @@ class StudentsController < InheritedResources::Base
     @student.email = contact.email
     @student.address = contact.address
     @student.mobile = contact.phone
+    @student.contact_id = contact.id
   end
   
   private

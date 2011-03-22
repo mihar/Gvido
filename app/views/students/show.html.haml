@@ -37,6 +37,12 @@
     %strong Opombe:
     %br
     = (textilize @student.notes).html_safe
+  
+  - if @student.contact
+    %h2 Vpisne informacije
+    %p
+      = render "contacts/contact_details", :contact => @student.contact
+    
 
 - unless @student.enrollments.empty?
 

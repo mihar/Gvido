@@ -1,4 +1,5 @@
 class Contact < ActiveRecord::Base
+  has_one :student
   has_and_belongs_to_many :instruments
   has_and_belongs_to_many :locations
 

@@ -11,6 +11,7 @@ App::Application.routes.draw do
     member do
       get :settle
       get :unsettle
+      delete :destroy
     end
   end
   
