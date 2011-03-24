@@ -44,7 +44,7 @@
       = render "contacts/contact_details", :contact => @student.contact
     
 
-- unless @student.enrollments.empty?
+- unless @student.enrollments.active.empty?
 
   %h3 Vpisnine
   %table
@@ -55,10 +55,10 @@
       %th Št. mesecev na obrok
       %th Št. predavanj
       %th Cena vpisnine
-      %th Cena predavanja
+      %th Celoten znesek
       %th Popust
     %tbody
-    = render @student.enrollments
+    = render @student.enrollments.active
 
 
 - if not @student.personal_contacts.empty?

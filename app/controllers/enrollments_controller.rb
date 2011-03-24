@@ -21,8 +21,18 @@ class EnrollmentsController < InheritedResources::Base
       student.status = Status.find 4 #Izbrisan
       student.save
     end
-    destroy! { student_path(parent) }
+    
+    enrollment = Enrollment.find params[:id]
+    
+    if Payment.settled_payments(enrollment.id).empty?
+      enrollment.destroy
+    else
+      enrollment.destroy_unsettled_payments
+      enrollment.deleted = true
+      enrollment.save
+    end
+    
+    redirect_to student_path(parent)
   end
-  
 
 end

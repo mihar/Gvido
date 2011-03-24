@@ -129,9 +129,11 @@ sl:
         text:  "Dodatne informacije"
       enrollment:
         enrollment_date: "Datum vpisa"
+        mentor: "Mentor"
+        instrument: "Inštrument"
         cancel_date: "Datum izpisa"
         prepayment: "Cena vpisnine (€)"
-        price_per_lesson: "Cena predavanja (€)"
+        total_price: "Celotni znesek (€)"
         payment_period: "Št. mesecev na obrok"
         lessons_per_month: "Št. predavanj na mesec"
         discount: "Popust (%)"

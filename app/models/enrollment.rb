@@ -5,27 +5,26 @@ class Enrollment < ActiveRecord::Base
   belongs_to :student
   validates_numericality_of :payment_period,    :only_integer => true, :greater_than_or_equal_to => 1
   validates_numericality_of :lessons_per_month, :only_integer => true, :greater_than_or_equal_to => 1
-  validates_numericality_of :price_per_lesson,  :greater_than_or_equal_to => 0
+  validates_numericality_of :total_price,       :greater_than_or_equal_to => 0
   validates_numericality_of :prepayment,        :greater_than_or_equal_to => 0
   validates_numericality_of :discount,          :greater_than_or_equal_to => 0
   validates_presence_of :instrument_id, :mentor_id
   validate :cancel_date_correctness
   
-  #after_validation :calculate_discount
-  
-  after_create  :create_payments
-  after_update  :update_payments
+  after_create   :create_payments
+  after_update   :update_payments
+  before_destroy :destroy_unsettled_payments
   
   attr_accessor :billable_months
+  
+  scope :active, where("deleted = ?", false)
   
   def discount_percent
     "#{discount * 100}%".gsub(".", ",")
   end
   
   def discount_percent=(_discount)
-    # 10%
     discount_without_percent = BigDecimal _discount.gsub("%", "").gsub(",", ".")
-    
     self.discount = discount_without_percent / 100
   end
   
@@ -33,7 +32,15 @@ class Enrollment < ActiveRecord::Base
     return lessons_per_month * payment_period
   end
   
+  def destroy_unsettled_payments
+    Payment.destroy_unsettled_payments_for_enrollment(id)
+  end
+  
   private
+  
+  def cancel_date_correctness
+    errors.add :cancel_date, "Datum izpisa mora biti poznejši od datuma vpisa" if cancel_date < enrollment_date
+  end
     
   def create_payments
     set_billable_months
@@ -78,40 +85,13 @@ class Enrollment < ActiveRecord::Base
       @billable_months = months
     end  
   end
-
-  def calculate_discount
-    self.discount = to_percent(discount)
-  end
     
-  def cancel_date_correctness
-    errors.add :cancel_date, "Datum izpisa mora biti poznejši od datuma vpisa" if cancel_date < enrollment_date
-  end
-  
-  def to_percent(percent_value)
-    BigDecimal(percent_value.to_s)/BigDecimal('100')
-  end
-  
-  
-  #figure out what to do, when prepayment is higher then payment price
-  def calculate_price(prepayment_cash_date = false)
-    #((10 * 5 - 22.5) - 0.05 * (10 * 5 - 22.5) ) * 1.2 = 31.35
-    puts "price_per_lesson #{price_per_lesson}"
-    puts "lessons_per_month #{lessons_per_month}"
-    puts "payment_period #{payment_period}"
-    puts "discount #{discount}"
-    
-    calculus = price_per_lesson * lessons_per_month * payment_period
-    puts "1  #{calculus}"
+  def calculate_price(prepayment_cash_date = false)   
+    calculus = total_price / @billable_months.length
     if prepayment_cash_date
-      calculus -= prepayment/BigDecimal('2')
-      puts "2 #{calculus}"
+      calculus -= prepayment / 2
     end
-     
     calculus -= calculus * discount
-    puts "3 #{calculus}"
-    
-    calculus = calculus * BigDecimal('1.2') #tax it up
-    puts "4 #{calculus}"
     return calculus
   end
   

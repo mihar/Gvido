@@ -17,27 +17,50 @@ Factory.define :enrollment do |f|
   f.association :student
   f.enrollment_date Date.new(2011, 9, 1)
   f.cancel_date Date.new(2012, 5, 1)
-  f.price_per_lesson 10
-  f.prepayment 45
+  f.total_price 500.0
+  f.prepayment 45.0
   f.payment_period 1
   f.lessons_per_month 5
   f.discount 0.0
 end
 
-Factory.define :jan_to_may_enrollment, :class => 'enrollment' do |f|
-  f.enrollment_date Date.new(2011, 1, 1)
-  f.cancel_date Date.new(2011, 5, 1)
+Factory.define :discounted_enrollment, :class => Enrollment do |f|
+  f.association :instrument
+  f.association :mentor
+  f.association :student
+  f.enrollment_date Date.new(2011, 9, 1)
+  f.cancel_date Date.new(2012, 5, 1)
+  f.total_price 500.0
+  f.prepayment 45.0
+  f.payment_period 1
+  f.lessons_per_month 5
+  f.discount 0.05
 end
 
-Factory.define :oct_to_feb_enrollment, :class => 'enrollment' do |f|
-  f.enrollment_date Date.new(2011, 10, 1)
-  f.cancel_date Date.new(2012, 2, 1)
-end
-
-Factory.define :jan_to_may_with_three_month_payment_period, :class => 'enrollment' do |f|
-  f.enrollment_date Date.new(2011, 1, 1)
-  f.cancel_date Date.new(2011, 5, 1)
+Factory.define :three_pay_period_enrollment, :class => Enrollment do |f|
+  f.association :instrument
+  f.association :mentor
+  f.association :student
+  f.enrollment_date Date.new(2011, 9, 1)
+  f.cancel_date Date.new(2012, 5, 1)
+  f.total_price 500.0
+  f.prepayment 45.0
   f.payment_period 3
+  f.lessons_per_month 5
+  f.discount 0.0
+end
+
+Factory.define :discounted_three_pay_period_enrollment, :class => Enrollment do |f|
+  f.association :instrument
+  f.association :mentor
+  f.association :student
+  f.enrollment_date Date.new(2011, 9, 1)
+  f.cancel_date Date.new(2012, 5, 1)
+  f.total_price 500.0
+  f.prepayment 45.0
+  f.payment_period 3
+  f.lessons_per_month 5
+  f.discount 0.05
 end
 
 Factory.define :person do |f|

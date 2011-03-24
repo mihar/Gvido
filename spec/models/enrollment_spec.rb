@@ -11,7 +11,7 @@ describe Enrollment do
   it { should belong_to(:student) }
   it { should validate_numericality_of(:payment_period) }
   it { should validate_numericality_of(:lessons_per_month) }
-  it { should validate_numericality_of(:price_per_lesson) }
+  it { should validate_numericality_of(:total_price) }
   it { should validate_numericality_of(:prepayment) }
   it { should validate_numericality_of(:discount) }
   
@@ -33,53 +33,78 @@ describe Enrollment do
   end
   
   it 'should deduct half of prepayment from first and last payment' do
-    #price_per_lesson = 10
-    #prepayment = 45/2 = 22.5
-    #payment_period = 1
-    #lessons_per_month = 5
-    #tax = 20%
-    #calculated_price = (10 * 5 - 22.5) * 1.2 = 33.0
-    subject.payments[0].calculated_price.should eql( BigDecimal('33') )
-    subject.payments[7].calculated_price.should eql( BigDecimal('33') )
+    #calculated_price = 500/8 - 22.5 = 40
+    subject.payments[0].calculated_price.should eql( BigDecimal('40') )
+    subject.payments[7].calculated_price.should eql( BigDecimal('40') )
   end
   
-  it 'should not deduct half of prepayment from other payments' do
-    #calculated_price = 10 * 5 * 1.2 = 60.0
-    subject.payments[1].calculated_price.should eql( BigDecimal('60') )
-    subject.payments[2].calculated_price.should eql( BigDecimal('60') )
-    subject.payments[3].calculated_price.should eql( BigDecimal('60') )
-    subject.payments[4].calculated_price.should eql( BigDecimal('60') )
-    subject.payments[5].calculated_price.should eql( BigDecimal('60') )
-    subject.payments[6].calculated_price.should eql( BigDecimal('60') )
+  it 'should not deduct half of prepayment from payments that are not first or last' do
+    #calculated_price = 500/8 = 62.5
+    subject.payments[1].calculated_price.should eql( BigDecimal('62.5') )
+    subject.payments[2].calculated_price.should eql( BigDecimal('62.5') )
+    subject.payments[3].calculated_price.should eql( BigDecimal('62.5') )
+    subject.payments[4].calculated_price.should eql( BigDecimal('62.5') )
+    subject.payments[5].calculated_price.should eql( BigDecimal('62.5') )
+    subject.payments[6].calculated_price.should eql( BigDecimal('62.5') )
   end
   
   it 'should calculate correct discount for first and last payment' do
-   #discount = 5% = 0.05
-   #calculated_price = ((10 * 5 - 22.5) - 0.05 * (10 * 5 - 22.5) ) * 1.2 = 31.35
-    enrollment = Factory :enrollment, :discount => BigDecimal('0.05')
+    #calculated_price = (500/8 - 22.5) - 0.05 * (500/8 - 22.5) = 40 - 2 = 38
+    enrollment = Factory :discounted_enrollment
     
-    puts " ???? izracunana vrednost = #{ enrollment.payments[0].calculated_price.to_s }"
-    enrollment.payments[0].calculated_price.should eql( BigDecimal('31.35') )
-    enrollment.payments[7].calculated_price.should eql( BigDecimal('31.35') )
+    enrollment.payments[0].calculated_price.should eql( BigDecimal('38') )
+    enrollment.payments[7].calculated_price.should eql( BigDecimal('38') )
+  end
+  
+  it 'should calculate correct discount for payments other than first or last' do
+    #calculated_price = 500/8 - 0.05 * 500/8 = 62.5 - 3.125 = 59.375 == 59.38
+    enrollment = Factory :discounted_enrollment
+    
+    enrollment.payments[1].calculated_price.should eql( BigDecimal('59.38') )
+    enrollment.payments[2].calculated_price.should eql( BigDecimal('59.38') )
+    enrollment.payments[3].calculated_price.should eql( BigDecimal('59.38') )
+    enrollment.payments[4].calculated_price.should eql( BigDecimal('59.38') )
+    enrollment.payments[5].calculated_price.should eql( BigDecimal('59.38') )
+    enrollment.payments[6].calculated_price.should eql( BigDecimal('59.38') )
   end
   
   it 'should create correct number of payments according to enrollments payment_period' do
-    enrollment = Factory :enrollment, :payment_period => 3
+    enrollment = Factory :three_pay_period_enrollment
     enrollment.payments.length.should eql(3)
   end
   
   it 'should create correct payment dates according to enrollments payment_period' do
-    enrollment = Factory :enrollment, :payment_period => 3
+    enrollment = Factory :three_pay_period_enrollment
     enrollment.payments[0].payment_date.should eql(Date.new(2011, 9, 1))
     enrollment.payments[1].payment_date.should eql(Date.new(2011, 12, 1))
     enrollment.payments[2].payment_date.should eql(Date.new(2012, 3, 1))
   end
   
-  #it 'should calculate proper discount for first and last payment' do
-  #  enrollment = Factory :enrollment, :payment_period => 3
-  #  
-  #end
+  it 'should deduct half of prepayment from first and last payment from three_pay_period_enrollment' do
+    #calculated_price = 500/3 - 22.5 = 144.166666 == 144.17
+    enrollment = Factory :three_pay_period_enrollment
+    enrollment.payments[0].calculated_price.should eql( BigDecimal('144.17') )
+    enrollment.payments[2].calculated_price.should eql( BigDecimal('144.17') )
+  end
   
+  it 'should not deduct half of prepayment from payment between first and last from three_pay_period_enrollment' do
+    #calculated_price = 500/3 = 166.666666 = zaokrozeno 166.67
+    enrollment = Factory :three_pay_period_enrollment
+    enrollment.payments[1].calculated_price.should eql( BigDecimal('166.67') )
+  end
+  
+  it 'should calculate the right discounted value for first and last payment from discounted_three_pay_period_enrollment' do
+    #calculated_price = (500/3 - 22.5) - 0.05 * (500/3 - 22.5) = 144.1666667 - 7.20833333 = 136.9583334 == 136.96
+    enrollment = Factory :discounted_three_pay_period_enrollment
+    enrollment.payments[0].calculated_price.should eql( BigDecimal('136.96') )
+    enrollment.payments[2].calculated_price.should eql( BigDecimal('136.96') )
+  end
+  
+  it 'should calculate the right discounted value for payment between first and last from three_pay_period_enrollment' do
+    #calculated_price = 500/3 - 0.05 * 500/3 = 166.666667 - 8.3333333333 = 158.3333333 == 158.33
+    enrollment = Factory :discounted_three_pay_period_enrollment
+    enrollment.payments[1].calculated_price.should eql( BigDecimal('158.33') )
+  end
   
 end
 

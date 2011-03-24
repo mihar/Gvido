@@ -2,14 +2,20 @@ class Payment < ActiveRecord::Base
   belongs_to  :enrollment
   has_one     :payment_exception
  
+  def self.settled_payments(enrollment_id)
+    where("enrollment_id = ? AND settled = ?", enrollment_id, true)
+  end
+  
+  def self.unsettled_payments(enrollment_id)
+    where("enrollment_id = ? AND settled = ?", enrollment_id, false)
+  end
+  
   def self.settled_payment_dates_for_enrollment(enrollment_id)
-    settled_payments = where("enrollment_id = ? AND settled = ?", enrollment_id, true)
-    settled_payments.map &:payment_date
+    settled_payments(enrollment_id).map &:payment_date
   end
   
   def self.destroy_unsettled_payments_for_enrollment(enrollment_id)
-    unsettled_payments = where("enrollment_id = ? AND settled = ?", enrollment_id, false)
-    unsettled_payments.destroy_all
+    unsettled_payments(enrollment_id).destroy_all
   end
   
   #returns a collection of all payment dates in hashes (keys are years, values are payable months)
