@@ -5,7 +5,7 @@
     - if @payment.settled
       = link_to 'Ne plačano', unsettle_payment_path(@payment)
     - else
-      = link_to 'Odstrani', @payment,  :confirm => destroy_confirmation(notice), :method => :delete
+      -# = link_to 'Odstrani', @payment,  :confirm => destroy_confirmation(notice), :method => :delete
       = link_to 'Plačano', settle_payment_path(@payment)
     
 %p

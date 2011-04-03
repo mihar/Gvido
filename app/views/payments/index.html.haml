@@ -1,4 +1,4 @@
-= title "Plačila"
+= title "Plačila za #{ l @current_month, :format => :month_year }"
 
 - @payable_months.each do |year, payable_months|
   %strong= "#{year} > "
@@ -31,7 +31,7 @@
       - student    = enrollment.student
       - exception  = payment.payment_exception
       %tr.clickable
-        %td= student.full_name
+        %td= link_to student.full_name, payment_path(payment)
         %td= full_address(student)
         %td= student.reference_number
         - if exception
@@ -46,6 +46,4 @@
             &#10003;
           - else
             ✗
-        %td
-          .crud
-            = link_to 'Prikaži', payment_path(payment)
+

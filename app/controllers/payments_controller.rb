@@ -7,9 +7,17 @@ class PaymentsController < ApplicationController
     @payable_months = Payment.all_payment_dates
     unless params[:payable_month].blank?
       @payments = Payment.monthly_payments(params[:payable_month])
+      #TODO: change this / fixit or dont do it at all
+      @current_month = Date.new(
+                                  params[:payable_month][0..3].to_i, 
+                                  params[:payable_month][5..6].to_i, 
+                                  params[:payable_month][8..9].to_i
+                               )
       return
     end
-    @payments = Payment.monthly_payments(Date.today.at_beginning_of_month)
+    
+    @current_month = Date.today.at_beginning_of_month
+    @payments = Payment.monthly_payments(@current_month)
   end
   
   def settle
