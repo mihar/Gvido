@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110323195616) do
+ActiveRecord::Schema.define(:version => 20110331092847) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -114,6 +114,15 @@ ActiveRecord::Schema.define(:version => 20110323195616) do
     t.integer "mentor_id"
   end
 
+  create_table "lessons", :force => true do |t|
+    t.integer  "payment_id"
+    t.integer  "lessons_per_month", :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "mentor_id"
+    t.integer  "student_id"
+  end
+
   create_table "link_categories", :force => true do |t|
     t.string   "title"
     t.integer  "position"
@@ -172,6 +181,7 @@ ActiveRecord::Schema.define(:version => 20110323195616) do
     t.string   "myspace"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "movies", :force => true do |t|
