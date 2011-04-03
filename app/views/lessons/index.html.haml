@@ -1,0 +1,11 @@
+= title 'Števila predavanj unčencev'
+
+= form_tag({:controller => 'lessons', :action => 'update'}, {:method => :put} )  do
+  - for lesson in @lessons
+    %p
+      - field_name = "lesson[#{lesson[:lesson].id}][lessons_per_month]"
+      = label_tag field_name, lesson[:student]
+      = number_field_tag field_name, lesson[:lesson].lessons_per_month
+  
+  = submit_tag 'Shrani'
+
