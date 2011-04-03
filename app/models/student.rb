@@ -1,6 +1,7 @@
 class Student < Person
   has_many :personal_contacts
   has_many :enrollments
+  has_many :lessons
   belongs_to  :status
   belongs_to  :contact
   
