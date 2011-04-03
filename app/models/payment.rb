@@ -1,6 +1,7 @@
 class Payment < ActiveRecord::Base
   belongs_to  :enrollment
   has_one     :payment_exception
+  has_one     :lesson
  
   def self.settled_payments(enrollment_id)
     where("enrollment_id = ? AND settled = ?", enrollment_id, true)
