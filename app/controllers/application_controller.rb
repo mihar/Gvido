@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   helper :all
-  helper_method :current_section, :admin?, :body_attrs
+  helper_method :current_section, :admin?, :mentor?, :body_attrs
   before_filter :authenticate_user!, :except => [:index, :show]
   protect_from_forgery
   
@@ -21,6 +21,10 @@ class ApplicationController < ActionController::Base
   
   def admin?
     current_user and current_user.admin?
+  end
+  
+  def mentor?
+    current_user and current_user.mentor?
   end
   
   def body_attrs
