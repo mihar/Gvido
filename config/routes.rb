@@ -4,9 +4,6 @@ App::Application.routes.draw do
   match 'dashboard', :to => 'dashboard#index'
   match 'dashboard', :to => 'dashboard#index', :as => 'user_root'
 
-  #get 'payments/index', :as => "payments"
-  #get 'payments/settle_payment/:id', :as => "settle_payment"
-  
   resources :payments, :only => [:index, :show] do
     member do
       get :settle
@@ -15,8 +12,11 @@ App::Application.routes.draw do
     end
   end
   
+  get 'lessons' => 'lessons#index'
+  put 'lessons' => 'lessons#update'
+  
   resources :statuses
-
+  
   resources :billing_options  
   
   resources :students do
