@@ -22,14 +22,14 @@ describe Enrollment do
   end
   
   it 'should have correct payment dates in created payments' do
-    subject.payments[0].payment_date.should eql(Date.new(2011, 9, 1))
-    subject.payments[1].payment_date.should eql(Date.new(2011, 10, 1))
-    subject.payments[2].payment_date.should eql(Date.new(2011, 11, 1))
-    subject.payments[3].payment_date.should eql(Date.new(2011, 12, 1))
-    subject.payments[4].payment_date.should eql(Date.new(2012, 1, 1))
-    subject.payments[5].payment_date.should eql(Date.new(2012, 2, 1))
-    subject.payments[6].payment_date.should eql(Date.new(2012, 3, 1))
-    subject.payments[7].payment_date.should eql(Date.new(2012, 4, 1))
+    subject.payments[0].payment_date.should eql(Date.new(2011, 9, 15))
+    subject.payments[1].payment_date.should eql(Date.new(2011, 10, 15))
+    subject.payments[2].payment_date.should eql(Date.new(2011, 11, 15))
+    subject.payments[3].payment_date.should eql(Date.new(2011, 12, 15))
+    subject.payments[4].payment_date.should eql(Date.new(2012, 1, 15))
+    subject.payments[5].payment_date.should eql(Date.new(2012, 2, 15))
+    subject.payments[6].payment_date.should eql(Date.new(2012, 3, 15))
+    subject.payments[7].payment_date.should eql(Date.new(2012, 4, 15))
   end
   
   it 'should deduct half of prepayment from first and last payment' do
@@ -75,9 +75,9 @@ describe Enrollment do
   
   it 'should create correct payment dates according to enrollments payment_period' do
     enrollment = Factory :three_pay_period_enrollment
-    enrollment.payments[0].payment_date.should eql(Date.new(2011, 9, 1))
-    enrollment.payments[1].payment_date.should eql(Date.new(2011, 12, 1))
-    enrollment.payments[2].payment_date.should eql(Date.new(2012, 3, 1))
+    enrollment.payments[0].payment_date.should eql(Date.new(2011, 9, 15))
+    enrollment.payments[1].payment_date.should eql(Date.new(2011, 12, 15))
+    enrollment.payments[2].payment_date.should eql(Date.new(2012, 3, 15))
   end
   
   it 'should deduct half of prepayment from first and last payment from three_pay_period_enrollment' do

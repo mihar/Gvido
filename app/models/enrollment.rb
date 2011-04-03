@@ -19,6 +19,8 @@ class Enrollment < ActiveRecord::Base
   
   scope :active, where("deleted = ?", false)
   
+  DATE_SPACER = 14
+  
   def discount_percent
     "#{discount * 100}%".gsub(".", ",")
   end
@@ -76,7 +78,7 @@ class Enrollment < ActiveRecord::Base
     month_diff = stop.year == start.year ? stop.month - start.month : stop.month + (stop.year - start.year) * 12 - start.month
     
     #maps all months starting with enrollment_date and excluding cancel_date
-    months = month_diff.times.map { |i| start >> i } 
+    months = month_diff.times.map { |i| start + DATE_SPACER >> i } 
     
     if payment_period > 1
       #gets first month in each payable period 
