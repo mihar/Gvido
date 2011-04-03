@@ -11,7 +11,7 @@
     %header
       %h1= link_to "GVIDO", dashboard_path
       %h2= link_to "Informacijski sistem", dashboard_path
-      - if user_signed_in?
+      - if user_signed_in? and current_user.admin?
         %nav
           %ul#main
             = menu_item "Učenci", "Students", students_path
@@ -40,6 +40,7 @@
                 = menu_item "Urniki", "Schedules", all_schedules_path
                 = menu_item "Videi", "Movies", all_movies_path
                 = menu_item "Povezave", "Links", all_links_path
+            
       - if user_signed_in?
         #user
           %span Prijavljen

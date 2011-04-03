@@ -1,4 +1,7 @@
 = title "Urejanje mentorja"
+.crud
+  .master
+    = link_to "Odstrani", resource, :confirm => destroy_confirmation(resource), :method => :delete  
 
 = render 'form'
 = render "instruments"
