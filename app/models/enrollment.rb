@@ -17,7 +17,7 @@ class Enrollment < ActiveRecord::Base
   
   attr_accessor :billable_months
   
-  scope :active, where("deleted = ?", false)
+  scope :active, where("enrollment_date < CURRENT_DATE() AND cancel_date > CURRENT_DATE() AND deleted = 0")
   
   DATE_SPACER = 14
   
