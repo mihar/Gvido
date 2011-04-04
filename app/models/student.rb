@@ -3,6 +3,7 @@ class Student < Person
   has_many :enrollments
   has_many :lessons
   belongs_to  :status
+  belongs_to  :billing_option
   belongs_to  :contact
   
   after_create :proper_reference_number
@@ -11,7 +12,22 @@ class Student < Person
   
   default_scope order('id DESC')
   
-  scope :statusars, where('status_id = 3')
+  scope :enrolled, find_by_sql("SELECT DISTINCT p.* FROM people p, enrollments e 
+          WHERE 
+            p.type = 'student' AND 
+            p.id = e.student_id AND
+            e.enrollment_date < CURRENT_DATE() AND e.cancel_date > CURRENT_DATE()
+          ORDER BY p.last_name ASC")
+  
+  def payments
+    payments = []
+    enrollments.each do |e|
+      e.payments.each do |p|
+        payments << p
+      end
+    end
+    payments
+  end
   
   protected
   
