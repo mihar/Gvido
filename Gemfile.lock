@@ -110,8 +110,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
-    mysql2 (0.2.6)
-    mysql2 (0.2.6-x86-mingw32)
+    mysql2 (0.2.7)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
@@ -211,7 +210,7 @@ DEPENDENCIES
   jquery-rails
   json
   launchy
-  mysql2
+  mysql2 (= 0.2.7)
   paperclip (~> 2.3)
   rails (= 3.0.5)
   rails-erd

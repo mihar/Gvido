@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.5'
 gem 'sqlite3', '1.3.3'
-gem 'mysql2'
+gem 'mysql2', '0.2.7'
 gem 'haml'
 gem "simple_form"
 gem "paperclip", "~> 2.3"
