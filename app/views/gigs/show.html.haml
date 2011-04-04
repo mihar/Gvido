@@ -4,7 +4,7 @@
 = spit @gig, :title, :h3
 
 - if @gig.when
-  %p.date= h @gig.when.to_s(:simple)
+  %p.date= l @gig.when, :format => :simple
 
 = spit @gig, :venue
 = spit @gig, :address    

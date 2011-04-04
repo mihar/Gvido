@@ -3,5 +3,5 @@
     %h3= notice.title
     %p.date
       objavljeno
-      %em= notice.created_at.to_s :short
+      %em= l notice.created_at, :format => :short
   .text.textilize= (textilize notice.body_html).html_safe

@@ -2,6 +2,9 @@
   = f.input :title
   = f.input :body
   = f.input :photo
-  = f.input :expires_at, :minute_step => 60
+  = f.input :expires_at,  :start_year => Date.today.year,
+                          :end_year => Date.today.year + 1,
+                          :discard_minute => true, :discard_second => true, 
+                          :order => [:hour, :day, :month, :year]
   .submit
     = f.button :submit

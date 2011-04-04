@@ -16,7 +16,7 @@
     = @student.reference_number
   %p.date
     %strong Datum dodajanja:
-    = @student.created_at.to_s :short
+    = l @student.created_at, :format => :long
   %p
     %strong Naslov:
     = full_address(@student)
@@ -32,7 +32,7 @@
   - if @student.date_of_birth
     %p
       %strong Datum rojstva:
-      = @student.date_of_birth.to_s :long
+      = l @student.date_of_birth, :format => :long
   %p
     %strong Opombe:
     %br
@@ -44,7 +44,7 @@
       = render "contacts/contact_details", :contact => @student.contact
     
 
-- unless @student.enrollments.active.empty?
+- unless @student.enrollments.empty?
 
   %h3 Vpisnine
   %table
@@ -58,10 +58,19 @@
       %th Celoten znesek
       %th Popust
     %tbody
-    = render @student.enrollments.active
+    = render @student.enrollments
 
+- unless @student.payments.empty?
+  %h3 Plačila
+  %table
+    %thead
+      %th Rok plačila
+      %th Znesek
+      %th Plačano
+    %tbody
+    = render @student.payments
 
-- if not @student.personal_contacts.empty?
+- unless @student.personal_contacts.empty?
   
   %h3 Osebni kontakti učenca
   %table

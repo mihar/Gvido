@@ -2,7 +2,7 @@
 - @lightbox = true
 
 %p.date
-  %strong= @notice.created_at.to_s :long
+  %strong= l @notice.created_at, :format => :simple
 .text.textilize= (textilize @notice.body_html).html_safe
 - if @notice.photo.file?
   .photo= (link_to_lightbox image_tag(@notice.photo.url(:small)), @notice.photo.url(:normal), 'obvestilo', @notice.title).html_safe
