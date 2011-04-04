@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110331092847) do
+ActiveRecord::Schema.define(:version => 20110404194501) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20110331092847) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "deleted",                                         :default => false
+    t.decimal  "enrollment_fee",    :precision => 8, :scale => 2
   end
 
   create_table "gigs", :force => true do |t|

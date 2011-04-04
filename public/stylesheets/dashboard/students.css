@@ -1,0 +1,18 @@
+#students-show .data, #students-show #contacts_enrollments, #students-show #payments, #students-show #lessons {
+  width: 45%;
+  float: left; }
+#students-show .data {
+  width: 30%;
+  margin-right: 2%;
+  background: #dddddd;
+  padding: 0 10px; }
+#students-show #contacts_enrollments {
+  width: 65%; }
+#students-show #enrollments {
+  margin-top: 20px; }
+#students-show #payments, #students-show #lessons {
+  margin-top: 20px; }
+#students-show br.clear {
+  clear: both; }
+#students-show h3 {
+  margin-bottom: 5px; }

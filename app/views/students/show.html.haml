@@ -1,4 +1,5 @@
-= title 'Pregled učenca'
+= title resource.full_name
+%h2.sub Pregled učenca
 
 .crud
   = link_to "Dodaj vpisnino", new_student_enrollment_path(@student)
@@ -39,51 +40,66 @@
     = (textilize @student.notes).html_safe
   
   - if @student.contact
-    %h2 Vpisne informacije
+    %h3 Vpisne informacije
     %p
       = render "contacts/contact_details", :contact => @student.contact
-    
 
-- unless @student.enrollments.empty?
+#contacts_enrollments
+  - unless @student.personal_contacts.empty?
+    #contacts
+      %h3 Osebni kontakti učenca
+      %table
+        %thead
+          %th Ime in priimek
+          %th Naslov
+          %th Telefonska številka
+          %th Mobitel
+          %th Email
+          %th Opombe
+        %tbody
+        = render @student.personal_contacts
 
-  %h3 Vpisnine
-  %table
-    %thead
-      %th Veljavnost vpisnine
-      %th Inštrument
-      %th Mentor
-      %th Št. mesecev na obrok
-      %th Št. predavanj
-      %th Cena vpisnine
-      %th Celoten znesek
-      %th Popust
-    %tbody
-    = render @student.enrollments
+  - unless @student.enrollments.empty?
+    #enrollments
+      %h3 Vpisnine
+      %table
+        %thead
+          %th Veljavnost vpisnine
+          %th Inštrument
+          %th Mentor
+          %th Št. mesecev na obrok
+          %th Št. predavanj
+          %th Cena vpisnine
+          %th Celoten znesek
+          %th Popust
+        %tbody
+        = render @student.enrollments
+
+%br.clear
 
 - unless @student.payments.empty?
-  %h3 Plačila
-  %table
-    %thead
-      %th Rok plačila
-      %th Znesek
-      %th Plačano
-    %tbody
-    = render @student.payments
+  #payments
+    %h3 Plačila
+    %table
+      %thead
+        %th Rok plačila
+        %th Znesek
+        %th Plačano
+      %tbody
+      = render @student.payments
+      
+- unless @student.lessons.empty?
+  #lessons
+    %h3 Učne ure
+    %table
+      %thead
+        %th Mesec
+        %th Mentor
+        %th Program
+        %th Št. ur
+      %tbody
+      = render @student.lessons
 
-- unless @student.personal_contacts.empty?
-  
-  %h3 Osebni kontakti učenca
-  %table
-    %thead
-      %th Ime in priimek
-      %th Naslov
-      %th Telefonska številka
-      %th Mobitel
-      %th Email
-      %th Opombe
-    %tbody
-    = render @student.personal_contacts
-  
+%br.clear
  
 = link_to_back students_path
-
