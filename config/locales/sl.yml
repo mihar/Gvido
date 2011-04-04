@@ -71,7 +71,7 @@ sl:
       default: "%A, %d %b %Y ob %H:%M:%S"
       short: "%d. %b ob %H:%M"
       long: "%d. %B, %Y ob %H:%M"
-      simple: "%d. %B %Y ob %H:%M"
+      simple: "%d. %B %Y"
       
     am: "dopoldan"
     pm: "popoldan"
@@ -132,11 +132,11 @@ sl:
         mentor: "Mentor"
         instrument: "Inštrument"
         cancel_date: "Datum izpisa"
-        prepayment: "Cena vpisnine (€)"
+        prepayment: "Pavšal (€)"
         total_price: "Celotni znesek (€)"
         payment_period: "Št. mesecev na obrok"
         lessons_per_month: "Št. predavanj na mesec"
-        discount: "Popust (%)"
+        discount_percent: "Popust (%)"
       gig:
         title: "Naziv koncerta"
         venue: "Prireditveni prostor"
