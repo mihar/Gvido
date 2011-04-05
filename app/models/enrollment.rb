@@ -49,39 +49,53 @@ class Enrollment < ActiveRecord::Base
   def enrollment_date_acceptance
     student.enrollments.each do |enrollment|
       saving = id.nil? 
-      invalid_enrollment_date = (
+      
+      existing_instrument_enrollment = (
         (instrument_id == enrollment.instrument_id) and
-        (mentor_id == enrollment.mentor_id) and 
+        (mentor_id == enrollment.mentor_id)
+      )
+      
+      invalid_enrollment_date = (
+        existing_instrument_enrollment and 
         (enrollment_date >= enrollment.enrollment_date) and
         (enrollment_date < enrollment.cancel_date)
       )
       
       invalid_cancel_date = (
-        (instrument_id == enrollment.instrument_id) and
-        (mentor_id == enrollment.mentor_id) and 
+        existing_instrument_enrollment and 
         (cancel_date > enrollment.enrollment_date) and
         (cancel_date <= enrollment.cancel_date)
       )
       
-      if invalid_enrollment_date or invalid_cancel_date
+      invalid_embracing_enrollment = (
+        existing_instrument_enrollment and 
+        (enrollment_date <= enrollment.enrollment_date) and
+        (cancel_date >= enrollment.cancel_date)
+      )
+      
+      
+      if invalid_enrollment_date or invalid_cancel_date or invalid_embracing_enrollment
         error_message = "Učenec je že vpisan na izbran program v izbranem obdobju (#{I18n.l enrollment.enrollment_date, :format => :default} - #{I18n.l enrollment.cancel_date - 1, :format => :default})" 
       end
       
       if saving
-        if invalid_enrollment_date
-          errors.add :enrollment_date, error_message
-        end
-        if invalid_cancel_date
-          errors.add :cancel_date, error_message
-        end
+        add_error(invalid_enrollment_date, invalid_cancel_date, invalid_embracing_enrollment, error_message)
       else #editing
-        if invalid_enrollment_date and id != enrollment.id
-          errors.add :enrollment_date, error_message
-        end
-        if invalid_cancel_date and id != enrollment.id
-          errors.add :cancel_date, error_message
+        if id != enrollment.id
+          add_error(invalid_enrollment_date, invalid_cancel_date, invalid_embracing_enrollment, error_message)
         end
       end
+    end
+  end
+  
+  def add_error(invalid_enrollment_date, invalid_cancel_date, invalid_embracing_enrollment, error_message)
+    if invalid_enrollment_date
+      errors.add :enrollment_date, error_message
+    elsif invalid_cancel_date
+      errors.add :cancel_date, error_message
+    elsif invalid_embracing_enrollment
+      errors.add :enrollment_date, error_message
+      errors.add :cancel_date, error_message
     end
   end
   
