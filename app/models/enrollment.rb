@@ -9,7 +9,8 @@ class Enrollment < ActiveRecord::Base
   validates_numericality_of :prepayment,        :greater_than_or_equal_to => 0
   validates_numericality_of :discount,          :greater_than_or_equal_to => 0
   validates_presence_of :instrument_id, :mentor_id
-  validate :cancel_date_correctness
+  
+  validate :cancel_date_correctness, :enrollment_date_acceptance
   
   after_create   :create_payments
   after_update   :update_payments
@@ -19,7 +20,7 @@ class Enrollment < ActiveRecord::Base
   
   scope :active, where("enrollment_date < CURRENT_DATE() AND cancel_date > CURRENT_DATE() AND deleted = 0")
   
-  DATE_SPACER = 14
+  DATE_SPACER = 19
   
   def discount_percent
     "#{discount * 100}%".gsub(".", ",")
@@ -42,8 +43,48 @@ class Enrollment < ActiveRecord::Base
   
   def cancel_date_correctness
     errors.add :cancel_date, "Datum izpisa mora biti poznejši od datuma vpisa" if cancel_date < enrollment_date
+    errors.add :cancel_date, "Učenec ne more biti vpisan in izpisan v istem mesecu" if cancel_date == enrollment_date
   end
     
+  def enrollment_date_acceptance
+    student.enrollments.each do |enrollment|
+      saving = id.nil? 
+      invalid_enrollment_date = (
+        (instrument_id == enrollment.instrument_id) and
+        (mentor_id == enrollment.mentor_id) and 
+        (enrollment_date >= enrollment.enrollment_date) and
+        (enrollment_date < enrollment.cancel_date)
+      )
+      
+      invalid_cancel_date = (
+        (instrument_id == enrollment.instrument_id) and
+        (mentor_id == enrollment.mentor_id) and 
+        (cancel_date > enrollment.enrollment_date) and
+        (cancel_date <= enrollment.cancel_date)
+      )
+      
+      if invalid_enrollment_date or invalid_cancel_date
+        error_message = "Učenec je že vpisan na izbran program v izbranem obdobju (#{I18n.l enrollment.enrollment_date, :format => :default} - #{I18n.l enrollment.cancel_date - 1, :format => :default})" 
+      end
+      
+      if saving
+        if invalid_enrollment_date
+          errors.add :enrollment_date, error_message
+        end
+        if invalid_cancel_date
+          errors.add :cancel_date, error_message
+        end
+      else #editing
+        if invalid_enrollment_date and id != enrollment.id
+          errors.add :enrollment_date, error_message
+        end
+        if invalid_cancel_date and id != enrollment.id
+          errors.add :cancel_date, error_message
+        end
+      end
+    end
+  end
+  
   def create_payments
     set_billable_months
     create_new_payments
