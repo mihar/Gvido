@@ -26,6 +26,10 @@ class MentorsController < InheritedResources::Base
     render :nothing => true
   end
   
+  def details
+    @enrollments = resource.enrollments
+  end
+  
   def create
     create! { all_mentors_path }
   end

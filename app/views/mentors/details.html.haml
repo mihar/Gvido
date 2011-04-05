@@ -1,0 +1,53 @@
+= title "Podrobnosti mentorja"
+
+.crud
+  = link_to "Odstrani", resource, :confirm => destroy_confirmation(resource), :method => :delete
+  .master
+    = link_to "Uredi", edit_mentor_path(resource)
+
+.data
+  %p
+    %strong Ime in priimek:
+    = resource.full_name
+  %p 
+  -# 		Podrobnosti	Facebook	Myspace	Pozicija	Foto
+    %strong Telefonska številka:
+    = resource.phone
+  %p
+    %strong Naslov:
+    = resource.address
+  %p
+    %strong Email:
+    = mail_to resource.email
+  %p
+    %strong Podrobnosti
+    = (textilize resource.about).html_safe
+  %p
+    %strong Facebook
+    = resource.facebook
+  %p
+    %strong Myspace
+    = resource.myspace
+  %p
+    %strong Pozicija
+    = resource.position
+    
+  - if resource.photo.file?
+    .photo= image_tag resource.photo.url(:square), :width => 50, :height => 50
+
+- unless @enrollments.empty?
+  %h3 Mentorjevi učenci
+  
+  %table
+    %thead
+      %tr
+        %th
+          Ime in priimek
+        %th
+          Program
+    %tbody
+      - for enrollment in @enrollments
+        %tr
+          %td= enrollment.student.full_name
+          %td= enrollment.instrument.title
+        

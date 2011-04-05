@@ -98,6 +98,7 @@ App::Application.routes.draw do
       post :add_instrument
       post :destroy_instrument
       get  :update_positions
+      get  :details
     end
   end
   

@@ -18,7 +18,7 @@
   %tbody
     - for mentor in collection
       %tr.clickable
-        %td= link_to mentor.name, edit_mentor_path(mentor)
+        %td= link_to mentor.name, details_mentor_path(mentor)
         %td= mentor.surname
         %td= mentor.phone
         %td= mentor.address
