@@ -21,7 +21,7 @@ class Student < Person
   
   def payments
     payments = []
-    enrollments.each do |e|
+    enrollments.order("enrollment_date ASC").each do |e|
       e.payments.each do |p|
         payments << p
       end
