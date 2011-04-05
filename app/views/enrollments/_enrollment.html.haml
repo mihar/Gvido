@@ -1,5 +1,5 @@
 %tr
-  %td= "#{ l enrollment.enrollment_date, :format => :month_year} - #{l enrollment.cancel_date, :format => :month_year}"
+  %td= "#{ l enrollment.enrollment_date, :format => :default} - #{l enrollment.cancel_date - 1, :format => :default}"
   %td= enrollment.instrument.title
   %td= enrollment.mentor.full_name
   %td= enrollment.payment_period

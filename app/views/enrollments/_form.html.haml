@@ -2,8 +2,7 @@
   = f.input :enrollment_date, :start_year => Date.today.year, :end_year => Date.today.year + 5, :order => [:month, :year]
   = f.input :cancel_date, :start_year => Date.today.year, :end_year => Date.today.year + 5, :order => [:month, :year]
   = f.association :mentor, :prompt => "Izberite mentorja", :label_method => :title
-  = f.association :instrument, :prompt => "Izberite inštrument"
-  
+  = f.association :instrument, :prompt => "Izberite inštrument"  
   = f.input :payment_period
   = f.input :lessons_per_month
   = f.input :prepayment, :input_html => { :step => "1" }
