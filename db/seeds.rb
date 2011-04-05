@@ -11,7 +11,7 @@ u.save
 
 BillingOption.create([
   {:short_description => 'Po pošti', :description => 'Učenec želi prejemati položnice na svoj hišni naslov'},
-  {:short_description => 'Po Emailu', :description => 'Učenec želi prejemati položnice na email'},
+  {:short_description => 'Po emailu', :description => 'Učenec želi prejemati položnice na email'},
   {:short_description => 'Preko mentorja', :description => 'Učenec bo položnico prejel preko mentorja'}
 ])
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110404194501) do
+ActiveRecord::Schema.define(:version => 20110404201138) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -117,7 +117,7 @@ ActiveRecord::Schema.define(:version => 20110404194501) do
 
   create_table "lessons", :force => true do |t|
     t.integer  "payment_id"
-    t.integer  "lessons_per_month", :default => 0
+    t.integer  "hours_this_month", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "mentor_id"
