@@ -73,7 +73,7 @@
           %th Celoten znesek
           %th Popust
         %tbody
-        = render @student.enrollments
+        = render @student.enrollments.order("enrollment_date ASC")
 
 %br.clear
 
