@@ -29,6 +29,10 @@ class Student < Person
     payments
   end
   
+  def active_enrollments
+    enrollments.where("enrollment_date <= CURRENT_DATE() AND cancel_date >= CURRENT_DATE()")
+  end
+  
   protected
   
   def proper_reference_number
