@@ -10,7 +10,7 @@ class Enrollment < ActiveRecord::Base
   validates_numericality_of :discount,          :greater_than_or_equal_to => 0
   validates_presence_of :instrument_id, :mentor_id
   
-  validate :cancel_date_correctness, :enrollment_date_acceptance
+  validate :cancel_date_correctness, :enrollment_date_acceptance, :mentors_instrument_correctness
   
   after_create   :create_payments
   after_update   :update_payments
@@ -98,6 +98,10 @@ class Enrollment < ActiveRecord::Base
       errors.add :cancel_date, error_message
     end
   end
+
+  def mentors_instrument_correctness
+    errors.add :instrument, "Izbran mentor ne poučuje tega predmeta" if !Mentor.find(mentor_id).instrument_ids.include?(instrument_id)
+  end
   
   def create_payments
     set_billable_months
@@ -127,6 +131,7 @@ class Enrollment < ActiveRecord::Base
       end
     end
   end
+  
   
   def set_billable_months
     start, stop = enrollment_date, cancel_date
