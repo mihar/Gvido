@@ -161,6 +161,7 @@ sl:
       location:
         title: "Naziv"
         subtitle: "Podnaziv"
+        location_section: "Skupina lokacij"
         city: "Kraj"
         zip: "Poštna številka"
         about: "Podrobnosti"
