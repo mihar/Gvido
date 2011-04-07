@@ -36,7 +36,7 @@ class Enrollment < ActiveRecord::Base
   end
   
   def destroy_unsettled_payments
-    Payment.destroy_unsettled_payments_for_enrollment(id)
+    payments.unsettled.each(&:destroy)
   end
   
   private
@@ -111,8 +111,8 @@ class Enrollment < ActiveRecord::Base
   #destroys unsettled payments and creates new ones
   def update_payments
     set_billable_months
-    @billable_months -= Payment.settled_payment_dates_for_enrollment(id)
-    Payment.destroy_unsettled_payments_for_enrollment(id)
+    @billable_months -= payments.settled.map(&:payment_date)
+    payments.unsettled.each(&:destroy)
     create_new_payments
   end
   

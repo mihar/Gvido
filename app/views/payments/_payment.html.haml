@@ -1,6 +1,6 @@
-%tr
-  %td= l payment.payment_date, :format => :default
-  %td=  number_to_currency(payment.calculated_price)
+%tr.clickable
+  %td= link_to l(payment.payment_date), payment
+  %td= number_to_currency payment.calculated_price
   %td
     - if payment.settled
       &#10003;

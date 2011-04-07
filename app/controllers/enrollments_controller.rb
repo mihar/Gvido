@@ -24,7 +24,7 @@ class EnrollmentsController < InheritedResources::Base
     
     enrollment = Enrollment.find params[:id]
     
-    if Payment.settled_payments(enrollment.id).empty?
+    if enrollment.payments.settled.empty?
       enrollment.destroy
     end
     
