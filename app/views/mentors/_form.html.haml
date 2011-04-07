@@ -1,8 +1,10 @@
 = simple_form_for resource, :class => :simple, :html => {:multipart => true} do |f|
-  %h3 Zasebne informacije
-  = f.input :private_email
-  = f.input :password
-  = f.input :password_confirmation
+
+  - if resource.user.nil?
+    %h3 Zasebne informacije
+    = f.input :private_email
+    = f.input :password
+    = f.input :password_confirmation
   
   %h3 Javne informacije
   = f.input :name

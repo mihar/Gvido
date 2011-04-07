@@ -176,7 +176,10 @@ sl:
         permalink: "Spletni naslov"
         position: "Pozicija"
         facebook: "Facebook naslov"
-        myspace: "Myspace naslov"    
+        myspace: "Myspace naslov"
+        private_email: "Zasebna E-pošta"
+        password_confirmation: "Potrditev gesla"
+        password: "Geslo"
       movie:
         youtube: "Spletni naslov"
       notice:
