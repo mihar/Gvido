@@ -59,7 +59,6 @@ class Mentor < ActiveRecord::Base
         :password => self.password, 
         :password_confirmation => self.password_confirmation
         )
-      
       if mentor_user.save
         self.user = mentor_user
       end

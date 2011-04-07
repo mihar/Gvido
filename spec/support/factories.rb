@@ -128,6 +128,9 @@ end
 Factory.define :mentor do |f|
   f.name 'Mentor'
   f.surname 'Joza'
+  f.sequence(:private_email) { |n| "#{n}jojo@jo.si" }
+  f.password 'lololo'
+  f.password_confirmation 'lololo'
 end
 
 Factory.define :movie do |f|
