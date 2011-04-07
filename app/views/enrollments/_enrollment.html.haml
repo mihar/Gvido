@@ -9,6 +9,7 @@
   %td= number_to_percentage(enrollment.discount * 100, :precision => 2)
   %td
     .crud
-      = link_to "Odstrani", [enrollment.student, enrollment], :confirm => destroy_confirmation(enrollment), :method => :delete
+      - if Payment.settled_payments(enrollment.id).empty?
+        = link_to "Odstrani", [enrollment.student, enrollment], :confirm => destroy_confirmation(enrollment), :method => :delete
       = link_to "Uredi", edit_student_enrollment_path(enrollment.student, enrollment)
 

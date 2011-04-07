@@ -26,10 +26,6 @@ class EnrollmentsController < InheritedResources::Base
     
     if Payment.settled_payments(enrollment.id).empty?
       enrollment.destroy
-    else
-      enrollment.destroy_unsettled_payments
-      enrollment.deleted = true
-      enrollment.save
     end
     
     redirect_to student_path(parent)
