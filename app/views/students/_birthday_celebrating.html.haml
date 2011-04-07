@@ -1,0 +1,8 @@
+- if @students_celebrating.any?
+  %section
+    %h2 Danes praznuje
+    %ul
+      - @students_celebrating.each do |student|
+        %li
+          = student
+          %em== (#{student.age} let)

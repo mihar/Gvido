@@ -1,14 +1,10 @@
-%tr
-  = spit contact, :name, :td
+%tr.clickable
+  %td= link_to contact.name, contact
+  %td= contact.phone
+  %td= contact.email
   %td
-    = contact.instruments.map { |i| link_to i.title, instrument_path(i) }.join(", ") unless contact.instruments.empty?
+    = raw contact.instruments.map(&:title).join(", ") unless contact.instruments.empty?
   %td
-    = contact.locations.map { |i| link_to i.title, location_path(i) }.join(", ") unless contact.locations.empty?    
+    = raw contact.locations.map(&:title).join(", ") unless contact.locations.empty?    
   %td
-    = h contact.created_at.to_s :short
-
-
-  %td
-    = link_to "Podrobnosti", contact
-  %td
-    = link_to "Odstrani", contact, :confirm => destroy_confirmation(contact), :method => :delete
+    =l contact.created_at, :format => :simple

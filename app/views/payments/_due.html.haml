@@ -1,0 +1,9 @@
+%section
+  %h2 Zamudniki plačil
+  %table
+    %thead
+      %tr
+        %th Ime
+        %th Rok plačila
+        %th Znesek
+    %tbody= render :partial => "payments/due_payment", :collection => @payments

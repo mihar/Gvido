@@ -3,11 +3,13 @@ class DashboardController < ApplicationController
   skip_authorization_check
   
   def index
-    if mentor?
-      redirect_to :lessons
-      return
-    end
+    # Mentors go haway.
+    redirect_to :lessons if mentor?
+    
+    # Load up dashboard stuff.
     @contacts = Contact.unprocessed
+    @payments = Payment.due.unsettled
+    @students_celebrating = Student.birthday_today
   end
   
   protected
