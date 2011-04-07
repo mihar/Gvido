@@ -16,7 +16,7 @@ class PaymentsController < ApplicationController
       return
     end
     
-    @current_month = Date.today.at_beginning_of_month
+    @current_month = Date.today.at_beginning_of_month + Enrollment::DATE_SPACER
     @payments = Payment.monthly_payments(@current_month)
   end
   
