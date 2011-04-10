@@ -1,9 +1,19 @@
 require 'spec_helper'
 
 describe Enrollment do
-  subject { Factory :enrollment }
+  subject do 
+    enrollment = Factory.build :enrollment
+    enrollment.save
+    enrollment
+  end
   
-  it { should be_valid }
+  it {
+    unless subject.errors.empty?
+      puts '-- Napake pri shranjevanju --'
+      puts subject.errors.inspect
+    end
+    should be_valid
+  }
   it { should validate_presence_of(:instrument_id) }
   it { should validate_presence_of(:mentor_id) }
   it { should belong_to(:instrument) }
@@ -22,14 +32,14 @@ describe Enrollment do
   end
   
   it 'should have correct payment dates in created payments' do
-    subject.payments[0].payment_date.should eql(Date.new(2011, 9, 15))
-    subject.payments[1].payment_date.should eql(Date.new(2011, 10, 15))
-    subject.payments[2].payment_date.should eql(Date.new(2011, 11, 15))
-    subject.payments[3].payment_date.should eql(Date.new(2011, 12, 15))
-    subject.payments[4].payment_date.should eql(Date.new(2012, 1, 15))
-    subject.payments[5].payment_date.should eql(Date.new(2012, 2, 15))
-    subject.payments[6].payment_date.should eql(Date.new(2012, 3, 15))
-    subject.payments[7].payment_date.should eql(Date.new(2012, 4, 15))
+    subject.payments[0].payment_date.should eql(Date.new(2011, 9,  20))
+    subject.payments[1].payment_date.should eql(Date.new(2011, 10, 20))
+    subject.payments[2].payment_date.should eql(Date.new(2011, 11, 20))
+    subject.payments[3].payment_date.should eql(Date.new(2011, 12, 20))
+    subject.payments[4].payment_date.should eql(Date.new(2012, 1,  20))
+    subject.payments[5].payment_date.should eql(Date.new(2012, 2,  20))
+    subject.payments[6].payment_date.should eql(Date.new(2012, 3,  20))
+    subject.payments[7].payment_date.should eql(Date.new(2012, 4,  20))
   end
   
   it 'should deduct half of prepayment from first and last payment' do
@@ -75,9 +85,9 @@ describe Enrollment do
   
   it 'should create correct payment dates according to enrollments payment_period' do
     enrollment = Factory :three_pay_period_enrollment
-    enrollment.payments[0].payment_date.should eql(Date.new(2011, 9, 15))
-    enrollment.payments[1].payment_date.should eql(Date.new(2011, 12, 15))
-    enrollment.payments[2].payment_date.should eql(Date.new(2012, 3, 15))
+    enrollment.payments[0].payment_date.should eql(Date.new(2011, 9,  20))
+    enrollment.payments[1].payment_date.should eql(Date.new(2011, 12, 20))
+    enrollment.payments[2].payment_date.should eql(Date.new(2012, 3,  20))
   end
   
   it 'should deduct half of prepayment from first and last payment from three_pay_period_enrollment' do

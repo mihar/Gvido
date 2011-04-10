@@ -1,3 +1,7 @@
+Factory.sequence :email do |n|
+  "email#{n}@factory.com"
+end
+
 Factory.define :payment do |f|
   f.association :enrollment
 end
@@ -6,14 +10,20 @@ Factory.define :payment_exception do |f|
   f.association :enrollment
 end
 
+Factory.define :lesson do |f|
+  f.association :enrollment
+  f.association :student
+  f.association :mentor
+end
+
 Factory.define :about do |f|
   f.text     "Thats what its all *about*"
   f.contact  "Mikake mikakhil 0316655332"
 end
 
 Factory.define :enrollment do |f|
-  f.association :instrument
   f.association :mentor
+  f.association :instrument
   f.association :student
   f.enrollment_date Date.new(2011, 9, 1)
   f.cancel_date Date.new(2012, 5, 1)
@@ -126,11 +136,12 @@ Factory.define :link do |f|
 end
 
 Factory.define :mentor do |f|
-  f.name 'Mentor'
-  f.surname 'Joza'
-  f.sequence(:private_email) { |n| "#{n}jojo@jo.si" }
-  f.password 'lololo'
-  f.password_confirmation 'lololo'
+  f.name "Mentorij"
+  f.surname "Mentis"
+  f.private_email Factory.next :email
+  f.password "SimonTalek"
+  f.password_confirmation "SimonTalek"
+  f.after_build { |mentor| mentor.instruments << Factory(:instrument) }
 end
 
 Factory.define :movie do |f|
@@ -187,9 +198,9 @@ Factory.define :post_office do |f|
 end
 
 Factory.define :user do |f|
-  f.first_name "Mikhailo"
-  f.last_name "Ajnspigler"
-  f.sequence(:email) { |n| "mikhailo#{n}@ajnspilger.si" }
+  f.first_name "Admin"
+  f.last_name "Krmetic"
+  f.sequence(:email) { |n| "lolo#{n}@tralala.si" }
   f.password "SimonTalek"
   f.password_confirmation "SimonTalek"
 end
@@ -198,30 +209,6 @@ Factory.define :billing_option do |f|
   f.description 'Kes na roko preko mentorja na zadnjem predavanju v mescu.'
   f.short_description 'Kes na roko'
 end
-
-#Factory.define :payment_order do |f|
-#  f.association :originator, :factory => :student
-#  f.association :recipient,  :factory => :person
-#  f.description 'Obican racun'
-#  f.deadline_at Time.now.next_month
-#end
-#
-#Factory.define :payment_type do |f|
-#  f.description 'Placilo po urni postavki'
-#  f.base_price BigDecimal('10')
-#  f.association :tax_type
-#end
-#
-#Factory.define :payment do |f|
-#  f.association :payment_order
-#  f.association :payment_type
-#  f.quantity 5
-#end
-#
-#Factory.define :tax_type do |f|
-#  f.description 'Davek na ucno uro'
-#  f.tax BigDecimal.new('0.2')
-#end
 
 Factory.define :status do |f|
   f.description 'Oseba je aktiven ucenec, ki rad zapoje kako domaco.'

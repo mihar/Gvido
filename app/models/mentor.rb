@@ -10,13 +10,16 @@ class Mentor < ActiveRecord::Base
 
   attr_accessor :private_email, :password, :password_confirmation
   
-  validates_presence_of :name, :surname
+  validates_presence_of :name, :surname, :price_per_private_lesson, :price_per_public_lesson
+  validates_numericality_of :price_per_private_lesson, :greater_than_or_equal_to => 0
+  validates_numericality_of :price_per_public_lesson,  :greater_than_or_equal_to => 0
   
   validate :user_creation_validation
   
   before_save :make_permalink
   before_create :mentor_user_creation 
   #before_update :update_mentors_user_account
+  
   
   has_attached_file :photo, 
                     :styles => { :square => "75x75#", :small => "150x150#", :medium => "180x180#", :normal => "550x550>" },

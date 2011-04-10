@@ -15,6 +15,12 @@ BillingOption.create([
   {:short_description => 'Preko mentorja', :description => 'Učenec bo položnico prejel preko mentorja'}
 ])
 
+PaymentPlan.create([
+  {:title => 'Mesečni obrok'},
+  {:title => 'Vsak tretji mesec'},
+  {:title => 'V enkratnem znesku'},
+])
+
 Status.create([
   {:short_description => 'V dodajanju', :description => 'Učenec še ni vpisan in potrebno mu je poslati ponudbo.'},
   {:short_description => 'V čakanju', :description => 'Učenec se namerava vpisati vendar je potrebno počakati na potrdilo o vpisu'},

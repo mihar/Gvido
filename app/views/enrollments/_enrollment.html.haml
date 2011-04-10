@@ -2,11 +2,11 @@
   %td= "#{ l enrollment.enrollment_date, :format => :default} - #{l enrollment.cancel_date - 1, :format => :default}"
   %td= enrollment.instrument.title
   %td= enrollment.mentor.full_name
-  %td= enrollment.payment_period
-  %td= enrollment.lessons_per_period
+  %td= enrollment.payment_plan.title
   %td= number_to_currency(enrollment.prepayment, :precision => 2)
-  %td= number_to_currency(enrollment.total_price, :precision => 2)
   %td= number_to_percentage(enrollment.discount * 100, :precision => 2)
+  %td= number_to_currency(enrollment.total_price, :precision => 2)
+  %td= number_to_currency(net_ammount(enrollment.total_price, enrollment.discount) , :precision => 2)
   %td
     .crud
       - if enrollment.payments.settled.empty?

@@ -1,0 +1,8 @@
+= title "Urejanje mentorjevih prijavnih informacij"
+
+= simple_form_for @mentor, :class => :simple do |f|
+  = f.input :private_email
+  = f.input :password
+  = f.input :password_confirmation
+  .submit
+    = f.button :submit

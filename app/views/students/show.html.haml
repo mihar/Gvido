@@ -67,11 +67,11 @@
           %th Veljavnost vpisnine
           %th Inštrument
           %th Mentor
-          %th Št. mesecev na obrok
-          %th Št. predavanj
-          %th Cena vpisnine
-          %th Celoten znesek
+          %th Plan plačila
+          %th Kavcija
           %th Popust
+          %th Bruto znesek
+          %th Neto znesek
         %tbody
         = render @student.enrollments.order("enrollment_date ASC")
 
@@ -85,18 +85,18 @@
         %th Rok plačila
         %th Znesek
         %th Plačano
+        %th Program
+        %th Plan plačila
+        %th Št. učnih ur na obračun
       %tbody
       = render @student.payments
       
 - unless @student.lessons.empty?
   #lessons
-    %h3 Učne ure
+    %h3 Opravljene učne ure
     %table
       %thead
-        %th Mesec
-        %th Mentor
-        %th Program
-        %th Št. ur
+        %th Št. opravljenih učnih ur
       %tbody
       = render @student.lessons
 

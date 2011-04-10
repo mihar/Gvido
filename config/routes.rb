@@ -99,6 +99,8 @@ App::Application.routes.draw do
       post :destroy_instrument
       get  :update_positions
       get  :details
+      get  :edit_login_account
+      put  :update_login_account
     end
   end
   

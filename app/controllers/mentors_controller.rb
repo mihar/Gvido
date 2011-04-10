@@ -26,6 +26,13 @@ class MentorsController < InheritedResources::Base
     render :nothing => true
   end
   
+  def edit_login_account
+    @mentor = Mentor.find_by_permalink(params[:id])
+    @mentor.private_email = @mentor.user.email
+    @mentor.password = ''
+    @mentor.password_confirmation = ''
+  end
+  
   def details
     @enrollments = resource.enrollments
   end

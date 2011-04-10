@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110404201138) do
+ActiveRecord::Schema.define(:version => 20110408205215) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -67,15 +67,16 @@ ActiveRecord::Schema.define(:version => 20110404201138) do
     t.integer  "student_id"
     t.date     "enrollment_date"
     t.date     "cancel_date"
-    t.decimal  "total_price",       :precision => 8, :scale => 2
-    t.decimal  "prepayment",        :precision => 8, :scale => 2, :default => 45.0
-    t.integer  "payment_period",                                  :default => 1
+    t.decimal  "total_price",       :precision => 8,  :scale => 2
+    t.decimal  "prepayment",        :precision => 10, :scale => 0, :default => 0
+    t.integer  "payment_period",                                   :default => 1
     t.integer  "lessons_per_month"
-    t.decimal  "discount",          :precision => 6, :scale => 4, :default => 0.0
+    t.decimal  "discount",          :precision => 6,  :scale => 4, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted",                                         :default => false
-    t.decimal  "enrollment_fee",    :precision => 8, :scale => 2
+    t.boolean  "deleted",                                          :default => false
+    t.decimal  "enrollment_fee",    :precision => 10, :scale => 0, :default => 0
+    t.integer  "payment_plan_id",                                  :default => 1
   end
 
   create_table "gigs", :force => true do |t|
@@ -183,6 +184,8 @@ ActiveRecord::Schema.define(:version => 20110404201138) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.decimal  "price_per_private_lesson", :precision => 10, :scale => 0
+    t.decimal  "price_per_public_lesson",  :precision => 10, :scale => 0
   end
 
   create_table "movies", :force => true do |t|
@@ -211,6 +214,11 @@ ActiveRecord::Schema.define(:version => 20110404201138) do
     t.decimal  "discount",          :precision => 6, :scale => 4, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "payment_plans", :force => true do |t|
+    t.string  "title"
+    t.integer "monthly_payments"
   end
 
   create_table "payments", :force => true do |t|
