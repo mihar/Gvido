@@ -24,7 +24,7 @@
   - else
     .input
       = f.label :enrollment_date
-      = l resource.enrollment_date, :format => "%B %Y"
+      .value= l resource.enrollment_date, :format => "%B %Y"
   = f.input :cancel_date, :start_year => Date.today.year, :end_year => Date.today.year + 1, :order => [:month, :year]
 
   = f.association :mentor, :prompt => "Izberite mentorja", :label_method => :title
@@ -46,18 +46,18 @@
     - if resource.prepayment?
       .input
         = f.label :prepayment
-        = resource.prepayment
+        .value= resource.prepayment
     - if resource.enrollment_fee?
       .input
         = f.label :enrollment_fee
-        = resource.enrollment_fee
+        .value= resource.enrollment_fee
     - if resource.discount_percent
       .input
         = f.label :discount_percent
-        = resource.discount_percent
+        .value= resource.discount_percent
     - if resource.payment_plan
       .input
         = f.label :payment_plan
-        = resource.payment_plan
+        .value= resource.payment_plan
   .submit
     = f.button :submit
