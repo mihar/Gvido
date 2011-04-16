@@ -25,23 +25,41 @@ Factory.define :enrollment do |f|
   f.association :mentor
   f.association :instrument
   f.association :student
+  f.payment_plan_id 1
   f.enrollment_date Date.new(2011, 9, 1)
   f.cancel_date Date.new(2012, 5, 1)
-  f.total_price 500.0
-  f.prepayment 45.0
+  f.total_price BigDecimal('500.0')
+  f.prepayment 0.0
   f.payment_period 1
   f.lessons_per_month 5
   f.discount 0.0
+  f.enrollment_fee 0.0
+end
+
+Factory.define :prepayed_enrollment, :class => Enrollment do |f|
+  f.association :mentor
+  f.association :instrument
+  f.association :student
+  f.payment_plan_id 1
+  f.enrollment_date Date.new(2011, 9, 1)
+  f.cancel_date Date.new(2012, 5, 1)
+  f.total_price BigDecimal('500.0')
+  f.prepayment BigDecimal('45.0')
+  f.payment_period 1
+  f.lessons_per_month 5
+  f.discount 0.0
+  f.enrollment_fee 0.0
 end
 
 Factory.define :discounted_enrollment, :class => Enrollment do |f|
   f.association :instrument
   f.association :mentor
   f.association :student
+  f.payment_plan_id 1
   f.enrollment_date Date.new(2011, 9, 1)
   f.cancel_date Date.new(2012, 5, 1)
-  f.total_price 500.0
-  f.prepayment 45.0
+  f.total_price BigDecimal('500.0')
+  f.prepayment BigDecimal('45.0')
   f.payment_period 1
   f.lessons_per_month 5
   f.discount 0.05
@@ -51,10 +69,11 @@ Factory.define :three_pay_period_enrollment, :class => Enrollment do |f|
   f.association :instrument
   f.association :mentor
   f.association :student
+  f.payment_plan_id 2
   f.enrollment_date Date.new(2011, 9, 1)
   f.cancel_date Date.new(2012, 5, 1)
-  f.total_price 500.0
-  f.prepayment 45.0
+  f.total_price BigDecimal('500.0')
+  f.prepayment BigDecimal('45.0')
   f.payment_period 3
   f.lessons_per_month 5
   f.discount 0.0
@@ -64,13 +83,28 @@ Factory.define :discounted_three_pay_period_enrollment, :class => Enrollment do 
   f.association :instrument
   f.association :mentor
   f.association :student
+  f.payment_plan_id 2
   f.enrollment_date Date.new(2011, 9, 1)
   f.cancel_date Date.new(2012, 5, 1)
-  f.total_price 500.0
-  f.prepayment 45.0
+  f.total_price BigDecimal('500.0')
+  f.prepayment BigDecimal('45.0')
   f.payment_period 3
   f.lessons_per_month 5
   f.discount 0.05
+end
+
+Factory.define :single_payment_enrollment, :class => Enrollment do |f|
+  f.association :instrument
+  f.association :mentor
+  f.association :student
+  f.payment_plan_id 3 #Factory(:single_payment_plan)
+  f.enrollment_date Date.new(2011, 9, 1)
+  f.cancel_date Date.new(2012, 5, 1)
+  f.total_price BigDecimal('500.0')
+  f.prepayment BigDecimal('45.0')
+  f.payment_period 8
+  f.lessons_per_month 5
+  f.discount 0.0
 end
 
 Factory.define :person do |f|
@@ -134,7 +168,7 @@ Factory.define :link do |f|
   f.uri 'pejidz.com'
   f.association :category, :factory => :link_category
 end
-
+  
 Factory.define :mentor do |f|
   f.name "Mentorij"
   f.surname "Mentis"
@@ -142,6 +176,8 @@ Factory.define :mentor do |f|
   f.password "SimonTalek"
   f.password_confirmation "SimonTalek"
   f.after_build { |mentor| mentor.instruments << Factory(:instrument) }
+  f.price_per_private_lesson 25.0
+  f.price_per_public_lesson 10.0
 end
 
 Factory.define :movie do |f|

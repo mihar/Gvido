@@ -1,3 +1,3 @@
 class PaymentPlan < ActiveRecord::Base
-  has_one :payment_plan
+  has_many :enrollments
 end

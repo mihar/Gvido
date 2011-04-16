@@ -18,7 +18,7 @@ BillingOption.create([
 PaymentPlan.create([
   {:title => 'Mesečni obrok'},
   {:title => 'Vsak tretji mesec'},
-  {:title => 'V enkratnem znesku'},
+  {:title => 'V enkratnem znesku'}
 ])
 
 Status.create([
