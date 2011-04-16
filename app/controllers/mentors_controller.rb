@@ -27,10 +27,27 @@ class MentorsController < InheritedResources::Base
   end
   
   def edit_login_account
-    @mentor = Mentor.find_by_permalink(params[:id])
-    @mentor.private_email = @mentor.user.email
-    @mentor.password = ''
-    @mentor.password_confirmation = ''
+    @user = Mentor.find_by_permalink(params[:id]).user
+    @user.email = @user.email
+    @user.password = ''
+    @user.password_confirmation = ''
+  end
+  
+  def update_login_account
+    @user = Mentor.find_by_permalink(params[:id]).user
+    @user.email = params[:email]
+    @user.password = params[:password]
+    @user.password_confirmation = params[:password_confirmation]
+    @user.first_name = @user.mentor.name
+    @user.last_name = @user.mentor.surname
+
+    if @user.save
+      flash[:notice] = "Mentorjevi prijavni podatki so bili uspešno posodobljeni."
+      redirect_to details_mentor_path(@user.mentor)
+    else
+      flash[:error] = "Prišlo je do napake pri shranjevanju mentorjevih prijavnih podatkov."
+      render :action => :edit_login_account
+    end
   end
   
   def details

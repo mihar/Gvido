@@ -17,8 +17,7 @@ class Mentor < ActiveRecord::Base
   validate :user_creation_validation
   
   before_save :make_permalink
-  before_create :mentor_user_creation 
-  #before_update :update_mentors_user_account
+  before_create :mentor_user_creation
   
   
   has_attached_file :photo, 
@@ -70,34 +69,28 @@ class Mentor < ActiveRecord::Base
 
   def user_creation_validation
     if user.nil?
-      if private_email and !private_email.empty?
-        #mail validations?
-      else
-        errors.add :private_email, "ne sme biti prazno"
-      end
-      
-      if password and !password.empty?
-        errors.add :password, "geslo mora vsebovati vsaj 6 znakov" if password.length < 6
-      else
-        errors.add :password, "ne sme biti prazno"
-      end
-      
-      if password_confirmation and !password_confirmation.empty?
-        errors.add :password_confirmation, "geslo in potrditev gesla se morata ujemati" if password and password_confirmation != password
-      else
-        errors.add :password_confirmation, "ne sme biti prazno"
-      end
+      mentors_login_account_validation
     end
   end
   
-  def update_mentors_user_account
-    user.first_name = name 
-    user.last_name = surname
-    user.email = private_email
-    unless password_confirmation.nil?
-      user.password = password
-      user.password_confirmation = password_confirmation
+  def mentors_login_account_validation
+    if private_email and !private_email.empty?
+      #mail validations?
+    else
+      errors.add :private_email, "ne sme biti prazno"
     end
-    self.user.save
+    
+    if password and !password.empty?
+      errors.add :password, "geslo mora vsebovati vsaj 6 znakov" if password.length < 6
+    else
+      errors.add :password, "ne sme biti prazno"
+    end
+    
+    if password_confirmation and !password_confirmation.empty?
+      errors.add :password_confirmation, "geslo in potrditev gesla se morata ujemati" if password and password_confirmation != password
+    else
+      errors.add :password_confirmation, "ne sme biti prazno"
+    end
   end
+  
 end
