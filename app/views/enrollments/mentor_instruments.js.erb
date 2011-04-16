@@ -15,7 +15,7 @@ function _gvido_handle_mentor_change(event) {
   if ( $mentors.val() != "" ) // If mentor is picked.
   {
     $instruments.find("option").each(function(idx, option) {
-      if ( idx != 0 ) $(option).remove()
+      if ( $(option).text() != "Izberite inštrument" ) $(option).remove()
     })
     
     $(mentors).each(function(idx, mentor) {
