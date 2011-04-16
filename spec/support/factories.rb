@@ -25,7 +25,7 @@ Factory.define :enrollment do |f|
   f.association :mentor
   f.association :instrument
   f.association :student
-  f.payment_plan_id 1
+  f.payment_plan_id :monthly
   f.enrollment_date Date.new(2011, 9, 1)
   f.cancel_date Date.new(2012, 5, 1)
   f.total_price BigDecimal('500.0')
@@ -36,75 +36,24 @@ Factory.define :enrollment do |f|
   f.enrollment_fee 0.0
 end
 
-Factory.define :prepayed_enrollment, :class => Enrollment do |f|
-  f.association :mentor
-  f.association :instrument
-  f.association :student
-  f.payment_plan_id 1
-  f.enrollment_date Date.new(2011, 9, 1)
-  f.cancel_date Date.new(2012, 5, 1)
-  f.total_price BigDecimal('500.0')
+Factory.define :prepayed_enrollment, :parent => :enrollment do |f|
   f.prepayment BigDecimal('45.0')
-  f.payment_period 1
-  f.lessons_per_month 5
-  f.discount 0.0
-  f.enrollment_fee 0.0
 end
 
-Factory.define :discounted_enrollment, :class => Enrollment do |f|
-  f.association :instrument
-  f.association :mentor
-  f.association :student
-  f.payment_plan_id 1
-  f.enrollment_date Date.new(2011, 9, 1)
-  f.cancel_date Date.new(2012, 5, 1)
-  f.total_price BigDecimal('500.0')
-  f.prepayment BigDecimal('45.0')
-  f.payment_period 1
-  f.lessons_per_month 5
+Factory.define :discounted_enrollment, :parent => :prepayed_enrollment do |f|
   f.discount 0.05
 end
 
-Factory.define :three_pay_period_enrollment, :class => Enrollment do |f|
-  f.association :instrument
-  f.association :mentor
-  f.association :student
-  f.payment_plan_id 2
-  f.enrollment_date Date.new(2011, 9, 1)
-  f.cancel_date Date.new(2012, 5, 1)
-  f.total_price BigDecimal('500.0')
-  f.prepayment BigDecimal('45.0')
-  f.payment_period 3
-  f.lessons_per_month 5
-  f.discount 0.0
+Factory.define :three_pay_period_enrollment, :parent => :prepayed_enrollment do |f|
+  f.payment_plan_id :trimester
 end
 
-Factory.define :discounted_three_pay_period_enrollment, :class => Enrollment do |f|
-  f.association :instrument
-  f.association :mentor
-  f.association :student
-  f.payment_plan_id 2
-  f.enrollment_date Date.new(2011, 9, 1)
-  f.cancel_date Date.new(2012, 5, 1)
-  f.total_price BigDecimal('500.0')
-  f.prepayment BigDecimal('45.0')
-  f.payment_period 3
-  f.lessons_per_month 5
-  f.discount 0.05
+Factory.define :discounted_three_pay_period_enrollment, :parent => :discounted_enrollment do |f|
+  f.payment_plan_id :trimester
 end
 
-Factory.define :single_payment_enrollment, :class => Enrollment do |f|
-  f.association :instrument
-  f.association :mentor
-  f.association :student
-  f.payment_plan_id 3 #Factory(:single_payment_plan)
-  f.enrollment_date Date.new(2011, 9, 1)
-  f.cancel_date Date.new(2012, 5, 1)
-  f.total_price BigDecimal('500.0')
-  f.prepayment BigDecimal('45.0')
-  f.payment_period 8
-  f.lessons_per_month 5
-  f.discount 0.0
+Factory.define :single_payment_enrollment, :parent => :prepayed_enrollment do |f|
+  f.payment_plan_id :singular
 end
 
 Factory.define :person do |f|
@@ -124,7 +73,7 @@ Factory.define :personal_contact do |f|
   f.association :student
 end
 
-Factory.define :parent, :class => 'personal_contact' do |f|
+Factory.define :parent, :parent => :personal_contact do |f|
   f.first_name 'Tata'
 end
 
