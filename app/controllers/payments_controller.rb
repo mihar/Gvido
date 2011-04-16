@@ -30,8 +30,7 @@ class PaymentsController < ApplicationController
   
   def show
     @payment = Payment.find(params[:id])
-    @enrollment = if @payment.enrollment then @payment.enrollment else nil end
-    @student    = if @enrollment.student then @enrollment.student else nil end
+    @student    = if @payment.enrollment and @payment.enrollment.student then @payment.enrollment.student else nil end
     @exception  = if @payment.payment_exception then @payment.payment_exception else nil end
   end
   

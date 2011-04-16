@@ -39,7 +39,7 @@
           %td= exception.lessons_per_month 
         - else 
           %td= l payment.payment_date
-          %td= enrollment.lessons_per_period
+          %td= payment.lessons_per_payment_period
         %td= number_to_currency(payment.calculated_price)
         %td
           - if payment.settled
