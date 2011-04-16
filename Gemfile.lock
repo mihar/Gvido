@@ -192,7 +192,7 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   autotest
-  cancan
+  cancan (= 1.6.4)
   capistrano
   capistrano-ext
   capybara
