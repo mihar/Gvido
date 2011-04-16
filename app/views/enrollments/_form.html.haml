@@ -20,9 +20,11 @@
   
 = simple_form_for [resource.student, resource], :class => :simple do |f|
   - if resource.new_record?
-    = f.input   :enrollment_date, :start_year => Date.today.year, :end_year => Date.today.year + 1, :order => [:month, :year]
+    = f.input :enrollment_date, :start_year => Date.today.year, :end_year => Date.today.year + 1, :order => [:month, :year]
   - else
-    = f.input :enrollment_date, :order => [:month, :year], :disabled => true
+    .input
+      = f.label :enrollment_date
+      = l resource.enrollment_date, :format => "%B %Y"
   = f.input :cancel_date, :start_year => Date.today.year, :end_year => Date.today.year + 1, :order => [:month, :year]
 
   = f.association :mentor, :prompt => "Izberite mentorja", :label_method => :title
@@ -41,9 +43,21 @@
       = f.collection_radio :payment_plan_id, PaymentPlan.all, :id, :title
       = f.error :payment_plan_id, :id => :payment_plan_id_error
   - else
-    = f.input :prepayment, :disabled => true
-    = f.input :enrollment_fee, :disabled => true
-    = f.input :discount_percent, :disabled => true
-    = f.association :payment_plan, :as => :radio, :disabled => true
+    - if resource.prepayment?
+      .input
+        = f.label :prepayment
+        = resource.prepayment
+    - if resource.enrollment_fee?
+      .input
+        = f.label :enrollment_fee
+        = resource.enrollment_fee
+    - if resource.discount_percent
+      .input
+        = f.label :discount_percent
+        = resource.discount_percent
+    - if resource.payment_plan
+      .input
+        = f.label :payment_plan
+        = resource.payment_plan
   .submit
     = f.button :submit

@@ -37,6 +37,10 @@ class PaymentPlan
   def singular?
     id == :singular
   end
+  
+  def to_s
+    title
+  end
 end
 
 
