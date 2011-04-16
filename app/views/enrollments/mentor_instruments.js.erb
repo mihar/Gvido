@@ -1,0 +1,53 @@
+var mentors = []
+<% for mentor in Mentor.all -%>
+  mentors.push(["<%= mentor.id %>", '<%=h mentor %>', [<%= mentor.instrument_ids.join(", ") %>]]);
+<% end -%>
+
+var instruments = []
+<% for instrument in Instrument.all -%>
+  instruments.push(["<%= instrument.id %>", '<%=h instrument %>']);
+<% end -%>
+
+function _gvido_handle_mentor_change(event) {
+  $mentors = $("#enrollment_mentor_id")
+  $instruments = $("#enrollment_instrument_id")
+  
+  if ( $mentors.val() != "" ) // If mentor is picked.
+  {
+    $instruments.find("option").each(function(idx, option) {
+      if ( idx != 0 ) $(option).remove()
+    })
+    
+    $(mentors).each(function(idx, mentor) {
+      if ( mentor[0] == $mentors.val() )
+      {
+        instrument_ids = mentor[2]
+        if ( instrument_ids.length > 0 )
+        {
+          $(instrument_ids).each(function(idx, instrument_id) {
+            var instrument_title = ""
+            
+            $(instruments).each(function(idx, instrument) {
+              if ( instrument[0] == instrument_id )
+              {
+                instrument_title = instrument[1]
+              }
+            })
+            $instruments.append($("<option value='"+ instrument_id +"'>"+ instrument_title +"</option>"))
+          })
+        }
+      }
+    })
+    
+    $instruments.parent().show()
+  }
+  else
+  {
+    $instruments.parent().hide()    
+  }
+}
+
+$(function() {
+  _gvido_handle_mentor_change()
+  $("#enrollment_mentor_id").change(_gvido_handle_mentor_change)
+})

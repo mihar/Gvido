@@ -21,7 +21,9 @@ App::Application.routes.draw do
   
   resources :students do
     resources :personal_contacts
-    resources :enrollments
+    resources :enrollments do
+      get :mentor_instruments, :on => :collection
+    end
   end
   
   resources :abouts do

@@ -14,7 +14,11 @@ class EnrollmentsController < InheritedResources::Base
   def update
     update! { student_path(parent) }
   end
-    
+  
+  def mentor_instruments
+    respond_to { |wants| wants.js }
+  end
+  
   def destroy
     student = Student.find params[:student_id]
     if student.enrollments.length.eql?(1)

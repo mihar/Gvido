@@ -45,6 +45,10 @@ class Mentor < ActiveRecord::Base
     save
   end
   
+  def to_s
+    full_name
+  end
+  
   
   private
   
