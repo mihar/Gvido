@@ -102,8 +102,8 @@ class Enrollment < ActiveRecord::Base
   #destroys unsettled payments and creates new ones
   def update_payments
     set_billable_months
-    @billable_months -= payments.regular_settled(true).map(&:payment_date)
-    payments.regular_unsettled(true).each(&:destroy)
+    @billable_months -= payments.settled.regular(true).map(&:payment_date)
+    payments.unsettled.regular(true).each(&:destroy)
     create_new_payments(true)
   end
   
@@ -135,11 +135,11 @@ class Enrollment < ActiveRecord::Base
   end
 
   def settled_payment_types
-    payments.regular_settled(true).map(&:payment_kind)
+    payments.settled.regular(true).map(&:payment_kind)
   end
     
   def irregular_first_or_last_payment_situation(payment_date)
-    if payments.regular_settled(true).empty?
+    if payments.settled.regular(true).empty?
       #no exceptions to deal with
       return first_or_last_payment_situation(true)
     else
@@ -220,7 +220,7 @@ class Enrollment < ActiveRecord::Base
     puts ""
     
     if updating
-      sum_of_settled_payments = payments.regular_settled(true).map(&:calculated_price).sum
+      sum_of_settled_payments = payments.settled.regular(true).map(&:calculated_price).sum
       calculus = (total_price - sum_of_settled_payments - deducted_from_prepayment) / @billable_months.length
       puts "-- updated calculation = #{calculus}"
     else

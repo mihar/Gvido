@@ -5,8 +5,8 @@ class Payment < ActiveRecord::Base
   
   scope :settled, where(:settled => true).order('payments.payment_date ASC')
   scope :unsettled, where(:settled => false)
-  scope :regular_settled, where(:settled => true, :payment_kind => 1..3)
-  scope :regular_unsettled, where(:settled => false, :payment_kind => 1..3)
+  scope :regular, where(:payment_kind => 1..3)
+
   scope :due_this_month, where(:payment_date => Date.today.beginning_of_month..Date.today.end_of_month)
   scope :due, where("payment_date < ?", 1.day.from_now)
   
