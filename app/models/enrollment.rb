@@ -10,7 +10,7 @@ class Enrollment < ActiveRecord::Base
   validates_numericality_of :total_price,       :greater_than_or_equal_to => 0
   validates_numericality_of :prepayment,        :greater_than_or_equal_to => 0
   validates_numericality_of :discount,          :greater_than_or_equal_to => 0
-  validates_presence_of :instrument_id, :mentor_id
+  validates_presence_of :instrument_id, :mentor_id, :payment_plan_id
   
   validate :cancel_date_correctness, :enrollment_date_acceptance
   

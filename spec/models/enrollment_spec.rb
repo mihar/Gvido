@@ -336,7 +336,7 @@ describe Enrollment do
     subject.payments(true)[4].calculated_price.should eql( BigDecimal('109.38') )
   end
   
-  ### updated enrollment, length cut, first payment settled with prepayment, no enrollment fee
+  ### updated enrollment, length cut, first two payments settled with prepayment, no enrollment fee
   it '(update - settled payment, length cut, with prepayment) should create correct payments' do
     enrollment = Factory :prepayed_enrollment
     enrollment.payments[1].settled = true
@@ -355,9 +355,6 @@ describe Enrollment do
     enrollment.payments(true)[4].payment_date.should eql(Date.new(2011, 12, 20))
     enrollment.payments(true)[5].payment_date.should eql(Date.new(2012, 1,  20))
     
-    puts '///////////////////////////////////////////////////'
-    puts "SESTEVEK PLACIL #{enrollment.payments(true).map(&:calculated_price).sum}"
-    puts '///////////////////////////////////////////////////'
     #(500 - 102.5 - 22.5) /3 = 125
     #125 - 22.5 = 102.5
     enrollment.payments(true)[0].calculated_price.should eql( BigDecimal('45') )
@@ -379,6 +376,46 @@ describe Enrollment do
     enrollment.payments(true)[5].payment_kind.should eql(Payment::PAYMENT_KIND[:half_prepayment_deducted])
   end
   
+  ###updated enrollment with trimester and prepayment, first payment settled then length cut
+  it "should calculate corect prices for updated enrollment with trimester, prepayment and length cut" do
+    enrollment = Factory :three_pay_period_enrollment
+    enrollment.payments[1].settled = true
+    enrollment.payments[1].save
+
+    enrollment.cancel_date = Date.new(2012, 2, 1)
+    enrollment.save
+    
+    enrollment.payments(true).length.should eql(3)
+    
+    #(500 - 144.17 - 22.5) - 22.5
+    enrollment.payments(true)[0].calculated_price.should eql( BigDecimal('45') )
+    enrollment.payments(true)[0].payment_kind.should eql(Payment::PAYMENT_KIND[:prepayment])
+    
+    enrollment.payments(true)[1].calculated_price.should eql( BigDecimal('144.17') )
+    enrollment.payments(true)[1].payment_kind.should eql(Payment::PAYMENT_KIND[:half_prepayment_deducted])
+    
+    enrollment.payments(true)[2].calculated_price.should eql( BigDecimal('310.83') )
+    enrollment.payments(true)[2].payment_kind.should eql(Payment::PAYMENT_KIND[:half_prepayment_deducted])
+  end 
+  
+  it "shouldn't change anyhing if single payment enrollment has its payment settled after length cut" do
+    enrollment = Factory :single_payment_enrollment
+    enrollment.payments[1].settled = true
+    enrollment.payments[1].save
+
+    enrollment.cancel_date = Date.new(2012, 2, 1)
+    enrollment.save
+    
+    enrollment.payments(true).length.should eql(2)
+    
+    #(500 - 144.17 - 22.5) - 22.5
+    enrollment.payments(true)[0].calculated_price.should eql( BigDecimal('45') )
+    enrollment.payments(true)[0].payment_kind.should eql(Payment::PAYMENT_KIND[:prepayment])
+    
+    enrollment.payments(true)[1].calculated_price.should eql( BigDecimal('455') )
+    enrollment.payments(true)[1].payment_kind.should eql(Payment::PAYMENT_KIND[:full_prepayment_deducted])
+   
+  end
   
 end
 

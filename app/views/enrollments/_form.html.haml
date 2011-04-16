@@ -37,6 +37,7 @@
     .input.radio.optional
       = f.label :payment_plan
       = f.collection_radio :payment_plan_id, PaymentPlan.all, :id, :title
+      = f.error :payment_plan_id, :id => :payment_plan_id_error
   - else
     = f.input :prepayment, :disabled => true
     = f.input :enrollment_fee, :disabled => true
