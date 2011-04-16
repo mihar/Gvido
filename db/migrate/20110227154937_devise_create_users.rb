@@ -5,6 +5,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :last_name
       t.boolean :admin, :default => false
       t.database_authenticatable :null => false
+      t.encryptable
       t.rememberable
       t.trackable
 
