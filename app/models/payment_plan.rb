@@ -13,6 +13,7 @@ class PaymentPlan
   end
   
   def self.find(id)
+    return unless id
     id = id.to_sym
     self.new :id => id, :title => PAYMENT_PLANS[id]
   end

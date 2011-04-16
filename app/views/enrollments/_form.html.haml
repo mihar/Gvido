@@ -34,7 +34,9 @@
     = f.input :enrollment_fee, :input_html => { :step => "1" }
     = f.input :enrollment_fee_payment_date, :as => :date, :start_year => Date.today.year, :end_year => Date.today.year + 1
     = f.input :discount_percent
-    = f.association :payment_plan, :as => :radio
+    .input.radio.optional
+      = f.label :payment_plan
+      = f.collection_radio :payment_plan_id, PaymentPlan.all, :id, :title
   - else
     = f.input :prepayment, :disabled => true
     = f.input :enrollment_fee, :disabled => true
