@@ -3,7 +3,6 @@ class Enrollment < ActiveRecord::Base
   belongs_to :instrument
   belongs_to :mentor
   belongs_to :student
-  belongs_to :payment_plan
   
   validates_numericality_of :payment_period,    :only_integer => true, :greater_than_or_equal_to => 1
   validates_numericality_of :lessons_per_month, :only_integer => true, :greater_than_or_equal_to => 1
@@ -20,12 +19,12 @@ class Enrollment < ActiveRecord::Base
   before_destroy :destroy_unsettled_payments
   
   before_validation do
+    return unless payment_plan
+    
     case payment_plan.id
-      when 1 then self.payment_period = 1 #monthly payment
-      when 2 then self.payment_period = 3 #payment on every third month
-      when 3 then self.payment_period = length #one time payment
-    else
-      self.payment_period = payment_plan.payment_period  
+      when :monthly then self.payment_period = 1
+      when :trimester then self.payment_period = 3
+      when :singular then self.payment_period = length
     end
   end
   
@@ -45,6 +44,10 @@ class Enrollment < ActiveRecord::Base
                 :converter => Proc.new{ |item| item }
                 
   DATE_SPACER = 19
+  
+  def payment_plan
+    @payment_plan ||= PaymentPlan.find payment_plan_id
+  end
   
   def discount_percent
     "#{discount * 100}%".gsub(".", ",")
@@ -165,9 +168,9 @@ class Enrollment < ActiveRecord::Base
   
   def first_or_last_payment_situation(updating = false)
     if prepayment > 0
-      if (payment_plan.id == 3) or
-        (payment_plan.id == 2 and length == 3) or
-        (payment_plan.id == 1 and length == 1) 
+      if (payment_plan.singular?) or
+        (payment_plan.trimester? and length == 3) or
+        (payment_plan.monthly? and length == 1) 
         return [ calculate_price(true, updating, true), Payment::PAYMENT_KIND[:full_prepayment_deducted] ]
       else
         return [ calculate_price(true, updating), Payment::PAYMENT_KIND[:half_prepayment_deducted] ]
@@ -202,45 +205,45 @@ class Enrollment < ActiveRecord::Base
   end
   
   def calculate_price(prepayment_cash_date = false, updating = false, full_prepayment_deduction = false)
-    puts ""
-    puts "------------------------------------- CALCULATION START -"
-    puts "---------------------------------------------------------"
-    puts "prepayment_cash_date =  #{prepayment_cash_date.to_s}"
-    puts "---------------------------------------------------------"
-    puts "updating = #{updating.to_s}"
-    puts "---------------------------------------------------------"
-    puts "@billable_months.length = #{@billable_months.length}"
-    puts "---------------------------------------------------------"
-    puts "length = #{length}"
-    puts "---------------------------------------------------------"
-    puts "total_price = #{total_price}"
-    puts "---------------------------------------------------------"
-    puts "discount = #{discount}"
-    puts "---------------------------------------------------------"
-    puts ""
+    Rails.logger.info ""
+    Rails.logger.info "------------------------------------- CALCULATION START -"
+    Rails.logger.info "---------------------------------------------------------"
+    Rails.logger.info "prepayment_cash_date =  #{prepayment_cash_date.to_s}"
+    Rails.logger.info "---------------------------------------------------------"
+    Rails.logger.info "updating = #{updating.to_s}"
+    Rails.logger.info "---------------------------------------------------------"
+    Rails.logger.info "@billable_months.length = #{@billable_months.length}"
+    Rails.logger.info "---------------------------------------------------------"
+    Rails.logger.info "length = #{length}"
+    Rails.logger.info "---------------------------------------------------------"
+    Rails.logger.info "total_price = #{total_price}"
+    Rails.logger.info "---------------------------------------------------------"
+    Rails.logger.info "discount = #{discount}"
+    Rails.logger.info "---------------------------------------------------------"
+    Rails.logger.info ""
     
     if updating
       sum_of_settled_payments = payments.settled.regular(true).map(&:calculated_price).sum
       calculus = (total_price - sum_of_settled_payments - deducted_from_prepayment) / @billable_months.length
-      puts "-- updated calculation = #{calculus}"
+      Rails.logger.info "-- updated calculation = #{calculus}"
     else
       calculus = total_price / @billable_months.length
-      puts "-- normal calculation = #{calculus}"
+      Rails.logger.info "-- normal calculation = #{calculus}"
     end
     
     if prepayment_cash_date
       calculus -= full_prepayment_deduction ? prepayment : prepayment / 2
-      puts "-- calculation after deducted prepayment = #{calculus}"
+      Rails.logger.info "-- calculation after deducted prepayment = #{calculus}"
     end
     
     calculus -= calculus * discount
-    puts "-- calculation after deducted discount = #{calculus}"
-    puts ""
-    puts "---------------------------------------------------------"
-    puts "CALCULATED PRICE = #{calculus.round(2)}"
-    puts "---------------------------------------------------------"
-    puts "-------------------------------------- CALCULATION STOP -"
-    puts ""
+    Rails.logger.info "-- calculation after deducted discount = #{calculus}"
+    Rails.logger.info ""
+    Rails.logger.info "---------------------------------------------------------"
+    Rails.logger.info "CALCULATED PRICE = #{calculus.round(2)}"
+    Rails.logger.info "---------------------------------------------------------"
+    Rails.logger.info "-------------------------------------- CALCULATION STOP -"
+    Rails.logger.info ""
     
     return calculus.round(2)
   end

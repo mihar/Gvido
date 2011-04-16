@@ -1,6 +1,6 @@
 class AddPaymentPlanIdToEnrollments < ActiveRecord::Migration
   def self.up
-    add_column :enrollments, :payment_plan_id, :integer, :default => 1
+    add_column :enrollments, :payment_plan_id, :string
   end
 
   def self.down

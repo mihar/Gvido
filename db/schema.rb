@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(:version => 20110414203010) do
     t.datetime "updated_at"
     t.boolean  "deleted",                                         :default => false
     t.decimal  "enrollment_fee",    :precision => 8, :scale => 2, :default => 0.0
-    t.integer  "payment_plan_id",                                 :default => 1
+    t.string   "payment_plan_id"
   end
 
   create_table "gigs", :force => true do |t|
@@ -214,15 +214,6 @@ ActiveRecord::Schema.define(:version => 20110414203010) do
     t.decimal  "discount",          :precision => 6, :scale => 4, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "payment_plans", :force => true do |t|
-    t.string  "title"
-    t.integer "payment_period"
-  end
-
-  create_table "payment_types", :force => true do |t|
-    t.string "description"
   end
 
   create_table "payments", :force => true do |t|
