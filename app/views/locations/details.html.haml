@@ -1,0 +1,67 @@
+= title "Podrobnosti lokcaije"
+
+.crud
+  = link_to "Odstrani", resource, :confirm => destroy_confirmation(resource), :method => :delete
+  .master
+    = link_to "Uredi", edit_resource_path
+
+
+.data
+  %p
+    %strong Naziv:
+    = resource.title
+    
+  - if resource.subtitle?
+  %p
+    %strong Podnaziv:
+    = resource.subtitle
+    
+  - if resource.address?
+    %p
+      %strong Naslov:
+      = resource.address
+
+  - if resource.post_office
+    %p
+      %strong Pošta:
+      = resource.post_office.id
+      = resource.post_office
+  
+  - if resource.city?
+    %p
+      %strong Kraj:
+      = resource.city
+  
+  - if resource.about?
+    %p
+      %strong Podrobnosti:
+      = raw textilize resource.about
+      
+  - if resource.uri?
+    %p
+      %strong Spletna povezava:
+      = link_to_self resource.uri
+
+- unless resource.instruments.empty?
+  %h3 Programi
+  %p= resource.instruments.to_sentence
+
+- unless resource.mentors.empty?
+  %h3 Mentorji
+  %p= resource.mentors.to_sentence
+
+- unless resource.enrollments.empty?
+  %h3 Mentorjevi učenci
+  %table
+    %thead
+      %tr
+        %th
+          Ime in priimek
+        %th
+          Program
+    %tbody
+      - for enrollment in resource.enrollments
+        %tr
+          %td= enrollment.student
+          %td= enrollment.instrument
+        

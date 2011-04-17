@@ -70,6 +70,7 @@ App::Application.routes.draw do
   resources :locations do
     get :all, :on => :collection
     member do
+      get  :details
     end
   end
   
