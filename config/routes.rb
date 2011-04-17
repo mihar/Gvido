@@ -3,7 +3,10 @@ App::Application.routes.draw do
   
   match 'dashboard', :to => 'dashboard#index'
   match 'dashboard', :to => 'dashboard#index', :as => 'user_root'
-
+  
+  resources :lessons, :only => [:index, :update]
+  resources :statuses, :billing_options
+  
   resources :payments, :only => [:index, :show] do
     member do
       get :settle
@@ -11,13 +14,6 @@ App::Application.routes.draw do
       delete :destroy
     end
   end
-  
-  get 'lessons' => 'lessons#index'
-  put 'lessons' => 'lessons#update'
-  
-  resources :statuses
-  
-  resources :billing_options  
   
   resources :students do
     resources :personal_contacts
@@ -74,8 +70,6 @@ App::Application.routes.draw do
   resources :locations do
     get :all, :on => :collection
     member do
-      post :add_mentor
-      post :destroy_mentor
     end
   end
   
@@ -97,12 +91,8 @@ App::Application.routes.draw do
   resources :mentors do
     get :all, :on => :collection
     member do
-      post :add_instrument
-      post :destroy_instrument
       get  :update_positions
       get  :details
-      get  :edit_login_account
-      put  :update_login_account
     end
   end
   

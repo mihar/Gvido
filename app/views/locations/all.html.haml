@@ -21,7 +21,7 @@
   %tbody
     - for location in collection
       %tr.clickable
-        %td= location.title
+        %td= link_to location, details_location_path(location)
         %td= location.subtitle
         %td= location.address
         %td= location.city

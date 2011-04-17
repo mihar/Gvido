@@ -8,5 +8,9 @@ class PostOffice < ActiveRecord::Base
   
   attr_accessible :id, :name
   
-  default_scope order("name")
+  default_scope order(:name)
+  
+  def to_s
+    name
+  end
 end

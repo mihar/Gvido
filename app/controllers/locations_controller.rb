@@ -14,18 +14,6 @@ class LocationsController < InheritedResources::Base
     super
   end
   
-  def add_mentor
-    resource.mentors << Mentor.find(params[:mentor][:id])
-    flash[:notice] = "Mentor dodan lokaciji"
-    redirect_to edit_location_path(params[:id])    
-  end
-  
-  def destroy_mentor
-    resource.mentors.delete(Mentor.find_by_permalink(params[:mentor_id]))
-    flash[:notice] = "Mentor odstranjen iz lokacije"
-    redirect_to edit_location_path(params[:id])    
-  end
-  
   def create
     create! { all_locations_path }
   end

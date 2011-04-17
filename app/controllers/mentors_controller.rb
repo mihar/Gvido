@@ -14,48 +14,12 @@ class MentorsController < InheritedResources::Base
     @instruments = Instrument.all.reject { |i| resource.instruments.include?(i) }
     edit!
   end
-
-  def add_instrument
-    resource.instruments << Instrument.find(params[:instrument][:id])
-    flash[:notice] = "Instrument dodan mentorju"
-    redirect_to edit_mentor_path(params[:id])
-  end
   
-  def destroy_instrument
-    resource.instruments.delete(Instrument.find_by_permalink(params[:instrument_id]))
-    flash[:notice] = "Instrument odstranjen od mentorja"
-    redirect_to edit_mentor_path(params[:id])
-  end
-
   def update_positions
     params[:mentors].each_with_index do |id, position|
       Mentor.update(id, :position => position)
     end
     render :nothing => true
-  end
-  
-  def edit_login_account
-    @user = Mentor.find_by_permalink(params[:id]).user
-    @user.email = @user.email
-    @user.password = ''
-    @user.password_confirmation = ''
-  end
-  
-  def update_login_account
-    @user = Mentor.find_by_permalink(params[:id]).user
-    @user.email = params[:email]
-    @user.password = params[:password]
-    @user.password_confirmation = params[:password_confirmation]
-    @user.first_name = @user.mentor.name
-    @user.last_name = @user.mentor.surname
-
-    if @user.save
-      flash[:notice] = "Mentorjevi prijavni podatki so bili uspešno posodobljeni."
-      redirect_to details_mentor_path(@user.mentor)
-    else
-      flash[:error] = "Prišlo je do napake pri shranjevanju mentorjevih prijavnih podatkov."
-      render :action => :edit_login_account
-    end
   end
   
   def details
@@ -67,6 +31,9 @@ class MentorsController < InheritedResources::Base
   end
   
   def update
+    resource.instrument_ids = [] unless params[:instrument_ids]
+    resource.locations_ids = [] unless params[:location_ids]
+    
     update! { all_mentors_path }
   end
   

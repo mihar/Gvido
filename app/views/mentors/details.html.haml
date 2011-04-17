@@ -2,7 +2,6 @@
 
 .crud
   = link_to "Odstrani", resource, :confirm => destroy_confirmation(resource), :method => :delete
-  = link_to "Uredi prijavne informacije", edit_login_account_mentor_path(resource)
   .master
     = link_to "Uredi", edit_mentor_path(resource)
 
@@ -10,35 +9,46 @@
   %p
     %strong Ime in priimek:
     = resource.full_name
-  %p 
-  -# 		Podrobnosti	Facebook	Myspace	Pozicija	Foto
-    %strong Telefonska številka:
-    = resource.phone
-  %p
-    %strong Naslov:
-    = resource.address
+  - if resource.phone?
+    %p 
+      %strong Telefonska številka:
+      = resource.phone
+  - if resource.address?
+    %p
+      %strong Naslov:
+      = resource.address
   %p
     %strong Email:
     = mail_to resource.email
+  - if resource.about?
+    %p
+      %strong Podrobnosti:
+      = raw textilize resource.about
+  - if resource.facebook?
+    %p
+      %strong Facebook:
+      = link_to_self resource.facebook
+  - if resource.myspace?
+    %p
+      %strong Myspace:
+      = link_to_self resource.myspace
   %p
-    %strong Podrobnosti
-    = (textilize resource.about).html_safe
-  %p
-    %strong Facebook
-    = link_to_self resource.facebook
-  %p
-    %strong Myspace
-    = link_to_self resource.myspace
-  %p
-    %strong Pozicija
+    %strong Pozicija:
     = resource.position
     
   - if resource.photo.file?
     .photo= image_tag resource.photo.url(:square), :width => 50, :height => 50
 
-- unless @enrollments.empty?
+- unless resource.instruments.empty?
+  %h3 Programi
+  %p= resource.instruments.to_sentence
+
+- unless resource.locations.empty?
+  %h3 Lokacije
+  %p= resource.locations.to_sentence
+
+- unless resource.enrollments.empty?
   %h3 Mentorjevi učenci
-  
   %table
     %thead
       %tr
@@ -47,8 +57,8 @@
         %th
           Program
     %tbody
-      - for enrollment in @enrollments
+      - for enrollment in resource.enrollments
         %tr
-          %td= enrollment.student.full_name
-          %td= enrollment.instrument.title
+          %td= enrollment.student
+          %td= enrollment.instrument
         

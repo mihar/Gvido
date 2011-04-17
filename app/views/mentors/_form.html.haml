@@ -5,10 +5,11 @@
   = f.input :email
   = f.input :phone
   = f.input :address
+  
+  %h3 Predstavitev
   = f.input :about
   = f.input :facebook
   = f.input :myspace
-  = f.input :position
   = f.input :photo
   .input.optional
     - if resource.photo.file?
@@ -19,10 +20,29 @@
   = f.simple_fields_for :user do |u|
     = u.input :password
     = u.input :password_confirmation
+  
+  %h3 Programi
+  %ul
+  - Instrument.all.each do |instrument|
+    %li
+      %label
+        = check_box_tag "mentor[instrument_ids][]", instrument.id, resource.instrument_ids.include?(instrument.id)
+        = instrument
+        
+  %h3 Lokacije
+  %ul
+  - Location.all.each do |location|
+    %li
+      %label
+        = check_box_tag "mentor[location_ids][]", location.id, resource.location_ids.include?(location.id)
+        = location
     
   %h3 Pare
   = f.input :price_per_private_lesson
   = f.input :price_per_public_lesson
+  
+  %h3 Pozicija
+  = f.input :position
   
   .submit
     = f.button :submit
