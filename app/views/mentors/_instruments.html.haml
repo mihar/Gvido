@@ -2,7 +2,7 @@
 %ul
   = render :partial => 'instrument', :collection => @mentor.instruments
   
-- unless @instruments.empty?
+- if @instruments and @instruments.any?
   = form_tag add_instrument_mentor_path, :method => :post do
     = collection_select :instrument, :id, @instruments, :id, :title
     = submit_tag :Dodaj

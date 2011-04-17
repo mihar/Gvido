@@ -2,7 +2,15 @@ class MentorsController < InheritedResources::Base
   load_and_authorize_resource
   layout :pick_layout
   
+  def new
+    @mentor = Mentor.new
+    @mentor.build_user
+    new!
+  end
+  
   def edit
+    @mentor = Mentor.find_by_permalink params[:id]
+    @mentor.build_user unless @mentor.user
     @instruments = Instrument.all.reject { |i| resource.instruments.include?(i) }
     edit!
   end

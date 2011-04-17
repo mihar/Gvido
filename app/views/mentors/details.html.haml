@@ -25,10 +25,10 @@
     = (textilize resource.about).html_safe
   %p
     %strong Facebook
-    = resource.facebook
+    = link_to_self resource.facebook
   %p
     %strong Myspace
-    = resource.myspace
+    = link_to_self resource.myspace
   %p
     %strong Pozicija
     = resource.position

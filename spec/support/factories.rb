@@ -1,7 +1,3 @@
-Factory.sequence :email do |n|
-  "email#{n}@factory.com"
-end
-
 Factory.define :payment do |f|
   f.association :enrollment
 end
@@ -121,9 +117,8 @@ end
 Factory.define :mentor do |f|
   f.name "Mentorij"
   f.surname "Mentis"
-  f.private_email Factory.next :email
-  f.password "SimonTalek"
-  f.password_confirmation "SimonTalek"
+  f.sequence(:email) { |n| "lolo#{n}@tralala.si" }
+  f.association :user
   f.after_build { |mentor| mentor.instruments << Factory(:instrument) }
   f.price_per_private_lesson 25.0
   f.price_per_public_lesson 10.0

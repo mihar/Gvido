@@ -4,7 +4,7 @@ sl:
   no: "NE"
 
   times: "krat"
-
+  existing_image: "Obstoječa slika"
   days:
     one: "1 dan"
     few: "2 dneva"
@@ -12,6 +12,7 @@ sl:
     other: "%{count} dni"
   
   attributes:
+    password_confirmation: "Geslo ponovno"
     password: "Geslo"
     name: "Naziv"
     image: "Grafika"
@@ -180,8 +181,6 @@ sl:
         facebook: "Facebook naslov"
         myspace: "Myspace naslov"
         private_email: "Zasebna E-pošta"
-        password_confirmation: "Potrditev gesla"
-        password: "Geslo"
         price_per_public_lesson: "Tarifa javnega predavanja"
         price_per_private_lesson: "Tarifa zasebnega predavanja"
       movie:
