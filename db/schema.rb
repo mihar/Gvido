@@ -184,7 +184,6 @@ ActiveRecord::Schema.define(:version => 20110417181347) do
     t.integer  "position",                                                :default => 0
     t.string   "facebook"
     t.string   "myspace"
-    t.integer  "user_id"
     t.decimal  "price_per_private_lesson", :precision => 10, :scale => 0
     t.decimal  "price_per_public_lesson",  :precision => 10, :scale => 0
   end
@@ -330,6 +329,7 @@ ActiveRecord::Schema.define(:version => 20110417181347) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "mentor_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
