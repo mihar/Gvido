@@ -139,6 +139,7 @@ sl:
         enrollment_fee_payment_date: "Rok plačila vpisnine"
         payment_plan: "Plan plačila"
         lessons_per_month: "Št. predavanj na mesec"
+        price_per_lesson: "Cena učne ure (€)"
         discount_percent: "Popust (%)"
       gig:
         title: "Naziv koncerta"

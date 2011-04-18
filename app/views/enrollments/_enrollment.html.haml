@@ -7,6 +7,7 @@
   %td= number_to_percentage(enrollment.discount * 100, :precision => 2)
   %td= number_to_currency(enrollment.total_price, :precision => 2)
   %td= number_to_currency(enrollment.payments.map(&:calculated_price).sum  , :precision => 2)
+  %td= number_to_currency(enrollment.payments.settled.map(&:calculated_price).sum, :precision => 2)
   %td
     .crud
       - if enrollment.payments.settled.empty?

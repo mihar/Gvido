@@ -97,12 +97,8 @@ App::Application.routes.draw do
   resources :mentors do
     get :all, :on => :collection
     member do
-      post :add_instrument
-      post :destroy_instrument
       get  :update_positions
       get  :details
-      get  :edit_login_account
-      put  :update_login_account
     end
   end
   

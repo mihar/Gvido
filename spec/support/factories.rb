@@ -29,11 +29,32 @@ Factory.define :enrollment do |f|
   f.enrollment_date Date.new(2011, 9, 1)
   f.cancel_date Date.new(2012, 5, 1)
   f.total_price BigDecimal('500.0')
+  f.price_per_lesson 0.0
   f.prepayment 0.0
   f.payment_period 1
   f.lessons_per_month 5
   f.discount 0.0
   f.enrollment_fee 0.0
+end
+
+Factory.define :enrollment_with_price_per_lesson, :parent => :enrollment do |f|
+  f.price_per_lesson 25.0
+end
+
+Factory.define :prepayed_enrollment_with_price_per_lesson, :parent => :enrollment_with_price_per_lesson do |f|
+  f.prepayment BigDecimal('45.0')
+end
+
+Factory.define :prepayed_enrollment_with_price_per_lesson_and_discount, :parent => :prepayed_enrollment_with_price_per_lesson do |f|
+  f.discount 0.05
+end
+
+Factory.define :prepayed_singular_enrollment_with_price_per_lesson, :parent => :prepayed_enrollment_with_price_per_lesson do |f|
+  f.payment_plan_id :singular
+end
+
+Factory.define :trimester_enrollment_with_prepayment, :parent => :prepayed_enrollment_with_price_per_lesson do |f|
+  f.payment_plan_id :trimester
 end
 
 Factory.define :prepayed_enrollment, :parent => :enrollment do |f|

@@ -30,4 +30,6 @@
 %p
   %strong Znesek
   = number_to_currency(@payment.calculated_price)
+  
+= raw @payment.description if @payment.description
 

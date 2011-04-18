@@ -14,13 +14,14 @@ class Enrollment < ActiveRecord::Base
   
   validate :cancel_date_correctness, :enrollment_date_acceptance
   
-  after_create   :create_payments
-  after_update   :update_payments
+  after_create    :create_payments
+  after_update    :update_payments
+  before_save     :set_total_price
+  before_update   :set_total_price
   before_destroy :destroy_unsettled_payments
   
   before_validation do
     return unless payment_plan
-    
     case payment_plan.id
       when :monthly then self.payment_period = 1
       when :trimester then self.payment_period = 3
@@ -28,7 +29,7 @@ class Enrollment < ActiveRecord::Base
     end
   end
   
-  attr_accessor :billable_months
+  attr_accessor :billable_months, :payment_description
   
   scope :active, where("enrollment_date < CURRENT_DATE() AND cancel_date > CURRENT_DATE() AND deleted = 0")
   composed_of :prepayment_payment_date,
@@ -68,7 +69,12 @@ class Enrollment < ActiveRecord::Base
   end
   
   private
-  
+  def set_total_price
+    if price_per_lesson > 0
+      self.total_price =  payments.settled.regular(true).map(&:calculated_price).sum + \
+                          price_per_lesson * lessons_per_month * (length - payments.settled.regular(true).length)
+    end
+  end
   ###### CALCULATIONS ######
   
   def create_payments
@@ -85,6 +91,7 @@ class Enrollment < ActiveRecord::Base
         p.payment_date = enrollment_fee_payment_date
         p.calculated_price = enrollment_fee
         p.payment_kind = Payment::PAYMENT_KIND[:enrollment_fee]
+        p.description = "Vpisnina"
         p.settled = false
       end
     end
@@ -97,6 +104,7 @@ class Enrollment < ActiveRecord::Base
         p.payment_date = prepayment_payment_date.to_date
         p.calculated_price = prepayment
         p.payment_kind = Payment::PAYMENT_KIND[:prepayment]
+        p.description = "Kavcija"
         p.settled = false
       end
     end
@@ -121,10 +129,10 @@ class Enrollment < ActiveRecord::Base
         if updating
           calculated_price, payment_kind = irregular_first_or_last_payment_situation(payment_date)
         else
-          calculated_price, payment_kind = first_or_last_payment_situation
+          calculated_price, payment_kind = first_or_last_payment_situation(payment_date)
         end
       else
-        calculated_price = updating ? calculate_price(false, true) : calculate_price
+        calculated_price = updating ? calculate_price(payment_date, false, true) : calculate_price(payment_date)
       end
 
       Payment.create do |p|
@@ -132,6 +140,7 @@ class Enrollment < ActiveRecord::Base
         p.payment_date = payment_date
         p.payment_kind = payment_kind
         p.calculated_price = calculated_price
+        p.description = @payment_description
         p.settled = false
       end
     end
@@ -144,39 +153,39 @@ class Enrollment < ActiveRecord::Base
   def irregular_first_or_last_payment_situation(payment_date)
     if payments.settled.regular(true).empty?
       #no exceptions to deal with
-      return first_or_last_payment_situation(true)
+      return first_or_last_payment_situation(payment_date, true)
     else
       types = settled_payment_types
 
       if types.include?(Payment::PAYMENT_KIND[:full_prepayment_deducted])
-        return [ calculate_price(false, true), Payment::PAYMENT_KIND[:regular] ]
+        return [ calculate_price(payment_date, false, true), Payment::PAYMENT_KIND[:regular] ]
       else
         case types.count(Payment::PAYMENT_KIND[:half_prepayment_deducted])
-          when 0 then return first_or_last_payment_situation(true)
-          when 2 then return [ calculate_price(false, true), Payment::PAYMENT_KIND[:regular] ]
+          when 0 then return first_or_last_payment_situation(payment_date, true)
+          when 2 then return [ calculate_price(payment_date, false, true), Payment::PAYMENT_KIND[:regular] ]
         else
           if (@billable_months.length > 1 and payment_date == @billable_months.last) or
              (@billable_months.length == 1)
-            return [ calculate_price(true, true), Payment::PAYMENT_KIND[:half_prepayment_deducted]]
+            return [ calculate_price(payment_date, true, true), Payment::PAYMENT_KIND[:half_prepayment_deducted]]
           else
-            return [ calculate_price(false, true), Payment::PAYMENT_KIND[:regular] ]
+            return [ calculate_price(payment_date, false, true), Payment::PAYMENT_KIND[:regular] ]
           end
         end
       end 
     end
   end
   
-  def first_or_last_payment_situation(updating = false)
+  def first_or_last_payment_situation(payment_date, updating = false)
     if prepayment > 0
       if (payment_plan.singular?) or
         (payment_plan.trimester? and length == 3) or
         (payment_plan.monthly? and length == 1) 
-        return [ calculate_price(true, updating, true), Payment::PAYMENT_KIND[:full_prepayment_deducted] ]
+        return [ calculate_price(payment_date, true, updating, true), Payment::PAYMENT_KIND[:full_prepayment_deducted] ]
       else
-        return [ calculate_price(true, updating), Payment::PAYMENT_KIND[:half_prepayment_deducted] ]
+        return [ calculate_price(payment_date, true, updating), Payment::PAYMENT_KIND[:half_prepayment_deducted] ]
       end
     else
-      return [ calculate_price(false, updating), Payment::PAYMENT_KIND[:regular] ]
+      return [ calculate_price(payment_date, false, updating), Payment::PAYMENT_KIND[:regular] ]
     end  
   end
   
@@ -204,48 +213,71 @@ class Enrollment < ActiveRecord::Base
     end
   end
   
-  def calculate_price(prepayment_cash_date = false, updating = false, full_prepayment_deduction = false)
-    Rails.logger.info ""
-    Rails.logger.info "------------------------------------- CALCULATION START -"
-    Rails.logger.info "---------------------------------------------------------"
-    Rails.logger.info "prepayment_cash_date =  #{prepayment_cash_date.to_s}"
-    Rails.logger.info "---------------------------------------------------------"
-    Rails.logger.info "updating = #{updating.to_s}"
-    Rails.logger.info "---------------------------------------------------------"
-    Rails.logger.info "@billable_months.length = #{@billable_months.length}"
-    Rails.logger.info "---------------------------------------------------------"
-    Rails.logger.info "length = #{length}"
-    Rails.logger.info "---------------------------------------------------------"
-    Rails.logger.info "total_price = #{total_price}"
-    Rails.logger.info "---------------------------------------------------------"
-    Rails.logger.info "discount = #{discount}"
-    Rails.logger.info "---------------------------------------------------------"
-    Rails.logger.info ""
-    
-    if updating
-      sum_of_settled_payments = payments.settled.regular(true).map(&:calculated_price).sum
-      calculus = (total_price - sum_of_settled_payments - deducted_from_prepayment) / @billable_months.length
-      Rails.logger.info "-- updated calculation = #{calculus}"
+  def payment_description_init(prepayment_cash_date = false, updating = false, full_prepayment_deduction = false)
+    @payment_description = ""
+    @payment_description += "<p><strong>Plačilo ima posodobljen znesek zaradi spremembe vpisnine.</strong></p>" if updating
+    @payment_description += "<h4>Podatki</h4>"
+    @payment_description += "<ul>"
+    if price_per_lesson > 0
+      @payment_description += "<li><strong>Cena učne ure</strong> = #{price_per_lesson}</li>" 
     else
-      calculus = total_price / @billable_months.length
-      Rails.logger.info "-- normal calculation = #{calculus}"
+      @payment_description += "<li><strong>Cena šolnine</strong> = #{total_price}</li>" if total_price > 0
     end
+    if prepayment_cash_date
+      if full_prepayment_deduction
+        @payment_description += "<li><strong>Celotna kavcija</strong> = #{prepayment}</li>"
+      else
+        @payment_description += "<li><strong>Polovica kavcije</strong> = #{prepayment / 2}</li>"
+      end
+    end
+      @payment_description += "<li><strong>Popust</strong> = #{discount}</li>" if discount > 0
+    @payment_description += "</ul>"
+  end
+  
+  def calculate_price(payment_date, prepayment_cash_date = false, updating = false, full_prepayment_deduction = false)
+    payment_description_init(prepayment_cash_date, updating, full_prepayment_deduction)
+   
+    if price_per_lesson > 0
+      calculus = price_per_lesson * lessons_per_payment_period(payment_date)
+      @payment_description += "<p><strong>Osnova</strong> = #{price_per_lesson} * #{lessons_per_month} * #{ payment_period } = #{calculus} </p>"
+    else
+      if updating
+        sum_of_settled_payments = payments.settled.regular(true).map(&:calculated_price).sum
+        calculus = (total_price - sum_of_settled_payments - deducted_from_prepayment) / @billable_months.length
+        @payment_description += "<p><strong>Osnova</strong> = (#{total_price} - #{sum_of_settled_payments} - #{deducted_from_prepayment}) / #{@billable_months.length} = #{calculus} </p>"
+      else
+        calculus = total_price / @billable_months.length
+        @payment_description += "<p><strong>Osnova</strong> = #{total_price} / #{@billable_months.length} = #{calculus} </p>"
+      end
+    end
+    
+    @payment_description += "<h4>Potek izračuna</h4>"
+    @payment_description += "<p>"
+    @payment_description += "#{calculus} "
     
     if prepayment_cash_date
       calculus -= full_prepayment_deduction ? prepayment : prepayment / 2
-      Rails.logger.info "-- calculation after deducted prepayment = #{calculus}"
+      @payment_description += " - #{full_prepayment_deduction ? prepayment : prepayment / 2}"
     end
     
+    @payment_description += " - #{calculus * discount}" if discount > 0
     calculus -= calculus * discount
-    Rails.logger.info "-- calculation after deducted discount = #{calculus}"
-    Rails.logger.info ""
-    Rails.logger.info "---------------------------------------------------------"
-    Rails.logger.info "CALCULATED PRICE = #{calculus.round(2)}"
-    Rails.logger.info "---------------------------------------------------------"
-    Rails.logger.info "-------------------------------------- CALCULATION STOP -"
-    Rails.logger.info ""
     
+    @payment_description += " = <strong>#{calculus.round(2)}</strong>"
+    @payment_description += "</p>"
     return calculus.round(2)
+  end
+  
+  def lessons_per_payment_period(payment_date)
+    if length % payment_period == 0
+      return lessons_per_month * payment_period
+    else  
+      if payment_date == @billable_months.last
+        return (length % payment_period) * lessons_per_month
+      else
+        return lessons_per_month * payment_period
+      end
+    end 
   end
   
   ###### VALIDATIONS ######
@@ -295,7 +327,7 @@ class Enrollment < ActiveRecord::Base
       end
     end
   end
-  
+
   def add_error(invalid_enrollment_date, invalid_cancel_date, invalid_embracing_enrollment, error_message)
     if invalid_enrollment_date
       errors.add :enrollment_date, error_message
