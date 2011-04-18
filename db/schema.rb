@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110414203010) do
+ActiveRecord::Schema.define(:version => 20110417181347) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20110414203010) do
     t.boolean  "deleted",                                         :default => false
     t.decimal  "enrollment_fee",    :precision => 8, :scale => 2, :default => 0.0
     t.string   "payment_plan_id"
+    t.decimal  "price_per_lesson",  :precision => 6, :scale => 2, :default => 0.0
   end
 
   create_table "gigs", :force => true do |t|
@@ -224,6 +225,7 @@ ActiveRecord::Schema.define(:version => 20110414203010) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "payment_kind",                                   :default => 1
+    t.text     "description"
   end
 
   create_table "people", :force => true do |t|
