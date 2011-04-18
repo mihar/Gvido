@@ -1,4 +1,6 @@
 class Enrollment < ActiveRecord::Base  
+  include ActionView::Helpers::NumberHelper
+
   has_many :payments
   belongs_to :instrument
   belongs_to :mentor
@@ -219,18 +221,18 @@ class Enrollment < ActiveRecord::Base
     @payment_description += "<h4>Podatki</h4>"
     @payment_description += "<ul>"
     if price_per_lesson > 0
-      @payment_description += "<li><strong>Cena učne ure</strong> = #{price_per_lesson}</li>" 
+      @payment_description += "<li><strong>Cena učne ure</strong> = #{number_to_currency price_per_lesson}</li>" 
     else
-      @payment_description += "<li><strong>Cena šolnine</strong> = #{total_price}</li>" if total_price > 0
+      @payment_description += "<li><strong>Cena šolnine</strong> = #{number_to_currency total_price}</li>" if total_price > 0
     end
     if prepayment_cash_date
       if full_prepayment_deduction
-        @payment_description += "<li><strong>Celotna kavcija</strong> = #{prepayment}</li>"
+        @payment_description += "<li><strong>Celotna kavcija</strong> = #{number_to_currency prepayment}</li>"
       else
-        @payment_description += "<li><strong>Polovica kavcije</strong> = #{prepayment / 2}</li>"
+        @payment_description += "<li><strong>Polovica kavcije</strong> = #{number_to_currency prepayment / 2}</li>"
       end
     end
-      @payment_description += "<li><strong>Popust</strong> = #{discount}</li>" if discount > 0
+      @payment_description += "<li><strong>Popust</strong> = #{number_to_percentage discount}</li>" if discount > 0
     @payment_description += "</ul>"
   end
   
@@ -239,21 +241,21 @@ class Enrollment < ActiveRecord::Base
    
     if price_per_lesson > 0
       calculus = price_per_lesson * lessons_per_payment_period(payment_date)
-      @payment_description += "<p><strong>Osnova</strong> = #{price_per_lesson} * #{lessons_per_month} * #{ payment_period } = #{calculus} </p>"
+      @payment_description += "<p><strong>Osnova</strong> = #{number_to_currency price_per_lesson} * #{lessons_per_month} * #{ payment_period } = #{number_to_currency calculus} </p>"
     else
       if updating
         sum_of_settled_payments = payments.settled.regular(true).map(&:calculated_price).sum
         calculus = (total_price - sum_of_settled_payments - deducted_from_prepayment) / @billable_months.length
-        @payment_description += "<p><strong>Osnova</strong> = (#{total_price} - #{sum_of_settled_payments} - #{deducted_from_prepayment}) / #{@billable_months.length} = #{calculus} </p>"
+        @payment_description += "<p><strong>Osnova</strong> = (#{number_to_currency total_price} - #{number_to_currency sum_of_settled_payments} - #{number_to_currency deducted_from_prepayment}) / #{@billable_months.length} = #{number_to_currency calculus} </p>"
       else
         calculus = total_price / @billable_months.length
-        @payment_description += "<p><strong>Osnova</strong> = #{total_price} / #{@billable_months.length} = #{calculus} </p>"
+        @payment_description += "<p><strong>Osnova</strong> = #{number_to_currency total_price} / #{@billable_months.length} = #{number_to_currency calculus} </p>"
       end
     end
     
     @payment_description += "<h4>Potek izračuna</h4>"
     @payment_description += "<p>"
-    @payment_description += "#{calculus} "
+    @payment_description += "#{number_to_currency calculus} "
     
     if prepayment_cash_date
       calculus -= full_prepayment_deduction ? prepayment : prepayment / 2
@@ -263,7 +265,7 @@ class Enrollment < ActiveRecord::Base
     @payment_description += " - #{calculus * discount}" if discount > 0
     calculus -= calculus * discount
     
-    @payment_description += " = <strong>#{calculus.round(2)}</strong>"
+    @payment_description += " = <strong>#{number_to_currency calculus.round(2)}</strong>"
     @payment_description += "</p>"
     return calculus.round(2)
   end
