@@ -2,7 +2,6 @@
 
 .crud
   = link_to "Odstrani", resource, :confirm => destroy_confirmation(resource), :method => :delete
-  = link_to "Uredi prijavne informacije", edit_login_account_mentor_path(resource)
   .master
     = link_to "Uredi", edit_mentor_path(resource)
 
