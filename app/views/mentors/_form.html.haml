@@ -1,24 +1,49 @@
 = simple_form_for resource, :class => :simple, :html => {:multipart => true} do |f|
-
-  - if resource.user.nil?
-    %h3 Zasebne informacije
-    = f.input :private_email
-    = f.input :password
-    = f.input :password_confirmation
-  
-  %h3 Javne informacije
+  %h3 Osebni podatki
   = f.input :name
   = f.input :surname
-  = f.input :price_per_private_lesson
-  = f.input :price_per_public_lesson
-  = f.input :phone
   = f.input :email
+  = f.input :phone
   = f.input :address
-  = f.input :photo
+  
+  %h3 Predstavitev
   = f.input :about
   = f.input :facebook
   = f.input :myspace
+  = f.input :photo
+  .input.optional
+    - if resource.photo.file?
+      %label= t("existing_image")
+      = image_tag resource.photo.url(:small)
+  
+  %h3 Geslo za dostop
+  = f.simple_fields_for :user do |u|
+    = u.input :password
+    = u.input :password_confirmation
+  
+  %h3 Programi
+  %ul
+  - Instrument.all.each do |instrument|
+    %li
+      %label
+        = check_box_tag "mentor[instrument_ids][]", instrument.id, resource.instrument_ids.include?(instrument.id)
+        = instrument
+        
+  %h3 Lokacije
+  %ul
+  - Location.all.each do |location|
+    %li
+      %label
+        = check_box_tag "mentor[location_ids][]", location.id, resource.location_ids.include?(location.id)
+        = location
+    
+  %h3 Pare
+  = f.input :price_per_private_lesson
+  = f.input :price_per_public_lesson
+  
+  %h3 Pozicija
   = f.input :position
+  
   .submit
     = f.button :submit
 

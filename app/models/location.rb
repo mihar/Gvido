@@ -26,6 +26,12 @@ class Location < ActiveRecord::Base
     save(false)
   end
   
+  def enrollments
+    mentors.map do |m|
+      m.enrollments
+    end.flatten.uniq
+  end
+  
   def instruments
     mentors.map do |m|
       m.instruments
@@ -34,6 +40,10 @@ class Location < ActiveRecord::Base
   
   def gmaps4rails_address
     [self.address, self.city, self.post_office.id].join(" ")
+  end
+  
+  def to_s
+    title
   end
   
   protected
