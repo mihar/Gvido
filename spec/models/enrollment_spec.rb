@@ -143,7 +143,7 @@ describe Enrollment do
         it 'should create 9 payments including prepayment' do
           #sep oct nov dec jan feb mar apr < may
           enrollment = Factory :prepayed_enrollment
-          enrollment.payments.length.should eql(9)
+          enrollment.payments(true).length.should eql(9)
         end
 
         it 'should have correct payment dates in created payments' do
@@ -379,7 +379,7 @@ describe Enrollment do
       context "on create" do
         it 'should create correct payments' do
           enrollment = Factory :three_pay_period_enrollment
-          enrollment.payments.length.should eql(4)
+          enrollment.payments(true).length.should eql(4)
           enrollment.payments[1].payment_date.should eql(Date.new(2011, 9,  20))
           enrollment.payments[2].payment_date.should eql(Date.new(2011, 12, 20))
           enrollment.payments[3].payment_date.should eql(Date.new(2012, 3,  20))
@@ -455,7 +455,7 @@ describe Enrollment do
           #regular price = 500/3 - 0.05 * 500/3 = 166.666667 - 8.3333333333 = 158.3333333 == 158.33
           enrollment = Factory :discounted_three_pay_period_enrollment
 
-          enrollment.payments.length.should eql(4)
+          enrollment.payments(true).length.should eql(4)
           enrollment.payments[1].payment_date.should eql(Date.new(2011, 9,  20))
           enrollment.payments[2].payment_date.should eql(Date.new(2011, 12, 20))
           enrollment.payments[3].payment_date.should eql(Date.new(2012, 3,  20))
@@ -529,7 +529,7 @@ describe Enrollment do
       context "on create" do
         it 'should create correct payments' do
           enrollment = Factory :single_payment_enrollment
-          enrollment.payments.length.should eql(2)
+          enrollment.payments(true).length.should eql(2)
           enrollment.payments[1].payment_date.should eql(Date.new(2011, 9,  20))
           enrollment.payments[0].calculated_price.should eql(BigDecimal('45.0'))
           enrollment.payments[1].calculated_price.should eql(BigDecimal('455.0'))        
@@ -588,7 +588,8 @@ describe Enrollment do
         it "should create correct payments" do
           enrollment = Factory :enrollment_with_price_per_lesson
           #regular price = 25*5 = 125
-          enrollment.payments.length.should eql(8)
+          
+          enrollment.payments(true).length.should eql(8)
           enrollment.payments(true)[0].payment_date.should eql(Date.new(2011, 9,  20))
           enrollment.payments(true)[1].payment_date.should eql(Date.new(2011, 10, 20))
           enrollment.payments(true)[2].payment_date.should eql(Date.new(2011, 11, 20))
@@ -719,7 +720,7 @@ describe Enrollment do
         it "should create correct payments" do
           enrollment = Factory :prepayed_enrollment_with_price_per_lesson
 
-          enrollment.payments.length.should eql(9)
+          enrollment.payments(true).length.should eql(9)
           enrollment.payments(true)[1].payment_date.should eql(Date.new(2011, 9,  20))
           enrollment.payments(true)[2].payment_date.should eql(Date.new(2011, 10, 20))
           enrollment.payments(true)[3].payment_date.should eql(Date.new(2011, 11, 20))
@@ -754,7 +755,7 @@ describe Enrollment do
           enrollment = Factory :prepayed_enrollment_with_price_per_lesson
           enrollment.save
 
-          enrollment.payments.length.should eql(9)
+          enrollment.payments(true).length.should eql(9)
           enrollment.payments(true)[1].payment_date.should eql(Date.new(2011, 9,  20))
           enrollment.payments(true)[2].payment_date.should eql(Date.new(2011, 10, 20))
           enrollment.payments(true)[3].payment_date.should eql(Date.new(2011, 11, 20))
@@ -814,7 +815,7 @@ describe Enrollment do
       context "on update with first payment settled and enrollment lenght cut" do
         it "should create correct payments" do
           enrollment = Factory :prepayed_enrollment_with_price_per_lesson
-          enrollment.payments[1].settled = true
+          enrollment.payments(true)[1].settled = true
           enrollment.payments[1].save
           
           enrollment.cancel_date = Date.new(2012, 2, 1)
@@ -884,7 +885,7 @@ describe Enrollment do
           enrollment.save
           #25 * 5 - 0.05 * 25 * 5 = 118.75
           #(25 * 5 -22.5) - 0.05 * (25 * 5 -22.5) = 97.375
-          enrollment.payments.length.should eql(9)
+          enrollment.payments(true).length.should eql(9)
           enrollment.payments(true)[1].payment_date.should eql(Date.new(2011, 9,  20))
           enrollment.payments(true)[2].payment_date.should eql(Date.new(2011, 10, 20))
           enrollment.payments(true)[3].payment_date.should eql(Date.new(2011, 11, 20))
@@ -922,7 +923,7 @@ describe Enrollment do
           enrollment.save
           #25 * 5 - 0.05 * 25 * 5 = 118.75
           #(25 * 5 -22.5) - 0.05 * (25 * 5 -22.5) = 97.375
-          enrollment.payments.length.should eql(6)
+          enrollment.payments(true).length.should eql(6)
           enrollment.payments(true)[1].payment_date.should eql(Date.new(2011, 9,  20))
           enrollment.payments(true)[2].payment_date.should eql(Date.new(2011, 10, 20))
           enrollment.payments(true)[3].payment_date.should eql(Date.new(2011, 11, 20))
@@ -946,7 +947,7 @@ describe Enrollment do
       context "on update with first payment settled and enrollment length cut" do
         it "should create correct payments" do
           enrollment = Factory :prepayed_enrollment_with_price_per_lesson_and_discount
-          enrollment.payments[1].settled = true
+          enrollment.payments(true)[1].settled = true
           enrollment.payments[1].save
           
           enrollment.cancel_date = Date.new(2012, 2, 1)
@@ -1045,7 +1046,7 @@ describe Enrollment do
       context "on update with first payment settled and enrollment lenght cut" do
         it "should create correct payments" do
           enrollment = Factory :trimester_enrollment_with_prepayment
-          enrollment.payments[1].settled = true
+          enrollment.payments(true)[1].settled = true
           enrollment.payments[1].save
           enrollment.cancel_date = Date.new(2012, 2, 1)
           enrollment.save
@@ -1070,7 +1071,7 @@ describe Enrollment do
       context "on create" do
         it 'should create correct payments' do
           enrollment = Factory :prepayed_singular_enrollment_with_price_per_lesson
-          enrollment.payments.length.should eql(2)
+          enrollment.payments(true).length.should eql(2)
           enrollment.payments[1].payment_date.should eql(Date.new(2011, 9,  20))
           enrollment.payments[0].calculated_price.should eql(BigDecimal('45.0'))
           enrollment.payments[1].calculated_price.should eql(BigDecimal('955'))        
@@ -1104,7 +1105,7 @@ describe Enrollment do
       context "on update with settled payment" do
         it "shouldn't change anyhing if single payment enrollment has its payment settled after length cut" do
           enrollment = Factory :prepayed_singular_enrollment_with_price_per_lesson
-          enrollment.payments[1].settled = true
+          enrollment.payments(true)[1].settled = true
           enrollment.payments[1].save
 
           enrollment.cancel_date = Date.new(2012, 2, 1)
