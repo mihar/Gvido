@@ -74,8 +74,8 @@ class Enrollment < ActiveRecord::Base
   
   def set_total_price
     if price_per_lesson > 0
-      self.total_price =  payments.settled.regular(true).map(&:calculated_price).sum + \
-                          price_per_lesson * lessons_per_month * (length - payments.settled.regular(true).length)
+      self.total_price =  sum_of_settled_payments + deducted_from_prepayment + \
+                          price_per_lesson * lessons_per_month * (length - payments.settled.regular(true).length * payment_period)
     end
   end
   
@@ -136,9 +136,7 @@ class Enrollment < ActiveRecord::Base
   #creates a payment for every billable month
   def create_new_payments(updating = false)
     @billable_months.each do |payment_date|
-      
       payment_kind = Payment::PAYMENT_KIND[:regular]
-      
       #checks if prepayment should be deducted or not
       if payment_date == @billable_months.first or payment_date == @billable_months.last
         if updating
@@ -155,14 +153,9 @@ class Enrollment < ActiveRecord::Base
       else
         create_a_payment(calculated_price, payment_date, @payment_description,  payment_kind,  nil)
       end
-      
     end
   end
-
-  def settled_payment_types
-    payments.settled.regular(true).map(&:payment_kind)
-  end
-    
+      
   def irregular_first_or_last_payment_situation(payment_date)
     if payments.settled.regular(true).empty?
       #no exceptions to deal with
@@ -214,6 +207,14 @@ class Enrollment < ActiveRecord::Base
     end  
   end
   
+  def settled_payment_types
+    payments.settled.regular(true).map(&:payment_kind)
+  end
+  
+  def sum_of_settled_payments
+    payments.settled.regular(true).map(&:calculated_price).sum 
+  end
+  
   def deducted_from_prepayment
     types = settled_payment_types
     if types.include?(Payment::PAYMENT_KIND[:full_prepayment_deducted])
@@ -255,7 +256,6 @@ class Enrollment < ActiveRecord::Base
       @payment_description += "<p><strong>Osnova</strong> = #{number_to_currency price_per_lesson} * #{lessons_per_month} * #{ payment_period } = #{number_to_currency calculus} </p>"
     else
       if updating
-        sum_of_settled_payments = payments.settled.regular(true).map(&:calculated_price).sum
         calculus = (total_price - sum_of_settled_payments - deducted_from_prepayment) / @billable_months.length
         @payment_description += "<p><strong>Osnova</strong> = (#{number_to_currency total_price} - #{number_to_currency sum_of_settled_payments} - #{number_to_currency deducted_from_prepayment}) / #{@billable_months.length} = #{number_to_currency calculus} </p>"
       else

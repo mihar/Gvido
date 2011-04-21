@@ -840,6 +840,18 @@ describe Enrollment do
           enrollment.payments(true)[4].payment_kind.should eql(Payment::PAYMENT_KIND[:regular])
           enrollment.payments(true)[5].payment_kind.should eql(Payment::PAYMENT_KIND[:half_prepayment_deducted])
         end
+      
+        it "should calcuate correct total price" do
+          enrollment = Factory :prepayed_enrollment_with_price_per_lesson
+          enrollment.payments(true)[1].settled = true
+          enrollment.payments[1].save
+          
+          enrollment.cancel_date = Date.new(2012, 2, 1)
+          enrollment.save
+          
+          enrollment.payments(true)[1].calculated_price.should eql(BigDecimal('102.5'))
+          enrollment.total_price.should == enrollment.payments(true).map(&:calculated_price).sum
+        end
       end
     end
     
