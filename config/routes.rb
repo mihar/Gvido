@@ -4,7 +4,12 @@ App::Application.routes.draw do
   match 'dashboard', :to => 'dashboard#index'
   match 'dashboard', :to => 'dashboard#index', :as => 'user_root'
   
-  resources :lessons, :only => [:index, :update]
+  resources :lessons, :only => [:index] do
+    collection do
+      put :bulk_update
+    end
+  end
+    
   resources :statuses, :billing_options
   
   resources :payments, :only => [:index, :show] do

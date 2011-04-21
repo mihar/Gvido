@@ -6,27 +6,29 @@ class LessonsController < ApplicationController
   
   #displays lessons for students that need to pay this month
   def index
-    current_payment_date = Date.today.at_beginning_of_month + Enrollment::DATE_SPACER
     @lessons = Array.new
+    lessons = Array.new
+    date = Date.today == Date.today.at_end_of_month ? Date.today : Date.today.prev_month.at_end_of_month
     
-    for enrollment in current_user.mentor.enrollments
-      payment = Payment.find_by_enrollment_id_and_payment_date(
-        enrollment.id,
-        current_payment_date)
-        
-      unless payment.nil?
-        @lessons << {
-          :student => payment.enrollment.student.full_name,
-          :lesson => Lesson.find_or_create_by_student_id_and_mentor_id_and_payment_id(
-            payment.enrollment.student.id,
-            current_user.id,
-            payment.id)
-          }
-      end
+    Lesson.where(:check_in_date => date, :mentor_id => current_user.mentor.id).each do |lesson|
+      @lessons << {
+        :student => lesson.payment.enrollment.student.full_name,
+        :lesson => lesson
+      }
+      lessons << lesson
     end
+    
+    if Date.today == Date.today.at_end_of_month
+      @period = "od #{l Date.today.at_beginning_of_month } do #{l Date.today}"
+      @editing = true
+    else
+      @period = "od #{l Date.today.prev_month.at_beginning_of_month } do #{l Date.today.prev_month.at_end_of_month}"
+      @editing = false
+    end
+    @mentors_wage = lessons.map(&:hours_this_month).sum * current_user.mentor.price_per_private_lesson
   end
   
-  def update
+  def bulk_update
     Lesson.update(params[:lesson].keys, params[:lesson].values)
     redirect_to :lessons, :notice => 'Števila predavanj so bila uspešno posodobljena'
   end

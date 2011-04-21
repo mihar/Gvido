@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110417181347) do
+ActiveRecord::Schema.define(:version => 20110421080144) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -119,11 +119,13 @@ ActiveRecord::Schema.define(:version => 20110417181347) do
 
   create_table "lessons", :force => true do |t|
     t.integer  "payment_id"
-    t.integer  "hours_this_month", :default => 0
+    t.integer  "hours_this_month",          :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "mentor_id"
     t.integer  "student_id"
+    t.integer  "expected_hours_this_month", :default => 0
+    t.date     "check_in_date"
   end
 
   create_table "link_categories", :force => true do |t|
@@ -225,6 +227,7 @@ ActiveRecord::Schema.define(:version => 20110417181347) do
     t.datetime "updated_at"
     t.integer  "payment_kind",                                   :default => 1
     t.text     "description"
+    t.decimal  "price_per_lesson", :precision => 6, :scale => 4, :default => 0.0
   end
 
   create_table "people", :force => true do |t|

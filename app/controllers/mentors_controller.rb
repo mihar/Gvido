@@ -32,7 +32,7 @@ class MentorsController < InheritedResources::Base
   
   def update
     resource.instrument_ids = [] unless params[:instrument_ids]
-    resource.locations_ids = [] unless params[:location_ids]
+    resource.location_ids = [] unless params[:location_ids]
     
     update! { all_mentors_path }
   end

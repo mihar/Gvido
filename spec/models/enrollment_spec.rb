@@ -35,7 +35,7 @@ describe Enrollment do
         end
 
         it 'should have correct payment dates in created payments' do
-          subject.payments[0].payment_date.should eql(Date.new(2011, 9,  20))
+          subject.payments(true)[0].payment_date.should eql(Date.new(2011, 9,  20))
           subject.payments[1].payment_date.should eql(Date.new(2011, 10, 20))
           subject.payments[2].payment_date.should eql(Date.new(2011, 11, 20))
           subject.payments[3].payment_date.should eql(Date.new(2011, 12, 20))
@@ -1124,5 +1124,94 @@ describe Enrollment do
     end
   end
   
+  context "on lesson creation" do
+    it "should create correct lessons for monthly enrollment" do
+      counter = 0
+      subject.payments(true).each do |payment|
+        payment.payment_kind.should == Payment::PAYMENT_KIND[:regular]
+        payment.lessons.length.should == 1
+        payment.lessons.first.expected_hours_this_month.should == 5
+        payment.lessons.first.check_in_date.should == ((Date.new(2011, 9, 1)) >> counter ).at_end_of_month
+        
+        counter += 1
+      end
+    end
+    
+    it "should create correct lessons for trimester enrollment" do
+      enrollment = Factory :three_pay_period_enrollment
+      
+      counter = 0
+      enrollment.payments(true).each do |payment|
+        counter += 1
+        
+        case counter 
+        when 1
+          payment.payment_kind.should == Payment::PAYMENT_KIND[:prepayment]
+          payment.lessons.empty?.should == true
+        when 2 
+          payment.payment_kind.should == Payment::PAYMENT_KIND[:half_prepayment_deducted]
+          payment.lessons.length.should == 3
+          
+          payment.lessons[0].check_in_date.should == Date.new(2011, 9, 30)
+          payment.lessons[1].check_in_date.should == Date.new(2011, 10, 31)
+          payment.lessons[2].check_in_date.should == Date.new(2011, 11, 30)
+          payment.lessons[0].expected_hours_this_month.should == 5
+          payment.lessons[1].expected_hours_this_month.should == 5
+          payment.lessons[2].expected_hours_this_month.should == 5
+        when 3
+          payment.lessons.length.should == 3
+          payment.payment_kind.should == Payment::PAYMENT_KIND[:regular]
+          payment.lessons[0].check_in_date.should == Date.new(2011, 12, 31)
+          payment.lessons[1].check_in_date.should == Date.new(2012, 1, 31)
+          payment.lessons[2].check_in_date.should == Date.new(2012, 2, 29)
+          payment.lessons[0].expected_hours_this_month.should == 5
+          payment.lessons[1].expected_hours_this_month.should == 5
+          payment.lessons[2].expected_hours_this_month.should == 5
+        when 4
+          payment.payment_kind.should == Payment::PAYMENT_KIND[:half_prepayment_deducted]
+          payment.lessons.length.should == 2
+          payment.lessons[0].check_in_date.should == Date.new(2012, 3, 31)
+          payment.lessons[1].check_in_date.should == Date.new(2012, 4, 30)
+          payment.lessons[0].expected_hours_this_month.should == 5
+          payment.lessons[1].expected_hours_this_month.should == 5
+        end 
+        
+      end
+    end
+    
+    it "shold create correct lessons for singular enrollment" do
+      enrollment = Factory :single_payment_enrollment
+      
+      counter = 0
+      enrollment.payments(true).each do |payment|
+        counter += 1
+        
+        case counter 
+        when 1
+          payment.payment_kind.should == Payment::PAYMENT_KIND[:prepayment]
+          payment.lessons.empty?.should == true
+        when 2 
+          payment.payment_kind.should == Payment::PAYMENT_KIND[:full_prepayment_deducted]
+          payment.lessons.length.should == 8
+          
+          payment.lessons[0].check_in_date.should == Date.new(2011, 9, 30)
+          payment.lessons[1].check_in_date.should == Date.new(2011, 10, 31)
+          payment.lessons[2].check_in_date.should == Date.new(2011, 11, 30)
+          payment.lessons[3].check_in_date.should == Date.new(2011, 12, 31)
+          payment.lessons[4].check_in_date.should == Date.new(2012, 1, 31)
+          payment.lessons[5].check_in_date.should == Date.new(2012, 2, 29)
+          payment.lessons[6].check_in_date.should == Date.new(2012, 3, 31)
+          payment.lessons[7].check_in_date.should == Date.new(2012, 4, 30)
+          payment.lessons[0].expected_hours_this_month.should == 5
+          payment.lessons[1].expected_hours_this_month.should == 5
+          payment.lessons[2].expected_hours_this_month.should == 5
+          payment.lessons[3].expected_hours_this_month.should == 5
+          payment.lessons[4].expected_hours_this_month.should == 5
+          payment.lessons[5].expected_hours_this_month.should == 5
+          payment.lessons[6].expected_hours_this_month.should == 5
+          payment.lessons[7].expected_hours_this_month.should == 5
+        end
+      end 
+    end          
+  end
 end
-

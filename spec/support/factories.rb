@@ -7,7 +7,7 @@ Factory.define :payment_exception do |f|
 end
 
 Factory.define :lesson do |f|
-  f.association :enrollment
+  f.association :payment
   f.association :student
   f.association :mentor
 end

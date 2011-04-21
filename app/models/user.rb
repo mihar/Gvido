@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
   belongs_to :mentor, :dependent => :destroy
-  has_many :lessons
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable

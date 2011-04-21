@@ -7,12 +7,16 @@
   - else
     %td
   %td= number_to_currency payment.calculated_price
+  %td= number_to_currency payment.price_per_lesson
   %td
     - if payment.settled
       &#10003;
     - else
       ✗
   - if payment.payment_kind < 4
-    %td= payment.lessons_per_payment_period
-  - else
-    %td
+    %td= payment.lessons.map(&:expected_hours_this_month).sum
+    %td= payment.lessons.map(&:hours_this_month).sum
+    - payment.lessons.each do |lesson|
+      %td= "#{l(lesson.check_in_date.at_beginning_of_month)} - #{l(lesson.check_in_date)}"
+      %td= lesson.expected_hours_this_month
+      %td= lesson.hours_this_month

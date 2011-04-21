@@ -89,20 +89,22 @@
         %th Vrsta plačila
         %th Plan plačila
         %th Znesek
+        %th Cena ure
         %th Plačano
         %th Št. učnih ur na obračun
+        %th Št. potrjenih učnih ur
+        %th Obdobje
+        %th Pričakovanih ur
+        %th Potrjenih ur
+        %th Obdobje
+        %th Pričakovanih ur
+        %th Potrjenih ur
+        %th Obdobje
+        %th Pričakovanih ur
+        %th Potrjenih ur
       %tbody
       = render @student.payments
       
-- unless @student.lessons.empty?
-  #lessons
-    %h3 Opravljene učne ure
-    %table
-      %thead
-        %th Št. opravljenih učnih ur
-      %tbody
-      = render @student.lessons
-
 %br.clear
  
 = link_to_back students_path

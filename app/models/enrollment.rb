@@ -71,12 +71,14 @@ class Enrollment < ActiveRecord::Base
   end
   
   private
+  
   def set_total_price
     if price_per_lesson > 0
       self.total_price =  payments.settled.regular(true).map(&:calculated_price).sum + \
                           price_per_lesson * lessons_per_month * (length - payments.settled.regular(true).length)
     end
   end
+  
   ###### CALCULATIONS ######
   
   def create_payments
@@ -86,38 +88,49 @@ class Enrollment < ActiveRecord::Base
     create_new_payments
   end
   
-  def create_payment_for_enrollment_fee
-    if enrollment_fee > 0
-      Payment.create do |p|
-        p.enrollment_id = id
-        p.payment_date = enrollment_fee_payment_date
-        p.calculated_price = enrollment_fee
-        p.payment_kind = Payment::PAYMENT_KIND[:enrollment_fee]
-        p.description = "Vpisnina"
-        p.settled = false
-      end
-    end
-  end
-  
-  def create_payment_for_prepayment
-    if prepayment > 0
-      Payment.create do |p|
-        p.enrollment_id = id
-        p.payment_date = prepayment_payment_date.to_date
-        p.calculated_price = prepayment
-        p.payment_kind = Payment::PAYMENT_KIND[:prepayment]
-        p.description = "Kavcija"
-        p.settled = false
-      end
-    end
-  end
-  
   #destroys unsettled payments and creates new ones
   def update_payments
     set_billable_months
     @billable_months -= payments.settled.regular(true).map(&:payment_date)
     payments.unsettled.regular(true).each(&:destroy)
     create_new_payments(true)
+  end
+  
+  def create_payment_for_enrollment_fee
+    if enrollment_fee > 0
+      create_a_payment(enrollment_fee, enrollment_fee_payment_date, "Plačilo vpisnine", Payment::PAYMENT_KIND[:enrollment_fee], nil)
+    end
+  end
+  
+  def create_payment_for_prepayment
+    if prepayment > 0
+      create_a_payment(prepayment, prepayment_payment_date, "Plačilo kavcije", Payment::PAYMENT_KIND[:prepayment], nil)
+    end
+  end
+  
+  def create_a_payment(price, date, description, kind, _price_per_lesson = 0.0) 
+    payment = Payment.create do |p|
+      p.enrollment_id = id
+      p.payment_date = date
+      p.price_per_lesson = _price_per_lesson
+      p.calculated_price = price
+      p.payment_kind = kind
+      p.description = description
+      p.settled = false
+    end
+    
+    if kind != Payment::PAYMENT_KIND[:prepayment] and kind != Payment::PAYMENT_KIND[:enrollment_fee]
+      (lessons_per_payment_period(date) / lessons_per_month).times do |i|
+        Lesson.create do |l|
+          l.payment_id = payment.id
+          l.student_id = self.student.id
+          l.mentor_id = self.mentor.id
+          l.hours_this_month = 0
+          l.expected_hours_this_month = lessons_per_month
+          l.check_in_date = (date >> i).at_end_of_month
+        end
+      end
+    end
   end
   
   #creates a payment for every billable month
@@ -136,15 +149,13 @@ class Enrollment < ActiveRecord::Base
       else
         calculated_price = updating ? calculate_price(payment_date, false, true) : calculate_price(payment_date)
       end
-
-      Payment.create do |p|
-        p.enrollment_id = id
-        p.payment_date = payment_date
-        p.payment_kind = payment_kind
-        p.calculated_price = calculated_price
-        p.description = @payment_description
-        p.settled = false
+      
+      if price_per_lesson > 0
+        create_a_payment(calculated_price, payment_date, @payment_description,  payment_kind, price_per_lesson)
+      else
+        create_a_payment(calculated_price, payment_date, @payment_description,  payment_kind,  nil)
       end
+      
     end
   end
 

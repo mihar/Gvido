@@ -1,11 +1,21 @@
-= title 'Števila predavanj unčencev'
+= title "Števila zasebnih predavanj unčencev (#{@period})"
 
-= form_tag({:controller => 'lessons', :action => 'update'}, {:method => :put} )  do
+- if @editing
+  = form_tag(bulk_update_lessons_path, {:method => :put} )  do
+    - for lesson in @lessons
+      %p
+        - field_name = "lesson[#{lesson[:lesson].id}][hours_this_month]"
+        = label_tag field_name, lesson[:student]
+        = number_field_tag field_name, lesson[:lesson].hours_this_month
+  
+    = submit_tag 'Shrani'
+- else
   - for lesson in @lessons
     %p
-      - field_name = "lesson[#{lesson[:lesson].id}][hours_this_month]"
-      = label_tag field_name, lesson[:student]
-      = number_field_tag field_name, lesson[:lesson].hours_this_month
-  
-  = submit_tag 'Shrani'
+      %strong= lesson[:student]
+      = lesson[:lesson].hours_this_month
 
+%hr
+%p
+  %strong Znesek:
+  = number_to_currency(@mentors_wage)

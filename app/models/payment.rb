@@ -1,7 +1,7 @@
 class Payment < ActiveRecord::Base
   belongs_to  :enrollment
   has_one     :payment_exception
-  has_one     :lesson, :dependent => :destroy
+  has_many    :lessons, :dependent => :destroy
   
   scope :settled, where(:settled => true).order('payments.payment_date ASC')
   scope :unsettled, where(:settled => false)
