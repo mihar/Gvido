@@ -11,6 +11,6 @@ class Contact < ActiveRecord::Base
     errors.add :location_ids,    "Izbrana mora biti vsaj ena lokacija"   if locations.empty?
   end
  
-  scope :processed,   where('processed = ?', true).order('id DESC')
-  scope :unprocessed, where('processed = ?', false).order('id DESC')
+  scope :processed,   where(:processed => true).order('id DESC')
+  scope :unprocessed, where(:processed => false).order('id DESC')
 end
