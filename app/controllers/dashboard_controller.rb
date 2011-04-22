@@ -7,7 +7,7 @@ class DashboardController < ApplicationController
     redirect_to :lessons if mentor?
     
     # Load up dashboard stuff.
-    @contacts = Contact.unprocessed
+    @contacts = Contact.unprocessed(true)
     @payments = Payment.due.unsettled
     @students_celebrating = Student.birthday_today
   end

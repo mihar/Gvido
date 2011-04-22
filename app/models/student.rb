@@ -6,7 +6,7 @@ class Student < Person
   belongs_to  :billing_option
   belongs_to  :contact
   
-  after_create :proper_reference_number
+  after_create :proper_reference_number, :set_contact_to_processed
   
   validates_presence_of :status_id
   
@@ -39,4 +39,13 @@ class Student < Person
     self.reference_number = Digest::SHA1.hexdigest("#{id}").hex.to_s[0..12]
     self.save
   end
+  
+  def set_contact_to_processed
+    if contact
+      contact.processed = true
+      contact.save
+    end
+  end
+  
+  
 end
