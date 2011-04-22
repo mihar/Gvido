@@ -1,0 +1,8 @@
+= simple_form_for [@payment_exception.payment, @payment_exception], :class => :simple do |f|
+  
+  = f.input :payment_date
+  = f.input :price
+  = f.input :description
+
+  .submit
+    = f.button :submit
