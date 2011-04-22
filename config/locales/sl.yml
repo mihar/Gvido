@@ -54,7 +54,7 @@ sl:
       # You can provide other formats here if you like!
       default: "%d.%m.%Y"
       short: "%d. %b"
-      long: "%d. %b %Y"
+      long: "%d. %B %Y"
       simple: "%d. %b %Y"
       month_year: "%B %Y"
 

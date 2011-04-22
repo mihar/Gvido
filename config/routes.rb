@@ -13,10 +13,10 @@ App::Application.routes.draw do
   resources :statuses, :billing_options
   
   resources :payments, :only => [:index, :show] do
+    resources :payment_exceptions
     member do
       get :settle
       get :unsettle
-      delete :destroy
     end
   end
   
@@ -99,6 +99,7 @@ App::Application.routes.draw do
     member do
       get  :update_positions
       get  :details
+      get  :wages
     end
   end
   

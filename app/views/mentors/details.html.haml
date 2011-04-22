@@ -61,4 +61,14 @@
         %tr
           %td= enrollment.student
           %td= enrollment.instrument
-        
+
+
+- if @check_in_dates and not @check_in_dates.empty?
+  %br
+  %h3 Pregled mentorjevih plač
+  - @check_in_dates.each do |year, check_in_dates|
+    %strong= "#{year} > "
+    - check_in_dates.each do |check_in_date|
+      - date = l check_in_date, :format => :short
+      = link_to date, :action => "wages", :check_in_date => check_in_date.to_s
+

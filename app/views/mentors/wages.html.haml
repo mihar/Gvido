@@ -1,0 +1,25 @@
+= title "Pregled plače za obdobje od #{l @selected_date.at_beginning_of_month} do #{l @selected_date}"
+
+
+%table
+  %thead
+    %tr
+      %th Učenec
+      %th Pričakovano št. ur
+      %th Dejansko št. ur
+  %tbody
+  - for lesson in @lessons
+    %tr
+      %td
+        %strong= lesson.student
+      %td
+        = lesson.expected_hours_this_month
+      %td
+        = lesson.hours_this_month
+
+%hr
+%p
+%strong Znesek:
+= number_to_currency(@mentors_wage)
+
+= link_to_back details_mentor_path(resource)
