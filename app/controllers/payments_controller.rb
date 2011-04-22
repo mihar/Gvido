@@ -4,20 +4,20 @@ class PaymentsController < ApplicationController
   before_filter :set_section
   
   def index
-    @payable_months = Payment.all_payment_dates
-    unless params[:payable_month].blank?
-      @payments = Payment.monthly_payments(params[:payable_month])
-      #TODO: change this / fixit or dont do it at all
-      @current_month = Date.new(
-                                  params[:payable_month][0..3].to_i, 
-                                  params[:payable_month][5..6].to_i, 
-                                  params[:payable_month][8..9].to_i
-                               )
+    @payable_dates = Payment.all_payment_dates
+    unless params[:payable_date].blank?
+      @selected_date = Date.new(  params[:payable_date][0..3].to_i, 
+                                  params[:payable_date][5..6].to_i, 
+                                  params[:payable_date][8..9].to_i )
+      @payments = Payment.on_date(@selected_date)
+      set_instance_vars
       return
     end
     
-    @current_month = Date.today.at_beginning_of_month + Enrollment::DATE_SPACER
-    @payments = Payment.monthly_payments(@current_month)
+    @selected_date = Date.today.at_beginning_of_month + Enrollment::DATE_SPACER
+    @payments = Payment.on_date(@selected_date)
+    
+    set_instance_vars
   end
   
   def settle
@@ -34,14 +34,6 @@ class PaymentsController < ApplicationController
     @exception  = if @payment.payment_exception then @payment.payment_exception else nil end
   end
   
-  def destroy
-    @payment = Payment.find(params[:id])
-    @payment_date = @payment.payment_date.to_s
-    @payment.destroy
-    
-    redirect_to payments_path(:payable_month => @payment_date)
-  end
-  
   private
   
   def settle_it(id, settled = true)
@@ -49,6 +41,12 @@ class PaymentsController < ApplicationController
     payment.settled = settled
     payment.save
     redirect_to payments_path(:payable_month => payment.payment_date.to_s)
+  end
+  
+  def set_instance_vars
+    @expected_payments_sum  = @payments.map(&:calculated_price).sum
+    @settled_payments_sum   = @payments.settled(true).map(&:calculated_price).sum
+    @unsettled_payments_sum = @payments.unsettled(true).map(&:calculated_price).sum
   end
   
   def set_section

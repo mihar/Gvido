@@ -5,8 +5,8 @@
     - if @payment.settled
       = link_to 'Ne plačano', unsettle_payment_path(@payment)
     - else
-      -# = link_to 'Odstrani', @payment,  :confirm => destroy_confirmation(notice), :method => :delete
       = link_to 'Plačano', settle_payment_path(@payment)
+      -#= link_to 'Dodaj izjemo', new_payment_payment_exception_path(@payment)
     
 %p
   %strong Ime in priimek plačnika
@@ -27,6 +27,14 @@
   %strong Število predavanj
   = @payment.lessons_per_payment_period
 
+%p
+  %strong Plan plačila
+  = @payment.enrollment.payment_plan.title
+
+%p
+  %strong Vrsta plačila
+  = payment_type(@payment.payment_kind)
+  
 %p
   %strong Znesek
   = number_to_currency(@payment.calculated_price)

@@ -2,10 +2,7 @@
   %td= link_to l(payment.payment_date), payment
   %td= payment.enrollment.instrument.title + '/' + payment.enrollment.mentor.full_name
   %td= payment_type(payment.payment_kind)
-  - if payment.payment_kind < 4
-    %td= payment.enrollment.payment_plan.title
-  - else
-    %td
+  %td= payment.enrollment.payment_plan.title
   %td= number_to_currency payment.calculated_price
   %td= number_to_currency payment.price_per_lesson
   %td
@@ -14,8 +11,8 @@
     - else
       ✗
   - if payment.payment_kind < 4
-    %td= payment.lessons.map(&:expected_hours_this_month).sum
-    %td= payment.lessons.map(&:hours_this_month).sum
+    %td= payment.lessons_per_payment_period
+    %td= payment.actual_lessons_per_payment_period
     - payment.lessons.each do |lesson|
       %td= "#{l(lesson.check_in_date.at_beginning_of_month)} - #{l(lesson.check_in_date)}"
       %td= lesson.expected_hours_this_month
