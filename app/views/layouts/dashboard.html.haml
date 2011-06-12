@@ -19,7 +19,7 @@
             = menu_item "Mentorji", "Mentors", all_mentors_path
             = menu_item "Programi", "Instruments", all_instruments_path
             = menu_item "Lokacije", "Locations", all_locations_path
-            = menu_item "Plačila", "Payments", payments_path
+            = menu_item "Položnice", "Invoices", invoices_path
           %ul#support
             %li
               %span Ostalo
@@ -30,7 +30,7 @@
             %li
               %span Spletna stran
               %ul
-                = menu_item "O nas", "About", all_abouts_path
+                = menu_item "O nas", "Abouts", all_abouts_path
                 = menu_item "Koncerti", "Gigs", all_gigs_path
                 = menu_item "Kategorije albumov", "AlbumCategories", all_album_categories_path
                 = menu_item "Albumi", "Albums", all_albums_path
@@ -42,6 +42,7 @@
                 = menu_item "Videi", "Movies", all_movies_path
                 = menu_item "Povezave", "Links", all_links_path
                 = menu_item "Skupine lokacij", "LocationSections", all_location_sections_path
+                = menu_item "Pogodba", "Agreements", all_agreements_path 
             
       - if user_signed_in?
         #user

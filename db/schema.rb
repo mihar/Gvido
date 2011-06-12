@@ -10,13 +10,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110421080144) do
+ActiveRecord::Schema.define(:version => 20110610063930) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "contact"
+  end
+
+  create_table "agreements", :force => true do |t|
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "album_categories", :force => true do |t|
@@ -67,17 +73,15 @@ ActiveRecord::Schema.define(:version => 20110421080144) do
     t.integer  "student_id"
     t.date     "enrollment_date"
     t.date     "cancel_date"
-    t.decimal  "total_price",       :precision => 8, :scale => 2
-    t.decimal  "prepayment",        :precision => 8, :scale => 2, :default => 0.0
-    t.integer  "payment_period",                                  :default => 1
-    t.integer  "lessons_per_month"
-    t.decimal  "discount",          :precision => 6, :scale => 4, :default => 0.0
+    t.decimal  "total_price",      :precision => 8, :scale => 2
+    t.decimal  "prepayment",       :precision => 8, :scale => 2, :default => 0.0
+    t.integer  "nr_of_lessons"
+    t.decimal  "discount",         :precision => 6, :scale => 4, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted",                                         :default => false
-    t.decimal  "enrollment_fee",    :precision => 8, :scale => 2, :default => 0.0
-    t.string   "payment_plan_id"
-    t.decimal  "price_per_lesson",  :precision => 6, :scale => 2, :default => 0.0
+    t.boolean  "deleted",                                        :default => false
+    t.decimal  "enrollment_fee",   :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "price_per_lesson", :precision => 6, :scale => 2, :default => 0.0
   end
 
   create_table "gigs", :force => true do |t|
@@ -117,15 +121,19 @@ ActiveRecord::Schema.define(:version => 20110421080144) do
     t.integer "instrument_id"
   end
 
-  create_table "lessons", :force => true do |t|
-    t.integer  "payment_id"
-    t.integer  "hours_this_month",          :default => 0
+  create_table "invoices", :force => true do |t|
+    t.string   "monthly_reference"
+    t.decimal  "price",             :precision => 8, :scale => 2, :default => 0.0
+    t.date     "payment_date"
+    t.boolean  "settled",                                         :default => false
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "mentor_id"
     t.integer  "student_id"
-    t.integer  "expected_hours_this_month", :default => 0
-    t.date     "check_in_date"
+    t.string   "payers_name"
+    t.string   "payers_address"
+    t.string   "recievers_name"
+    t.string   "recievers_address"
   end
 
   create_table "link_categories", :force => true do |t|
@@ -188,6 +196,22 @@ ActiveRecord::Schema.define(:version => 20110421080144) do
     t.string   "myspace"
     t.decimal  "price_per_private_lesson", :precision => 10, :scale => 0
     t.decimal  "price_per_public_lesson",  :precision => 10, :scale => 0
+    t.boolean  "public_email",                                            :default => false
+    t.boolean  "public_phone",                                            :default => false
+    t.boolean  "public_address",                                          :default => false
+    t.datetime "last_hours_entry_at"
+  end
+
+  create_table "monthly_lessons", :force => true do |t|
+    t.integer  "mentor_id"
+    t.integer  "student_id"
+    t.integer  "enrollment_id"
+    t.integer  "payment_period_id"
+    t.integer  "invoice_id"
+    t.integer  "hours",             :default => 0
+    t.date     "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "movies", :force => true do |t|
@@ -209,25 +233,15 @@ ActiveRecord::Schema.define(:version => 20110421080144) do
     t.datetime "updated_at"
   end
 
-  create_table "payment_exceptions", :force => true do |t|
-    t.integer  "payment_id"
-    t.date     "payment_date"
-    t.integer  "lessons_per_month"
-    t.decimal  "discount",          :precision => 6, :scale => 4, :default => 0.0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "payments", :force => true do |t|
+  create_table "payment_periods", :force => true do |t|
     t.integer  "enrollment_id"
-    t.decimal  "calculated_price", :precision => 8, :scale => 2
-    t.date     "payment_date"
-    t.boolean  "settled"
+    t.string   "payment_plan_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.decimal  "discount",          :precision => 7, :scale => 4, :default => 0.0
+    t.boolean  "deduct_prepayment",                               :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "payment_kind",                                   :default => 1
-    t.text     "description"
-    t.decimal  "price_per_lesson", :precision => 6, :scale => 4, :default => 0.0
   end
 
   create_table "people", :force => true do |t|

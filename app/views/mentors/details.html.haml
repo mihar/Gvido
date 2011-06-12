@@ -59,16 +59,11 @@
     %tbody
       - for enrollment in resource.enrollments
         %tr
-          %td= enrollment.student
-          %td= enrollment.instrument
+          %td= link_to enrollment.student, enrollment.student
+          %td= link_to enrollment.instrument, detail_instrument_path(enrollment.instrument)
 
 
 - if @check_in_dates and not @check_in_dates.empty?
   %br
   %h3 Pregled mentorjevih plač
-  - @check_in_dates.each do |year, check_in_dates|
-    %strong= "#{year} > "
-    - check_in_dates.each do |check_in_date|
-      - date = l check_in_date, :format => :short
-      = link_to date, :action => "wages", :check_in_date => check_in_date.to_s
-
+  = date_hash_to_links(@check_in_dates, "wages", :check_in_date)

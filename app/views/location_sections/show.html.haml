@@ -1,11 +1,35 @@
-- title "Location Section"
-%p
-  %strong
-    Title:
-  = h @location_section.title
-%p
-  = link_to "Edit", edit_location_section_path(@location_section)
-  |
-  = link_to "Destroy", @location_section, :confirm => 'Ste prepričani?', :method => :delete
-  |
-  = link_to "View All", location_sections_path
+= title resource
+.crud
+  = link_to "Odstrani", resource, :confirm => destroy_confirmation(resource), :method => :delete
+  .master
+    = link_to "Uredi", edit_location_section_path(resource)
+
+- if resource.locations.any?
+  - locations = resource.locations
+  - mentors = locations.collect(&:mentors).flatten.uniq
+  - enrollments = resource.locations.collect(&:enrollments).flatten.uniq
+  
+  %h3 Lokacije
+  %p= resource.locations.to_sentence
+  
+  - if mentors.any?
+    %h3 Mentorji
+    %p= mentors.to_sentence
+  
+  - if enrollments.any?
+    %h3 Učenci
+    %table
+      %thead
+        %tr
+          %th
+            Ime in priimek
+          %th
+            Program
+      %tbody
+        - for enrollment in enrollments
+          %tr
+            %td= link_to enrollment.student, enrollment.student
+            %td= enrollment
+
+
+= link_to_back all_location_sections_path

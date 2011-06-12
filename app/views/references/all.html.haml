@@ -7,14 +7,12 @@
   %thead
     %th Referenca
     %th Vsebina
-    %th
+    %th Opcije
   %tbody
     - for reference in collection
       %tr.clickable
         %td= reference.title
         %td= (textilize reference.body).html_safe
-        %td
-          .crud
-            = link_to "Odstrani", reference, :confirm => destroy_confirmation(reference), :method => :delete
-            = link_to "Uredi", edit_reference_path(reference)
+        %td.crud= link_to "Odstrani", reference, :confirm => destroy_confirmation(reference), :method => :delete
+        %td.crud= link_to "Uredi", edit_reference_path(reference)
 

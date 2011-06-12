@@ -24,6 +24,7 @@ sl:
     photo: "Fotografija"
     title: "Naslov"
     email: "E-pošta"
+    discount_percent: "Popust (%)"
   crud:
     archive: "Arhiviraj"
     dearchive: "Dearhiviraj"
@@ -57,6 +58,7 @@ sl:
       long: "%d. %B %Y"
       simple: "%d. %b %Y"
       month_year: "%B %Y"
+      month: "%B"
 
     day_names: [nedelja, ponedeljek, torek, sreda, četrtek, petek, sobota]
     abbr_day_names: [ned, pon, tor, sre, čet, pet, sob]
@@ -108,6 +110,7 @@ sl:
       person: "Osebe"
       post: "Novice"
       photo: "Fotografije"
+      payment_period: "Plačilno obdobje"
       question: "Pogosta vprašanja"
       reference: "Reference"
       schedule: "Urniki"
@@ -138,10 +141,8 @@ sl:
         total_price: "Šolnina (€)"
         enrollment_fee: "Vpisnina (€)"
         enrollment_fee_payment_date: "Rok plačila vpisnine"
-        payment_plan: "Plan plačila"
-        lessons_per_month: "Št. predavanj na mesec"
+        nr_of_lessons: "Število učnih ur"
         price_per_lesson: "Cena učne ure (€)"
-        discount_percent: "Popust (%)"
       gig:
         title: "Naziv koncerta"
         venue: "Prireditveni prostor"
@@ -184,10 +185,17 @@ sl:
         private_email: "Zasebna E-pošta"
         price_per_public_lesson: "Tarifa javnega predavanja"
         price_per_private_lesson: "Tarifa zasebnega predavanja"
+        public_email: "Javna e-pošta?"
+        public_address: "Javen naslov?"
+        public_phone: "Javna telefonska številka?"
       movie:
         youtube: "Spletni naslov"
       notice:
         expires_at: "Datum poteka"
+      payment_period:
+        payment_plan: "Plan plačila"
+        start_date: "Od"
+        end_date: "Do"
       person:
         first_name: "Ime"
         last_name: "Priimek"

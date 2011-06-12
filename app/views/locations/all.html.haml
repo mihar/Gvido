@@ -14,7 +14,7 @@
     %th Spletni naslov
     %th Skupina lokacij
     %th Podrobnosti
-    %td
+    %th Opcije
   %tbody
     - for location in collection
       %tr.clickable
@@ -30,8 +30,6 @@
           - if location.location_section
             = location.location_section.title
         %td= location.about
-        %td
-          .crud
-            = link_to "Odstrani", location, :confirm => destroy_confirmation(location), :method => :delete
-            = link_to "Uredi", edit_location_path(location)
+        %td.crud= link_to "Odstrani", location, :confirm => destroy_confirmation(location), :method => :delete
+        %td.crud= link_to "Uredi", edit_location_path(location)
 

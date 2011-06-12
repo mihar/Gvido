@@ -39,17 +39,14 @@
       .value= resource.instrument.title
   = f.input :total_price, :input_html => { :step => "10" }
   = f.input :price_per_lesson, :input_html => { :step => "10" }
-  = f.input :lessons_per_month
+  = f.input :nr_of_lessons
+  
   - if resource.new_record?
     = f.input :prepayment, :input_html => { :step => "1" }
     = f.input :prepayment_payment_date, :as => :date, :start_year => Date.today.year, :end_year => Date.today.year + 1
     = f.input :enrollment_fee, :input_html => { :step => "1" }
     = f.input :enrollment_fee_payment_date, :as => :date, :start_year => Date.today.year, :end_year => Date.today.year + 1
     = f.input :discount_percent
-    .input.radio.optional
-      = f.label :payment_plan
-      = f.collection_radio :payment_plan_id, PaymentPlan.all, :id, :title
-      = f.error :payment_plan_id, :id => :payment_plan_id_error
   - else
     - if resource.prepayment?
       .input
@@ -63,9 +60,5 @@
       .input
         = f.label :discount_percent
         .value= resource.discount_percent
-    - if resource.payment_plan
-      .input
-        = f.label :payment_plan
-        .value= resource.payment_plan
   .submit
     = f.button :submit

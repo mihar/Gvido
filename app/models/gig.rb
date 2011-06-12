@@ -18,6 +18,6 @@ class Gig < ActiveRecord::Base
   private
   
   def format_title
-    self.title = self.title.titleize    
+    self.title = title.titleize    
   end
 end

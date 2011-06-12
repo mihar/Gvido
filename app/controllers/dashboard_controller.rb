@@ -4,12 +4,14 @@ class DashboardController < ApplicationController
   
   def index
     # Mentors go haway.
-    redirect_to :lessons if mentor?
+    redirect_to monthly_lessons_path if mentor?
     
     # Load up dashboard stuff.
-    @contacts = Contact.unprocessed(true)
-    @payments = Payment.due.unsettled
-    @students_celebrating = Student.birthday_today
+    @mentors_without_user_accounts = Mentor.without_user_accounts
+    @contacts = Contact.unprocessed   
+    @students_celebrating = Student.birthday_today    
+    @unsettled_invoices = Invoice.unsettled_on_date(Date.today)
+    @inactive_mentors = Mentor.inactive_on_date(Date.today)
   end
   
   protected

@@ -28,7 +28,7 @@ class Location < ActiveRecord::Base
   
   def enrollments
     mentors.map do |m|
-      m.enrollments
+      m.enrollments.active
     end.flatten.uniq
   end
   

@@ -12,7 +12,7 @@
     %th Datum in ura
     %th Opis
     %th Nastopajoči mentorji
-    %td
+    %th Opcije
   %tbody
     - for gig in collection
       %tr
@@ -23,8 +23,5 @@
         %td= (textilize gig.description).html_safe
         %td
           = preforming_mentors(gig)
-        %td 
-          .crud
-            .master
-              = link_to "Izbrisi", gig, :confirm => 'Ste prepričani?', :method => :delete
-              = link_to "Uredi", edit_gig_path(gig)
+        %td.crud= link_to "Izbriši", gig, :confirm => 'Ste prepričani?', :method => :delete
+        %td.crud= link_to "Uredi", edit_gig_path(gig)

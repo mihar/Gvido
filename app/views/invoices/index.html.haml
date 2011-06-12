@@ -1,0 +1,52 @@
+.crud
+  .master= link_to "Izvozi vse položnice v pdf", invoices_path("pdf")
+
+= title "Položnice s plačilnim dnevom #{ l @selected_date, :format => :long }"
+
+%h3 Plačilni dnevi
+= date_hash_to_links(@payable_dates, "index", :payable_date)
+
+%h3 Statistika
+%p
+  %strong Pričakovan znesek položnic
+  = number_to_currency(@expected_invoices_sum)
+
+%p
+  %strong Seštevek plačanih položnic
+  = number_to_currency(@settled_invoices_sum)
+
+%p
+  %strong Seštevek neplačanih položnic
+  = number_to_currency(@unsettled_invoices_sum)
+
+%br
+%h3 Pregled položnic
+- unless @invoices.empty?
+  %table
+    %thead
+      %tr
+        %th Priimek in ime
+        %th Naslov
+        %th Ref. številka položnice
+        %th Rok plačila
+        %th Znesek
+        %th Plačano
+        %th Opcije
+    %tbody
+      - for invoice in @invoices
+        %tr
+          %td= link_to invoice.student, invoice.student
+          %td= invoice.payers_address
+          %td= invoice.monthly_reference
+          %td= l invoice.payment_date
+          %td= number_to_currency(invoice.price)
+          %td
+            - if invoice.settled
+              &#10003;
+            - else
+              ✗
+          %td.crud= link_to "Izvoz v pdf", invoice_path( :invoice => invoice.attributes, :format => "pdf")
+          - unless invoice.new_record?
+            %td.crud= link_to 'Ni poravnana', unsettle_invoice_path(invoice)  
+          - else
+            %td.crud= link_to 'Poravnana', settle_invoice_path(:invoice => invoice.attributes)

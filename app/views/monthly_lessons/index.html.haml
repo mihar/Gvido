@@ -1,0 +1,36 @@
+- if @can_edit
+  = title "Vnesite števila zasebnih predavanj unčencev za obdobje #{@period}"
+  
+  = form_tag(bulk_update_monthly_lessons_path, {:method => :put} )  do
+    %table
+      %thead
+        %th Program
+        %th Učenec
+        %th Število ur
+      %tbody
+        - for lessons in @monthly_lessons
+          - field_name = "students_monthly_lessons[#{lessons[:students_monthly_lessons].id}][hours]"
+          %tr
+            %td= lessons[:programme_title]
+            %td= lessons[:student_name]
+            %td= number_field_tag field_name, lessons[:students_monthly_lessons].hours
+
+    = submit_tag 'Shrani'
+
+- else
+  = title "Pregled zasebnih predavanj unčencev za obdobje #{@period}"
+  %p
+    %strong Vaše plačilo
+    = number_to_currency(@mentors_wage, :precision => 2)
+  
+  %table
+    %thead
+      %th Program
+      %th Učenec
+      %th Število ur
+    %tbody
+      - for lessons in @monthly_lessons
+        %tr
+          %td= lessons[:programme_title]
+          %td= lessons[:student_name]
+          %td= lessons[:students_monthly_lessons].hours

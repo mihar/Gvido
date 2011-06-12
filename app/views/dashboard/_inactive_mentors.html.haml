@@ -1,0 +1,13 @@
+- if @inactive_mentors.any?
+  %section
+    %h2 Mentorji, ki še niso vnesli ur
+    %table
+      %thead
+        %tr
+          %th Mesec
+          %th Priimek in ime
+      %tbody
+        - @inactive_mentors.each do |inactive_mentors_hash|
+          %tr
+            %td= l inactive_mentors_hash[:payment_date], :format => :month_year
+            %td= inactive_mentors_hash[:inactive_mentors].to_sentence

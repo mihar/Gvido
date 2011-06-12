@@ -7,6 +7,12 @@ class Person < ActiveRecord::Base
   
   def full_name
     if first_name and last_name
+      "#{last_name} #{first_name}"
+    end
+  end
+  
+  def reverse_full_name
+    if first_name and last_name
       "#{first_name} #{last_name}"
     end
   end
@@ -20,6 +26,33 @@ class Person < ActiveRecord::Base
       age = age - 1
     end
     age
+  end
+  
+  def full_address
+    _post_office = '' #string format: po_number city
+    
+    if place.present? and post_office.present?  # place and post_office are entered
+      _post_office = post_office.id.to_s + ' ' + place
+    elsif place.present? and post_office.present? == false  # only place is entered
+      p_o = PostOffice.find_by_name(place)
+      if p_o
+        _post_office = p_o.id.to_s + ' ' + p_o.name
+      else
+        _post_office = place + 'Naslov ni popoln, poštna številka ni izbrana!'
+      end
+    elsif post_office.present? and place.present? == false  # only post_office is entered
+      _post_office = post_office.id.to_s + ' ' + post_office.name
+    else
+      _post_office = 'Naslov ni popoln, kraj in poštna številka nista vnesena!'
+    end
+    
+    if address.present?  # addres is entered
+      return address + ', ' + _post_office
+    else
+      return "Niste vnesli naslov, poštno številko in kraj!"
+    end
+    
+    return _post_office
   end
   
   def to_s

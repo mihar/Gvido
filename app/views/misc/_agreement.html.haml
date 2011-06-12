@@ -1,0 +1,18 @@
+- email = "tomaz.pacnik@gvido.si"
+- email_title = "Sprejem pogodbe"
+- email_body_p1 = "S tem emailom potrjujem, da se strinjam s pogoji, ki so podani v pogodbi glasbene šole GVIDO."
+- email_body_p2 = "Moje ime, priimek, naslov in elektronska pošta so:"
+- email_href = "mailto:" + email + "?subject=" + email_title + "&body=" + email_body_p1 + "%0A%0A" + email_body_p2
+
+%h3 Potrditev pogodbe
+%p
+  Za potrditev pogodbe izberite slednjo povezavo 
+  %a{ :href => email_href }= email
+  %br
+  oz. pošljite email na
+  %a{ :href => email_href }= email
+  z naslovom 
+  %em= email_title
+  in vsebino 
+  %em=email_body_p1 + " " + email_body_p2
+  in pripišite svoje ime, priimek, naslov in elektronsko pošto.

@@ -1,6 +1,6 @@
 class ContactsController < InheritedResources::Base
   load_and_authorize_resource
-  skip_load_resource :only => [:new_report]
+  skip_load_resource :only => [:new, :create, :new_report]
   skip_before_filter :authenticate_user!, :only => [:new, :create, :new_report]
   before_filter :set_section
 

@@ -9,7 +9,7 @@
     %th Opis
     %th Kategorija
     %th Pozicija
-    %td
+    %th Opcije
   %tbody
     - for album in collection
       %tr.clickable
@@ -21,9 +21,7 @@
           - else
             Brez kategorije
         %td= album.position
-        %td
-          .crud
-            = link_to "Fotografije", all_album_photos_path(album)
-            = link_to "Odstrani", album, :confirm => destroy_confirmation(album), :method => :delete
-            = link_to "Uredi", edit_album_path(album)
+        %td.crud= link_to "Fotografije", all_album_photos_path(album)
+        %td.crud= link_to "Odstrani", album, :confirm => destroy_confirmation(album), :method => :delete
+        %td.crud= link_to "Uredi", edit_album_path(album)
 

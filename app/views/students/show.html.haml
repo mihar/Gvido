@@ -20,7 +20,7 @@
     = l @student.created_at, :format => :long
   %p
     %strong Naslov:
-    = full_address(@student)
+    = @student.full_address
   %p
     %strong Email:
     = mail_to @student.email
@@ -60,51 +60,80 @@
         %tbody
         = render @student.personal_contacts
 
-  - unless @student.enrollments.empty?
+  - unless @student.enrollments(true).empty?
+  
+    - enrollments = @student.enrollments(true)
     #enrollments
       %h3 Vpisnine
       %table
         %thead
           %th Obdobje
           %th Program
-          %th Plan plačila
+          %th Vrsta plačila
           %th Vpisnina
           %th Kavcija
           %th Popust
+          %th Število ur
+          %th Cena učne ure
           %th Šolnina
           %th Seštevek plačil
-          %th Že plačano
         %tbody
-        = render @student.enrollments.order("enrollment_date ASC")
+        = render enrollments.order("enrollment_date ASC")
 
-%br.clear
-
-- unless @student.payments.empty?
-  #payments
-    %h3 Plačila
-    %table
-      %thead
-        %th Rok plačila
-        %th Program
-        %th Vrsta plačila
-        %th Plan plačila
-        %th Znesek
-        %th Cena ure
-        %th Plačano
-        %th Št. učnih ur na obračun
-        %th Št. potrjenih učnih ur
-        %th Obdobje
-        %th Pričakovanih ur
-        %th Potrjenih ur
-        %th Obdobje
-        %th Pričakovanih ur
-        %th Potrjenih ur
-        %th Obdobje
-        %th Pričakovanih ur
-        %th Potrjenih ur
-      %tbody
-      = render @student.payments
+    %br.clear
       
+    #settled_and_unsettled_payments
+      %h3 Poravnava
+      %p
+        %strong Znesek plačanih položnic:
+        = number_to_currency(@student.invoices.settled.map(&:price).sum, :precision => 2)
+      %p
+        %strong Znesek neplačanih položnic:
+        = number_to_currency(@student.invoices.unsettled.map(&:price).sum, :precision => 2)
+          
+    %br.clear
+
+    #payments
+      %h3 Plačila v tem mescu
+      %table
+        %thead
+          %th Rok plačila
+          %th Program
+          %th Plan plačila
+          %th Popust
+          %th Znesek
+        %tbody
+        - for enrollment in enrollments
+          - for payment in enrollment.payments
+            - if payment.payment_date.year == Date.today.year and payment.payment_date.month == Date.today.month
+              %tr
+                %td= l payment.payment_date, :format => :default
+                %td= enrollment.instrument.title + '/' + enrollment.mentor.full_name
+                %td= payment.payment_plan
+                %td= payment.period_discount == 0 ? "Brez popusta" : number_to_percentage(payment.period_discount * 100, :precision => 2)
+                %td= number_to_currency(payment.price, :precision => 2)
+    
+      %br.clear
+    
+      #all_payments
+        %h3 Vsa plačila
+        %table
+          %thead
+            %th Rok plačila
+            %th Program
+            %th Plan plačila
+            %th Popust
+            %th Znesek
+          %tbody
+          - for enrollment in enrollments
+            - for payment in enrollment.payments
+              %tr
+                %td= l payment.payment_date, :formay => :default
+                %td= enrollment.instrument.title + '/' + enrollment.mentor.full_name
+                %td= payment.payment_plan
+                %td= payment.period_discount == 0 ? "Brez popusta" : number_to_percentage(payment.period_discount * 100, :precision => 2)
+                %td= number_to_currency(payment.price, :precision => 2)            
+              
 %br.clear
  
 = link_to_back students_path

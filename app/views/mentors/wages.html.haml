@@ -1,21 +1,21 @@
-= title "Pregled plače za obdobje od #{l @selected_date.at_beginning_of_month} do #{l @selected_date}"
+= title "Pregled plače za obdobje od #{l @selected_date.at_beginning_of_month} do #{l @selected_date.at_end_of_month}"
 
-
-%table
-  %thead
-    %tr
+= form_tag(bulk_update_for_admin_monthly_lessons_path(:mentor_id => params[:id]), {:method => :put } )  do
+  %table
+    %thead
+      %th Program
       %th Učenec
-      %th Pričakovano št. ur
-      %th Dejansko št. ur
-  %tbody
-  - for lesson in @lessons
-    %tr
-      %td
-        %strong= lesson.student
-      %td
-        = lesson.expected_hours_this_month
-      %td
-        = lesson.hours_this_month
+      %th Število ur
+    %tbody
+      - for lessons in @monthly_lessons
+        - field_name = "students_monthly_lessons[#{lessons.id}][hours]"
+        - if lessons.enrollment
+          %tr
+            %td= lessons.enrollment.programme
+            %td= lessons.enrollment.student.full_name
+            %td= number_field_tag field_name, lessons.hours
+            
+  = submit_tag 'Shrani'
 
 %hr
 %p

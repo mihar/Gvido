@@ -1,5 +1,5 @@
 class Notice < ActiveRecord::Base
-  scope :non_expired, where("expires_at > NOW()")
+  scope :non_expired, where("expires_at > NOW()").order("created_at DESC")
   
   validates_presence_of :title, :body
   has_attached_file :photo, 

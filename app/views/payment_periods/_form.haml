@@ -1,0 +1,20 @@
+%p
+  %strong Obdobje vpisnine 
+  = "#{ l parent.enrollment_date, :format => :default} - #{l parent.cancel_date - 1, :format => :default}"
+= simple_form_for [parent, resource], :class => :simple do |f|
+  
+  .input.optional
+    %label Od
+    = l resource.start_date, :format => :long   
+  = f.input :start_date, :as => :hidden
+  = f.input :end_date, :start_year => parent.enrollment_date.year, :end_year => parent.cancel_date.year, :order => [:month, :year]
+  
+  = f.input :discount_percent
+  
+  .input.radio.optional
+    = f.label :payment_plan
+    = f.collection_radio :payment_plan_id, @payment_plans, :id, :title
+    = f.error :payment_plan_id, :id => :payment_plan_id_error
+  
+  .submit
+    = f.button :submit

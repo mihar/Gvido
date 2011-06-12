@@ -4,7 +4,7 @@ class Mentor < ActiveRecord::Base
   has_and_belongs_to_many :locations
   has_and_belongs_to_many :gigs
   has_many :enrollments, :conditions => "enrollment_date < CURRENT_DATE() AND cancel_date > CURRENT_DATE() AND deleted = 0", :dependent => :destroy
-  has_many :lessons
+  has_many :monthly_lessons
 
   accepts_nested_attributes_for :user
 
@@ -24,6 +24,66 @@ class Mentor < ActiveRecord::Base
                     :styles => { :square => "75x75#", :small => "150x150#", :medium => "180x180#", :normal => "550x550>" },
                     :url  => "/system/mentors/:id/:style/:basename.:extension",
                     :path => ":rails_root/public/system/mentors/:id/:style/:basename.:extension"
+  
+  
+  class << self
+    def ids_with_user_accounts
+      @mentor_ids_with_user_accounts ||= User.where(:admin => false).map(&:mentor_id)
+    end
+    
+    def mentors_with_user_accounts
+      @mentors_with_user_accounts ||= self.where(:id => self.ids_with_user_accounts)
+    end
+    
+    def without_user_accounts
+      @mentors_without_user_accounts ||= self.order("mentors.name ASC, mentors.surname ASC") - self.where(:id => self.ids_with_user_accounts)
+    end
+    
+    
+    # Returns an array of hashes containing payment_date and inactive mentors on that payment date
+    # [{:inactive_mentors => [#<Mentor >, #<Mentor>, ..], :payment_date => Mon, 20 Apr 2011}, {:inactive_mentors => [#<Mentor >],  :payment_date => Mon, 20 May 2011}]
+    #
+    def inactive_on_date(date)
+      inactive_mentors = []
+      mentors_with_monthly_lessons = self.with_monthly_lessons
+      payment_dates = Enrollment.payment_dates_array_up_to_date(date)
+
+      for payment_date in payment_dates
+        mentors_with_monthly_lessons.each do |mentor|
+          mentors = []
+          if mentor.last_hours_entry_at.present? == false
+            mentors << mentor
+          else
+            if mentor.last_hours_entry_at < payment_date.at_beginning_of_month
+              mentors << mentor
+            end
+          end
+          if mentors.any?
+            inactive_mentors  << { :payment_date => payment_date, :inactive_mentors => mentors }
+          end
+        end
+      end
+      return inactive_mentors
+    end
+    
+    # Returns am array of mentors with monthly lessons
+    # also destroys monthly lessons that belong to non existing enrollment
+    #
+    def with_monthly_lessons
+      mentors_with_monthly_lessons = self.all.reject {|mentor| mentor.monthly_lessons.any? == false }
+      if mentors_with_monthly_lessons.any?
+        mentors_with_monthly_lessons.each do |mentor|
+          mentor.monthly_lessons.each do |monthly_lesson|
+            if monthly_lesson.enrollment.present? == false #monthly lesson's enrollment doesn't exist
+              mentors_with_monthly_lessons = mentors_with_monthly_lessons - [mentor] if mentors_with_monthly_lessons.include? mentor
+              MonthlyLesson.destroy monthly_lesson
+            end
+          end
+        end
+      end
+      mentors_with_monthly_lessons
+    end
+  end
   
   def locations_by_city
    @locations ||= locations.map(&:city).uniq

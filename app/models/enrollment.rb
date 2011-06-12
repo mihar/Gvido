@@ -1,39 +1,26 @@
 class Enrollment < ActiveRecord::Base  
   include ActionView::Helpers::NumberHelper
-
-  has_many :payments
+  
   belongs_to :instrument
   belongs_to :mentor
   belongs_to :student
+  has_many :monthly_lessons, :dependent => :destroy
+  has_many :payment_periods, :dependent => :destroy
   
-  validates_numericality_of :payment_period,    :only_integer => true, :greater_than_or_equal_to => 1
-  validates_numericality_of :lessons_per_month, :only_integer => true, :greater_than_or_equal_to => 1
+  validates_numericality_of :nr_of_lessons,     :only_integer => true, :greater_than_or_equal_to => 1
   validates_numericality_of :enrollment_fee,    :greater_than_or_equal_to => 0.0
   validates_numericality_of :total_price,       :greater_than_or_equal_to => 0
+  validates_numericality_of :price_per_lesson,  :greater_than_or_equal_to => 0
   validates_numericality_of :prepayment,        :greater_than_or_equal_to => 0
   validates_numericality_of :discount,          :greater_than_or_equal_to => 0
-  validates_presence_of :instrument_id, :mentor_id, :payment_plan_id
+  validates_presence_of :instrument_id, :mentor_id
   
   validate :cancel_date_correctness, :enrollment_date_acceptance
+    
+  scope :active, where("enrollments.enrollment_date < CURRENT_DATE()").where("enrollments.cancel_date > CURRENT_DATE()").reload
+  scope :future, where("enrollments.enrollment_date > CURRENT_DATE()").reload
+  scope :past, where("enrollments.cancel_date < CURRENT_DATE()").reload
   
-  after_create    :create_payments
-  after_update    :update_payments
-  before_save     :set_total_price
-  before_update   :set_total_price
-  before_destroy :destroy_unsettled_payments
-  
-  before_validation do
-    return unless payment_plan
-    case payment_plan.id
-      when :monthly then self.payment_period = 1
-      when :trimester then self.payment_period = 3
-      when :singular then self.payment_period = length
-    end
-  end
-  
-  attr_accessor :billable_months, :payment_description
-  
-  scope :active, where("enrollment_date < CURRENT_DATE() AND cancel_date > CURRENT_DATE() AND deleted = 0")
   composed_of :prepayment_payment_date,
                 :class_name => 'Date',
                 :mapping => %w(Date to_date),
@@ -45,13 +32,67 @@ class Enrollment < ActiveRecord::Base
                 :mapping => %w(Date to_date),
                 :constructor => Proc.new{ Date.today },
                 :converter => Proc.new{ |item| item }
-                
-  DATE_SPACER = 19
   
-  def payment_plan
-    @payment_plan ||= PaymentPlan.find payment_plan_id
+  before_update :destroy_out_of_range_payment_periods_and_invoices
+  
+  class << self
+    def active_ids
+      self.active.map(&:id)
+    end
+    
+    def active_with_mentor_id(_mentor_id)
+      self.where("mentor_id = ? AND enrollment_date < CURRENT_DATE() AND cancel_date > CURRENT_DATE() AND deleted = 0", _mentor_id)
+    end
+    
+    def including_dates(start_date, stop_date)
+      self.where("enrollments.enrollment_date <= ? AND enrollments.cancel_date >= ?", start_date, stop_date)
+    end
+    
+    def including_date(date)
+      self.where("enrollment_date <= ? AND cancel_date >= ?", date, date)
+    end
+    
+    def for_student(_student_id)
+      self.where(:student_id => _student_id)
+    end
+    
+    def for_student_including_dates(_student_id, start_date, stop_date)
+      self.for_student(_student_id).including_dates(start_date, stop_date).reload
+    end
+    
+    # Returns a hash :year => [payment_date, payment_date, ..]
+    #
+    def payment_dates_up_to_date(date)
+      self.payment_dates_array_up_to_date(date).group_by(&:year)
+    end
+    
+    # Returns an array of payment dates up do given date
+    #
+    def payment_dates_array_up_to_date(date)
+      start_enrollment = self.order('enrollment_date ASC').limit(1).first
+      stop_enrollment  = self.order('cancel_date DESC').limit(1).first
+      
+      if start_enrollment and stop_enrollment  
+        start = start_enrollment.enrollment_date
+        stop  = stop_enrollment.cancel_date
+        payment_dates_array = []
+        
+        if date < stop_enrollment.cancel_date
+          length_in_months = Date.length_in_months_including_last(start, date)
+        else
+          length_in_months = Date.length_in_months_including_last(start, stop)
+        end
+        
+        length_in_months.times do |i|
+          payment_dates_array << ((start + Payment::DATE_SPACER) >> i)
+        end
+        return payment_dates_array
+      else
+        return []
+      end      
+    end
   end
-  
+    
   def discount_percent
     "#{discount * 100}%".gsub(".", ",")
   end
@@ -61,236 +102,57 @@ class Enrollment < ActiveRecord::Base
     self.discount = discount_without_percent / 100
   end
   
-  def destroy_unsettled_payments
-    payments.unsettled.each(&:destroy)
-  end
-  
   def length
-    start, stop = enrollment_date, cancel_date
-    stop.year == start.year ? stop.month - start.month : stop.month + (stop.year - start.year) * 12 - start.month
+    Date.length_in_months(enrollment_date, cancel_date)
   end
   
+  def payments
+    @payments ||= (payment_periods(true).map { |period| Payment.create(period) }).flatten
+  end
+  
+  def to_s
+    instrument.title + "/" + mentor.full_name
+  end
+  
+  def programme
+    instrument.title
+  end
+  
+  def chosen_price_per_hour
+    if price_per_lesson and price_per_lesson > 0 
+      return price_per_lesson
+    else
+      return (payments.map(&:price).inject(:+) / nr_of_lessons)
+    end
+  end
+  
+  def flat_rate_or_per_hour
+    _payment_periods = payment_periods#(true)
+    if _payment_periods.any?
+      if _payment_periods.first.payment_plan and _payment_periods.first.payment_plan.id == :per_hour
+        return "Na uro"
+      else
+        return "Pavšalno"
+      end
+    else
+      return "Napaka. Izbrišite vpisnino."
+    end
+  end
+    
   private
   
-  def set_total_price
-    if price_per_lesson > 0
-      self.total_price =  sum_of_settled_payments + deducted_from_prepayment + \
-                          price_per_lesson * lessons_per_month * (length - payments.settled.regular(true).length * payment_period)
-    end
-  end
-  
-  ###### CALCULATIONS ######
-  
-  def create_payments
-    set_billable_months
-    create_payment_for_enrollment_fee
-    create_payment_for_prepayment
-    create_new_payments
-  end
-  
-  #destroys unsettled payments and creates new ones
-  def update_payments
-    set_billable_months
-    @billable_months -= payments.settled.regular(true).map(&:payment_date)
-    payments.unsettled.regular(true).each(&:destroy)
-    create_new_payments(true)
-  end
-  
-  def create_payment_for_enrollment_fee
-    if enrollment_fee > 0
-      create_a_payment(enrollment_fee, enrollment_fee_payment_date, "Plačilo vpisnine", Payment::PAYMENT_KIND[:enrollment_fee], nil)
-    end
-  end
-  
-  def create_payment_for_prepayment
-    if prepayment > 0
-      create_a_payment(prepayment, prepayment_payment_date, "Plačilo kavcije", Payment::PAYMENT_KIND[:prepayment], nil)
-    end
-  end
-  
-  def create_a_payment(price, date, description, kind, _price_per_lesson = 0.0) 
-    payment = Payment.create do |p|
-      p.enrollment_id = id
-      p.payment_date = date
-      p.price_per_lesson = _price_per_lesson
-      p.calculated_price = price
-      p.payment_kind = kind
-      p.description = description
-      p.settled = false
-    end
-    
-    if kind != Payment::PAYMENT_KIND[:prepayment] and kind != Payment::PAYMENT_KIND[:enrollment_fee]
-      (lessons_per_payment_period(date) / lessons_per_month).times do |i|
-        Lesson.create do |l|
-          l.payment_id = payment.id
-          l.student_id = self.student.id
-          l.mentor_id = self.mentor.id
-          l.hours_this_month = 0
-          l.expected_hours_this_month = lessons_per_month
-          l.check_in_date = (date >> i).at_end_of_month
-        end
-      end
-    end
-  end
-  
-  #creates a payment for every billable month
-  def create_new_payments(updating = false)
-    @billable_months.each do |payment_date|
-      payment_kind = Payment::PAYMENT_KIND[:regular]
-      #checks if prepayment should be deducted or not
-      if payment_date == @billable_months.first or payment_date == @billable_months.last
-        if updating
-          calculated_price, payment_kind = irregular_first_or_last_payment_situation(payment_date)
-        else
-          calculated_price, payment_kind = first_or_last_payment_situation(payment_date)
+  def destroy_out_of_range_payment_periods_and_invoices
+    if self.changed?
+      if self.cancel_date_changed?
+        if self.cancel_date < self.cancel_date_was
+          useless_payment_periods = PaymentPeriod.for_enrollment_between_dates(id, self.cancel_date, self.cancel_date_was)
+          PaymentPeriod.destroy(useless_payment_periods) unless useless_payment_periods.empty?
         end
       else
-        calculated_price = updating ? calculate_price(payment_date, false, true) : calculate_price(payment_date)
-      end
-      
-      if price_per_lesson > 0
-        create_a_payment(calculated_price, payment_date, @payment_description,  payment_kind, price_per_lesson)
-      else
-        create_a_payment(calculated_price, payment_date, @payment_description,  payment_kind,  nil)
+        soon_to_be_updated_payment_periods = PaymentPeriod.for_enrollment(id)
+        soon_to_be_updated_payment_periods.each { |period| period.save }
       end
     end
-  end
-      
-  def irregular_first_or_last_payment_situation(payment_date)
-    if payments.settled.regular(true).empty?
-      #no exceptions to deal with
-      return first_or_last_payment_situation(payment_date, true)
-    else
-      types = settled_payment_types
-
-      if types.include?(Payment::PAYMENT_KIND[:full_prepayment_deducted])
-        return [ calculate_price(payment_date, false, true), Payment::PAYMENT_KIND[:regular] ]
-      else
-        case types.count(Payment::PAYMENT_KIND[:half_prepayment_deducted])
-          when 0 then return first_or_last_payment_situation(payment_date, true)
-          when 2 then return [ calculate_price(payment_date, false, true), Payment::PAYMENT_KIND[:regular] ]
-        else
-          if (@billable_months.length > 1 and payment_date == @billable_months.last) or
-             (@billable_months.length == 1)
-            return [ calculate_price(payment_date, true, true), Payment::PAYMENT_KIND[:half_prepayment_deducted]]
-          else
-            return [ calculate_price(payment_date, false, true), Payment::PAYMENT_KIND[:regular] ]
-          end
-        end
-      end 
-    end
-  end
-  
-  def first_or_last_payment_situation(payment_date, updating = false)
-    if prepayment > 0
-      if (payment_plan.singular?) or
-        (payment_plan.trimester? and length == 3) or
-        (payment_plan.monthly? and length == 1) 
-        return [ calculate_price(payment_date, true, updating, true), Payment::PAYMENT_KIND[:full_prepayment_deducted] ]
-      else
-        return [ calculate_price(payment_date, true, updating), Payment::PAYMENT_KIND[:half_prepayment_deducted] ]
-      end
-    else
-      return [ calculate_price(payment_date, false, updating), Payment::PAYMENT_KIND[:regular] ]
-    end  
-  end
-  
-  def set_billable_months
-    #maps all months starting with enrollment_date and excluding cancel_date
-    months = length.times.map { |i| enrollment_date + DATE_SPACER >> i } 
-    
-    if payment_period > 1
-      #gets first month in each payable period 
-      @billable_months = months.in_groups_of(payment_period).map {|i| i[0] }
-    else
-      @billable_months = months
-    end  
-  end
-  
-  def settled_payment_types
-    payments.settled.regular(true).map(&:payment_kind)
-  end
-  
-  def sum_of_settled_payments
-    payments.settled.regular(true).map(&:calculated_price).sum 
-  end
-  
-  def deducted_from_prepayment
-    types = settled_payment_types
-    if types.include?(Payment::PAYMENT_KIND[:full_prepayment_deducted])
-      return prepayment
-    end
-    case types.count(Payment::PAYMENT_KIND[:half_prepayment_deducted])
-      when 0 then return 0.0
-      when 1 then return prepayment / 2
-      when 2 then return prepayment
-    end
-  end
-  
-  def payment_description_init(prepayment_cash_date = false, updating = false, full_prepayment_deduction = false)
-    @payment_description = ""
-    @payment_description += "<p><strong>Plačilo ima posodobljen znesek zaradi spremembe vpisnine.</strong></p>" if updating
-    @payment_description += "<h4>Podatki</h4>"
-    @payment_description += "<ul>"
-    if price_per_lesson > 0
-      @payment_description += "<li><strong>Cena učne ure</strong> = #{number_to_currency price_per_lesson}</li>" 
-    else
-      @payment_description += "<li><strong>Cena šolnine</strong> = #{number_to_currency total_price}</li>" if total_price > 0
-    end
-    if prepayment_cash_date
-      if full_prepayment_deduction
-        @payment_description += "<li><strong>Celotna kavcija</strong> = #{number_to_currency prepayment}</li>"
-      else
-        @payment_description += "<li><strong>Polovica kavcije</strong> = #{number_to_currency prepayment / 2}</li>"
-      end
-    end
-      @payment_description += "<li><strong>Popust</strong> = #{number_to_percentage discount}</li>" if discount > 0
-    @payment_description += "</ul>"
-  end
-  
-  def calculate_price(payment_date, prepayment_cash_date = false, updating = false, full_prepayment_deduction = false)
-    payment_description_init(prepayment_cash_date, updating, full_prepayment_deduction)
-   
-    if price_per_lesson > 0
-      calculus = price_per_lesson * lessons_per_payment_period(payment_date)
-      @payment_description += "<p><strong>Osnova</strong> = #{number_to_currency price_per_lesson} * #{lessons_per_month} * #{ payment_period } = #{number_to_currency calculus} </p>"
-    else
-      if updating
-        calculus = (total_price - sum_of_settled_payments - deducted_from_prepayment) / @billable_months.length
-        @payment_description += "<p><strong>Osnova</strong> = (#{number_to_currency total_price} - #{number_to_currency sum_of_settled_payments} - #{number_to_currency deducted_from_prepayment}) / #{@billable_months.length} = #{number_to_currency calculus} </p>"
-      else
-        calculus = total_price / @billable_months.length
-        @payment_description += "<p><strong>Osnova</strong> = #{number_to_currency total_price} / #{@billable_months.length} = #{number_to_currency calculus} </p>"
-      end
-    end
-    
-    @payment_description += "<h4>Potek izračuna</h4>"
-    @payment_description += "<p>"
-    @payment_description += "#{number_to_currency calculus} "
-    
-    if prepayment_cash_date
-      calculus -= full_prepayment_deduction ? prepayment : prepayment / 2
-      @payment_description += " - #{full_prepayment_deduction ? prepayment : prepayment / 2}"
-    end
-    
-    @payment_description += " - #{calculus * discount}" if discount > 0
-    calculus -= calculus * discount
-    
-    @payment_description += " = <strong>#{number_to_currency calculus.round(2)}</strong>"
-    @payment_description += "</p>"
-    return calculus.round(2)
-  end
-  
-  def lessons_per_payment_period(payment_date)
-    if length % payment_period == 0
-      return lessons_per_month * payment_period
-    else  
-      if payment_date == @billable_months.last
-        return (length % payment_period) * lessons_per_month
-      else
-        return lessons_per_month * payment_period
-      end
-    end 
   end
   
   ###### VALIDATIONS ######
@@ -301,7 +163,7 @@ class Enrollment < ActiveRecord::Base
   end
   
   def enrollment_date_acceptance
-    student.enrollments.each do |enrollment|
+    student.enrollments(true).each do |enrollment|
       saving = id.nil? 
       
       existing_instrument_enrollment = (

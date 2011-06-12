@@ -4,7 +4,8 @@ class PaymentPlan
   PAYMENT_PLANS = {
     :monthly => "Vsak mesec", 
     :trimester => "Vsak trimester", 
-    :singular => "Enkratni znesek"
+    :singular => "Enkratni znesek",
+    :per_hour => "Na uro"
   }
   
   def initialize(options = {})

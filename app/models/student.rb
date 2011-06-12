@@ -1,7 +1,8 @@
 class Student < Person
   has_many :personal_contacts
-  has_many :enrollments
-  has_many :lessons
+  has_many :enrollments, :dependent => :destroy
+  has_many :monthly_lessons, :dependent => :destroy
+  has_many :invoices
   belongs_to  :status
   belongs_to  :billing_option
   belongs_to  :contact
@@ -12,31 +13,37 @@ class Student < Person
   
   default_scope order('id DESC')
   
-  scope :enrolled, find_by_sql("SELECT DISTINCT p.* FROM people p, enrollments e 
-          WHERE 
-            p.type = 'student' AND 
-            p.id = e.student_id AND
-            e.enrollment_date < CURRENT_DATE() AND e.cancel_date > CURRENT_DATE()
-          ORDER BY p.last_name ASC")
-  
-  def payments
-    payments = []
-    enrollments.order("enrollment_date ASC").each do |e|
-      e.payments.each do |p|
-        payments << p
-      end
+  class << self    
+    def active_students
+      @active_students ||= self.where(:id => Enrollment.active.map(&:student_id))
     end
-    payments
+    
+    def future_students
+      @future_students ||= self.where(:id => Enrollment.future.map(&:student_id))
+    end
+    
+    def past_students
+      @past_students ||= self.where(:id => Enrollment.past.map(&:student_id))
+      @past_students - self.active_students - self.future_students
+    end
+    
+    def with_no_enrollments
+      @enrolled_student_ids ||= Enrollment.select("DISTINCT(student_id)").to_a.map(&:student_id)
+      self.all - self.where(:id => @enrolled_student_ids)
+    end
   end
   
-  def active_enrollments
-    enrollments.where("enrollment_date <= CURRENT_DATE() AND cancel_date >= CURRENT_DATE()")
+  def monthly_reference_for_date(date)
+    active_enrollment = Enrollment.for_student(id).including_date(date).reload.first
+    month_ref = "%02d" % date.month
+    year_ref = Date.year_reference(active_enrollment.enrollment_date, active_enrollment.cancel_date)
+    "8#{month_ref}#{year_ref}-#{reference_number}"
   end
   
   protected
   
   def proper_reference_number
-    self.reference_number = Digest::SHA1.hexdigest("#{id}").hex.to_s[0..12]
+    self.reference_number = 100 + id
     self.save
   end
   
@@ -46,6 +53,5 @@ class Student < Person
       contact.save
     end
   end
-  
   
 end

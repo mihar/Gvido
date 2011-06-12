@@ -8,15 +8,13 @@
     %th Naziv
     %th Vsebina
     %th Datoteka
-    %td
+    %th Opcije
   %tbody
     - for schedule in collection
       %tr.clickable
         %td= schedule.title
         %td= (textilize schedule.body).html_safe
         %td= link_to "Prenos urnika", schedule.file.url
-        %td
-          .crud
-            = link_to "Odstrani", schedule, :confirm => destroy_confirmation(schedule), :method => :delete
-            = link_to "Uredi", edit_schedule_path(schedule)
+        %td.crud= link_to "Odstrani", schedule, :confirm => destroy_confirmation(schedule), :method => :delete
+        %td.crud= link_to "Uredi", edit_schedule_path(schedule)
 

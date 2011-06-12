@@ -4,26 +4,24 @@
   .master
     = link_to 'Nov učenec', new_student_path
 
-%table
-  %thead
-    %tr
-      %th
-        Ime in priimek
-      %th
-        Kontaktne osebe
-      %th
-        Mentor/Program
-      %th
-        Naslov
-      %th
-        Telefonska številka
-      %th
-        Mobitel
-      %th
-        Email
-      %th
-        Status vpisa
-      %th
-        Datum dodajanja
-  %tbody= render collection
+= render "overview"
+%br
+
+- unless @students_with_no_enrollments.empty?
+  %h3 Še nikoli vpisani učenci
+  = render "student", :students => @students_with_no_enrollments 
+  %br
   
+- unless @active_students.empty?
+  %h3 Trenutno vpisani
+  = render "student", :students => @active_students
+  %br
+  
+- unless @future_students.empty?
+  %h3 V bodoče vpisani učenci
+  = render "student", :students => @future_students
+  %br
+  
+- unless @past_students.empty?
+  %h3 Nekdanji učenci
+  = render "student", :students => @past_students

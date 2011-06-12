@@ -9,7 +9,7 @@ describe Person do
   it { should belong_to(:post_office) }
 
   it "should return a proper full name" do
-    subject.full_name.should eql('Mikakhil Mekakil')
+    subject.full_name.should eql('Mekakil Mikakhil')
   end
   
   it "should properly titelize first and last name" do
@@ -17,6 +17,6 @@ describe Person do
     
     student.first_name.should eql('Mala')
     student.last_name.should eql('Slova')
-  end 
+  end
   
 end

@@ -1,16 +1,16 @@
 %tr
   %td= "#{ l enrollment.enrollment_date, :format => :default} - #{l enrollment.cancel_date - 1, :format => :default}"
-  %td= enrollment.instrument.title + "/" + enrollment.mentor.full_name
-  %td= enrollment.payment_plan.title
+  %td= enrollment.to_s
+  %td= enrollment.flat_rate_or_per_hour
   %td= number_to_currency(enrollment.enrollment_fee, :precision => 2)
   %td= number_to_currency(enrollment.prepayment, :precision => 2)
   %td= number_to_percentage(enrollment.discount * 100, :precision => 2)
+  %td= enrollment.nr_of_lessons
+  %td= number_to_currency(enrollment.chosen_price_per_hour, :precision => 2)
   %td= number_to_currency(enrollment.total_price, :precision => 2)
-  %td= number_to_currency(enrollment.payments.map(&:calculated_price).sum  , :precision => 2)
-  %td= number_to_currency(enrollment.payments.settled.map(&:calculated_price).sum, :precision => 2)
+  %td= number_to_currency(enrollment.payments.map(&:price).inject(:+), :precision => 2)
   %td
     .crud
-      - if enrollment.payments.settled.empty?
-        = link_to "Odstrani", [enrollment.student, enrollment], :confirm => destroy_confirmation(enrollment), :method => :delete
+      = link_to "Odstrani", [enrollment.student, enrollment], :confirm => destroy_confirmation(enrollment), :method => :delete
       = link_to "Uredi", edit_student_enrollment_path(enrollment.student, enrollment)
 

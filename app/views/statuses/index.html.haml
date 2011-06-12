@@ -7,13 +7,12 @@
   %thead
     %th Opis
     %th Kratek opis
+    %th Opcije
   %tbody
     - for status in collection
-      %tr.clickable
+      %tr
         %td= (textilize status.description).html_safe
         %td= status.short_description
-        %td
-          .crud
-            - if status.id > 4
-              = link_to "Odstrani", status, :confirm => destroy_confirmation(status), :method => :delete
-            = link_to "Uredi", edit_status_path(status)
+        - if status.id > 4
+          %td.crud= link_to "Odstrani", status, :confirm => destroy_confirmation(status), :method => :delete
+        %td.crud= link_to "Uredi", edit_status_path(status)

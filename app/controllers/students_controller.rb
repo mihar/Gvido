@@ -3,6 +3,15 @@ class StudentsController < InheritedResources::Base
   layout "dashboard"
   before_filter :set_section
   
+  def index
+    @active_students = Student.active_students
+    @future_students = Student.future_students
+    @past_students = Student.past_students
+    @students_with_no_enrollments = Student.with_no_enrollments
+    @active_enrollments = Enrollment.active
+    index!
+  end
+  
   def new
     @student = Student.new
     # If no contact ID given, we can skip this step.

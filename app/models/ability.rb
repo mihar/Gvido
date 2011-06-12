@@ -6,12 +6,14 @@ class Ability
     if user.admin?
       can :manage, :all
     elsif user.mentor?
-      can :manage, Lesson
+      can :manage, MonthlyLesson
     else
       can :read, :all
       can [:create, :new_report], Contact
       cannot :read, Person
-      cannot :manage, Payment
+      cannot :show, LocationSection
+      cannot :manage, PaymentPeriod
+      cannot :manage, MonthlyLesson
     end
   end
 end

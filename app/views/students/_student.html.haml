@@ -1,20 +1,34 @@
-%tr.clickable
-  %td
-    = link_to student.full_name, student
-  %td
-    = contact_links(student.personal_contacts)
-  %td
-    = program_mentor(student.active_enrollments)
-  %td
-    = full_address(student)
-  %td
-    = student.landline
-  %td
-    = student.mobile
-  %td
-    = student.email
-  %td
-    = student.status.short_description
-  %td
-    = l student.created_at, :format => :short
+%table
+  %thead
+    %tr
+      %th Ime in priimek
+      %th Kontaktne osebe
+      %th Naslov
+      %th Telefonska številka
+      %th Mobitel
+      %th Email
+      %th Datum dodajanja
+      %th Prejem položnic
+      %th Stanje dodajanja
+  %tbody
+    - for student in students
+      %tr.clickable
+        %td
+          = link_to student.full_name, student
+        %td
+          = contact_links(student.personal_contacts)
+        %td
+          = student.full_address
+        %td
+          = student.landline
+        %td
+          = student.mobile
+        %td
+          = student.email
+        %td
+          = l student.created_at, :format => :short
+        %td
+          = student.billing_option ? student.billing_option : "Ni podano"
+        %td
+          = student.status
 

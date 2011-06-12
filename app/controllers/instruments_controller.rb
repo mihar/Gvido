@@ -16,6 +16,10 @@ class InstrumentsController < InheritedResources::Base
     destroy! { all_instruments_path }
   end
   
+  def detail
+    @active_enrollments = Enrollment.active.reject {|enrollment| enrollment.instrument != resource}.flatten.uniq
+  end
+  
   protected
   
   def resource

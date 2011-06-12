@@ -1,21 +1,23 @@
 App::Application.routes.draw do
+
   devise_for :users, :controllers => { :sessions => "sessions" }
   
   match 'dashboard', :to => 'dashboard#index'
   match 'dashboard', :to => 'dashboard#index', :as => 'user_root'
   
-  resources :lessons, :only => [:index] do
+  resources :monthly_lessons, :only => [:index] do
     collection do
       put :bulk_update
+      put :bulk_update_for_admin
     end
   end
     
   resources :statuses, :billing_options
   
-  resources :payments, :only => [:index, :show] do
-    resources :payment_exceptions
+  match 'invoices/show(.:format)' => "invoices#show", :as => :invoice
+  match 'invoices/settle(.:format)' => "invoices#settle", :as => :settle_invoice
+  resources :invoices, :only => [:index] do
     member do
-      get :settle
       get :unsettle
     end
   end
@@ -27,7 +29,17 @@ App::Application.routes.draw do
     end
   end
   
+  resources :payment_periods, :only => [:edit]
+  
+  resources :enrollments do
+    resources :payment_periods
+  end
+  
   resources :abouts do
+    get :all, :on => :collection
+  end
+  
+  resources :agreements do
     get :all, :on => :collection
   end
   

@@ -12,6 +12,8 @@
   = f.input :date_of_birth, :start_year => Date.today.year - 3, :end_year => Date.today.year - 90, :prompt => ['dan', 'mesec', 'leto']
   - if resource.enrollments.active.empty?
     = f.association :status, :collection => Status.all[0..1], :label_method => :short_description, :prompt => 'Stanje vpisa'
+  - else
+    = f.association :status, :collection => Status.all, :label_method => :short_description, :prompt => 'Stanje vpisa'
   = f.association :billing_option, :collection => BillingOption.all, :label_method => :short_description, :prompt => 'Način izstavljanja položnic'
   
   .submit

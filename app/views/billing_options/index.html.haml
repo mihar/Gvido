@@ -7,14 +7,13 @@
   %thead
     %th Opis
     %th Kratek opis
+    %th Opcije
   %tbody
     - for billing_option in collection
-      %tr.clickable
+      %tr
         %td= (textilize billing_option.description).html_safe
         %td= billing_option.short_description
-        %td
-          .crud
-            - if billing_option.id > 3
-              = link_to "Odstrani", billing_option, :confirm => destroy_confirmation(billing_option), :method => :delete
-            = link_to "Uredi", edit_billing_option_path(billing_option)
+        - if billing_option.id > 3
+          %td.crud= link_to "Odstrani", billing_option, :confirm => destroy_confirmation(billing_option), :method => :delete
+        %td.crud= link_to "Uredi", edit_billing_option_path(billing_option)
 

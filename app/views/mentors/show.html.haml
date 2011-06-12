@@ -3,9 +3,12 @@
 
 .data
   = spit @mentor, :full_name, :h3
-  = spit @mentor, :phone
-  = spit @mentor, :address
-  - if @mentor.email
+  - if @mentor.public_phone?
+    = spit @mentor, :phone
+  - if @mentor.public_address?
+    = spit @mentor, :address
+  
+  - if @mentor.public_email?
     %p.email= link_to @mentor.email, "mailto:#{@mentor.email}"
   
   .facebook_myspace

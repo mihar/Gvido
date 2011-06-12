@@ -5,8 +5,8 @@ class PostsController < InheritedResources::Base
   layout :pick_layout
    
   def index
-    @notices = Notice.all
-    super
+    @notices = Notice.non_expired
+    index!
   end
   
   def create

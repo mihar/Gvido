@@ -1,0 +1,7 @@
+- title "Pogodba"
+
+= render_misc 'agreement'
+
+- unless collection.empty?
+  .abouts.textilize= (textilize collection.last.text).html_safe
+

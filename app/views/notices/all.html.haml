@@ -9,7 +9,7 @@
     %th Datum objave
     %th Vsebina
     %th Fotografija
-    %td
+    %th Opcije
   %tbody
     - for notice in collection
       %tr.clickable
@@ -19,8 +19,6 @@
         %td
           - if notice.photo.file?
             .photo= (image_tag(notice.photo.url(:small))).html_safe
-        %td
-          .crud
-            = link_to "Odstrani", notice, :confirm => destroy_confirmation(notice), :method => :delete
-            = link_to "Uredi", edit_notice_path(notice)
+        %td.crud= link_to "Odstrani", notice, :confirm => destroy_confirmation(notice), :method => :delete
+        %td.crud= link_to "Uredi", edit_notice_path(notice)
 

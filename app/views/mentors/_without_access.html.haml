@@ -1,0 +1,7 @@
+- unless @mentors_without_user_accounts.empty?
+  %section
+    %h2 Slednjim mentorjem niste uredili elektronske pošte in gesla za dostop do sistema.
+    %h3 Za normalno delovanje plačniškega sistema morate urediti naslednje mentorje!
+    
+    %p= @mentors_without_user_accounts.map {|mentor| link_to mentor, edit_mentor_path(mentor) }.join(', ').html_safe
+    

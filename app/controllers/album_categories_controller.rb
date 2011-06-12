@@ -12,7 +12,7 @@ class AlbumCategoriesController < InheritedResources::Base
   end
   
   def destroy
-    resource.albums.each do |a|
+    resource.albums(true).each do |a|
       a.album_category_id = nil
       a.save
     end

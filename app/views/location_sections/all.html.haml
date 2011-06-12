@@ -7,13 +7,11 @@
 %table
   %thead
     %th Naziv skupine lokacij
-    %td
+    %th Opcije
   %tbody
     - for location_section in collection
       %tr.clickable
         %td= location_section.title
-        %td
-          .crud
-            = link_to "Odstrani", location_section, :confirm => destroy_confirmation(location_section), :method => :delete
-            = link_to "Uredi", edit_location_section_path(location_section)
+        %td.crud= link_to "Odstrani", location_section, :confirm => destroy_confirmation(location_section), :method => :delete
+        %td.crud= link_to "Uredi", edit_location_section_path(location_section)
 

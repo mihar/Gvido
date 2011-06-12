@@ -1,10 +1,9 @@
-= title "Podrobnosti lokcaije"
+= title "Podrobnosti lokacije"
 
 .crud
   = link_to "Odstrani", resource, :confirm => destroy_confirmation(resource), :method => :delete
   .master
     = link_to "Uredi", edit_resource_path
-
 
 .data
   %p
@@ -12,9 +11,9 @@
     = resource.title
     
   - if resource.subtitle?
-  %p
-    %strong Podnaziv:
-    = resource.subtitle
+    %p
+      %strong Podnaziv:
+      = resource.subtitle
     
   - if resource.address?
     %p
@@ -49,9 +48,9 @@
 - unless resource.mentors.empty?
   %h3 Mentorji
   %p= resource.mentors.to_sentence
-
+  
 - unless resource.enrollments.empty?
-  %h3 Mentorjevi učenci
+  %h3 Učenci
   %table
     %thead
       %tr
@@ -62,6 +61,5 @@
     %tbody
       - for enrollment in resource.enrollments
         %tr
-          %td= enrollment.student
-          %td= enrollment.instrument
-        
+          %td= link_to enrollment.student, enrollment.student
+          %td= enrollment

@@ -19,6 +19,43 @@ describe Mentor do
   it { should validate_presence_of(:price_per_private_lesson) }
   it { should validate_presence_of(:price_per_public_lesson) }
   
+  it "should change created_at and updated_at" do
+    monthly_lesson = Factory :monthly_lesson, :date => Date.new(2011, 9, 1), :created_at => DateTime.new(2011, 10, 1), :updated_at => DateTime.new(2011, 10, 1)
+    monthly_lesson.created_at.should == DateTime.new(2011, 10, 1)
+    monthly_lesson.updated_at.should == DateTime.new(2011, 10, 1)
+  end
+  
+  it "should create same values for created_at and updated_at" do
+    monthly_lesson = Factory :monthly_lesson, :date => Date.new(2011, 9, 1)
+    monthly_lesson.created_at.should == monthly_lesson.updated_at
+  end
+  
+  context "method inactive_on_date" do
+    context "when mentor has not jet entered any monthly lessons" do
+      it "should return a correct dates at beginning of month" do
+        Factory :payment_period
+        current_date = Date.new(2011, 10, 1)
+        hash = Mentor.inactive_on_date(current_date)
+        
+        hash[0][:payment_date].should == Date.new(2011, 9, 20)
+        hash[1][:payment_date].should == Date.new(2011, 10, 20)
+      end      
+    end
+    
+    context "when mentor updated students hours in in spetember" do
+      it "should return october" do
+        mentor = Factory :mentor
+        enrollment = Factory :enrollment, :mentor => mentor
+        Factory :payment_period, :enrollment => enrollment
+        mentor.update_attribute :last_hours_entry_at, DateTime.new(2011, 9, 1)
+        current_date = Date.new(2011, 10, 1)
+        
+        hash = Mentor.inactive_on_date(current_date)
+        hash[0][:payment_date].should == Date.new(2011, 10, 20)
+      end      
+    end
+  end
+  
   it "should create websafe permalink" do
     subject.save
     subject.permalink.eql?("mentorij-mentis").should be_true

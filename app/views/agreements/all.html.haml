@@ -1,0 +1,12 @@
+= title "Pogodba"
+
+.crud
+  .master
+    - unless collection.empty?
+      = link_to "Uredi", edit_agreement_path(collection.last)
+    - else
+      = link_to "Nova pogodba", new_agreement_path
+
+- unless collection.empty?
+  = (textilize collection.last.text).html_safe
+  

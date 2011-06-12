@@ -8,16 +8,13 @@
     %th Naslov
     %th Datum objave
     %th Vsebina
-    %td
-    %td
+    %th Opcije
   %tbody
     - for post in collection
       %tr.clickable
         %td= post.title
         %td= post.created_at.to_s :short
         %td= (textilize post.text).html_safe
-        %td
-          .crud
-            = link_to "Odstrani", post, :confirm => destroy_confirmation(post), :method => :delete
-            = link_to "Uredi", edit_post_path(post)
+        %td.crud= link_to "Odstrani", post, :confirm => destroy_confirmation(post), :method => :delete
+        %td.crud= link_to "Uredi", edit_post_path(post)
 

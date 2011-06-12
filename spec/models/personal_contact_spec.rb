@@ -10,7 +10,7 @@ describe PersonalContact do
   it { should belong_to(:student) }
 
   it "should return a proper full name" do
-    subject.full_name.should eql('Grenpa Mekakil')
+    subject.full_name.should eql('Mekakil Grenpa')
   end
   
   it "should properly titelize first and last name" do

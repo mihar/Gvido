@@ -24,23 +24,22 @@ class MentorsController < InheritedResources::Base
   
   def details
     @enrollments = resource.enrollments
-    @check_in_dates = Lesson.all_months_for_mentor(resource.id)
+    @check_in_dates = MonthlyLesson.check_in_dates_for_mentor(resource.id)
   end
   
   def wages
-    @check_in_dates = Lesson.all_months_for_mentor(resource.id)
+    @check_in_dates = MonthlyLesson.check_in_dates_for_mentor(resource.id)
     unless params[:check_in_date].blank?
       @selected_date = Date.new(  params[:check_in_date][0..3].to_i, 
                                   params[:check_in_date][5..6].to_i, 
                                   params[:check_in_date][8..9].to_i )
-      @lessons = Lesson.on_date(@selected_date).with_mentor(resource.id)
-      set_mentors_wage
+      
+      get_mentors_monthly_lessons_and_set_wage
       return
     end
     
-    @selected_date = Date.today.at_end_of_month
-    @lessons = Lesson.on_date(@selected_date).with_mentor(resource.id)
-    set_mentors_wage
+    @selected_date = Date.today.at_beginning_of_month
+    get_mentors_monthly_lessons_and_set_wage
   end
   
   def create
@@ -72,9 +71,11 @@ class MentorsController < InheritedResources::Base
   
   protected
   
-  def set_mentors_wage
+  def get_mentors_monthly_lessons_and_set_wage
+    @monthly_lessons = MonthlyLesson.on_date_with_mentor(@selected_date, resource.id)
+    
     if resource.price_per_private_lesson
-      @mentors_wage = @lessons.map(&:hours_this_month).sum * resource.price_per_private_lesson
+      @mentors_wage = @monthly_lessons.map(&:hours).sum * resource.price_per_private_lesson
     else
       flash[:error] = 'Mentorju niste vnesli cene zasebnih ur.' 
     end

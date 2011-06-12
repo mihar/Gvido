@@ -1,0 +1,17 @@
+- if @unsettled_invoices.any?
+  %section
+    %h2 Zamudniki plačil
+    %table
+      %thead
+        %tr
+          %th Priimek in ime
+          %th Ref. številka položnice
+          %th Rok plačila
+          %th Znesek
+      %tbody
+        - for invoice in @unsettled_invoices
+          %tr
+            %td= link_to invoice.payers_name, invoice.student 
+            %td= invoice.monthly_reference
+            %td= l invoice.payment_date, :format => :long
+            %td= number_to_currency(invoice.price)

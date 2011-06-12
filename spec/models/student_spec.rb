@@ -13,7 +13,7 @@ describe Student do
   it { should have_many(:enrollments) }
 
   it "should return a proper full name" do
-    subject.full_name.should eql('Mikakhil Mekakil')
+    subject.full_name.should eql('Mekakil Mikakhil')
   end
   
   it "should properly titelize first and last name" do
@@ -23,15 +23,8 @@ describe Student do
     student.last_name.should eql('Slova')
   end
   
-  it "should properly order students in students scope" do
-    b = Factory :student, :first_name => "B", :last_name => 'B'
-    Factory :student, :first_name => "B", :last_name => 'A'
-    Factory :student, :first_name => "A", :last_name => 'B'
-    a = Factory :student, :first_name => "A", :last_name => 'A'
-    
-    organized_students_list = Student.all
-    organized_students_list.first.should eql(a)
-    organized_students_list.last.should eql(b)
+  it "should return full address" do
+    subject.full_address.should == "Jenkova 56, 3320 Velenje"
   end
   
 end

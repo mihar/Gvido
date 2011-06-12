@@ -1,0 +1,26 @@
+- if @active_enrollments.any?
+  %section
+    %h2 Statistika vpisanih učencev
+    %h3 Regije z aktivnimi učenci
+    %p= location_section_links(@active_enrollments)
+    
+    %h3 Lokacije z aktivnimi učenci
+    %p= location_details_links(@active_enrollments)
+        
+    %h3 Število učencev na program
+    %table
+      %thead
+        %tr
+          %th Inštrument
+          %th Število učencev
+          %th Mentorji
+      %tbody
+      - @active_enrollments.group_by(&:instrument).each do |instrument, enrollments|
+        %tr
+          %td= link_to instrument, detail_instrument_path(instrument)
+          %td= enrollments.length
+          %td= enrollments.collect(&:mentor).flatten.uniq.collect { |mentor| link_to mentor, details_mentor_path(mentor) }.to_sentence.html_safe
+          
+      
+        
+        

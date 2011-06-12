@@ -30,3 +30,25 @@
     %strong Nasveti:
     %br
     = resource.shop_instructions
+  
+  - if resource.mentors.any?
+    %p
+      %strong Mentorji:
+      %br
+      = resource.mentors.to_sentence
+  
+  - if @active_enrollments.any?
+    %h3 Pregled mentorjev in njihovih učencev
+    %table
+      %thead
+        %tr
+          %th Mentor
+          %th Učenci
+      %tbody
+        - @active_enrollments.group_by(&:mentor).each do |mentor, enrollments|
+          %tr
+            %td= link_to mentor, details_mentor_path(mentor)
+            %td= enrollments.collect(&:student).collect { |student| link_to student, student }.to_sentence.html_safe
+    
+
+      

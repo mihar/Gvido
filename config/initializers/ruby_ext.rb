@@ -64,5 +64,31 @@ class String
   
 end
 
+class Date
+  def self.length_in_months(start, stop)
+    stop.year == start.year ? stop.month - start.month : stop.month + (stop.year - start.year) * 12 - start.month
+  end
+  
+  def self.length_in_months_including_last(start, stop)
+    self.length_in_months(start, stop) + 1
+  end
+  
+  # def self.length_in_months(start, stop)
+  #   stop.year == start.year ? stop.month - start.month : stop.month + (stop.year - start.year) * 12 - start.month
+  # end
+  
+  def self.year_reference(enrollment_date, cancel_date)
+    if enrollment_date.year < cancel_date.year
+      return enrollment_date.year.to_s[2,3] +  cancel_date.year.to_s[2,3]
+    else
+      if cancel_date.month <= 6
+        return (enrollment_date.year - 1).to_s[2,3] +  cancel_date.year.to_s[2,3]
+      else
+        return enrollment_date.year.to_s[2,3] +  (cancel_date.year + 1).to_s[2,3]
+      end
+    end
+  end
+end
+
 # Remove the dreadful to_float method on big decimal objects.
 # class BigDecimal; undef :to_f; end;
