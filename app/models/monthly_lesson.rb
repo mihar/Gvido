@@ -22,6 +22,11 @@ class MonthlyLesson < ActiveRecord::Base
       lessons_on_date = MonthlyLesson.on_date(_date).with_mentor(_mentor_id).reload
     end
     
+    def on_month_for_mentor(_date, _mentor_id)
+      month, year = _date.month, _date.year
+      self.where(:mentor_id => _mentor_id).where("MONTH(date) <= ?", month).where("YEAR(date) <= ?", year).reload
+    end
+    
     # Returns a hash of mentors check in dates up to now 
     # that looks something like this => #<OrderedHash {2011=>[Wed, 01 Jun 2011]}> 
     #
@@ -38,7 +43,7 @@ class MonthlyLesson < ActiveRecord::Base
     end
     
     def with_payment_period(_payment_period_id)
-      self.where(:payment_period_id => _payment_period_id).order('date ASC').all
+      self.where(:payment_period_id => _payment_period_id).order('date ASC').reload
     end
     
     def for_mentor_on_date(_mentor_id, _date)
