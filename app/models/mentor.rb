@@ -45,43 +45,32 @@ class Mentor < ActiveRecord::Base
     #
     def inactive_on_date(date)
       inactive_mentors = []
-      mentors_with_monthly_lessons = self.with_monthly_lessons
       payment_dates = Enrollment.payment_dates_array_up_to_date(date)
 
       for payment_date in payment_dates
-        mentors_with_monthly_lessons.each do |mentor|
-          mentors = []
+        mentors = []
+        self.with_monthly_lessons_up_to_date(payment_date).each do |mentor|
           if mentor.last_hours_entry_at.present? == false
             mentors << mentor
           else
-            if mentor.last_hours_entry_at < payment_date.at_beginning_of_month
-              mentors << mentor
-            end
-          end
-          if mentors.any?
-            inactive_mentors  << { :payment_date => payment_date, :inactive_mentors => mentors }
+            mentors << mentor if mentor.last_hours_entry_at < payment_date.at_beginning_of_month
           end
         end
+        
+        inactive_mentors  << { :payment_date => payment_date, :inactive_mentors => mentors } if mentors.any?
       end
+      
       return inactive_mentors
     end
     
     # Returns am array of mentors with monthly lessons
-    # also destroys monthly lessons that belong to non existing enrollment
     #
-    def with_monthly_lessons
-      mentors_with_monthly_lessons = self.all.reject {|mentor| mentor.monthly_lessons.any? == false }
-      if mentors_with_monthly_lessons.any?
-        mentors_with_monthly_lessons.each do |mentor|
-          mentor.monthly_lessons.each do |monthly_lesson|
-            if monthly_lesson.enrollment.present? == false #monthly lesson's enrollment doesn't exist
-              mentors_with_monthly_lessons = mentors_with_monthly_lessons - [mentor] if mentors_with_monthly_lessons.include? mentor
-              MonthlyLesson.destroy monthly_lesson
-            end
-          end
-        end
+    def with_monthly_lessons_up_to_date(date)
+      mentors_with_monthly_lessons_up_to_date = []
+      self.all.each do |mentor| 
+        mentors_with_monthly_lessons_up_to_date << mentor if MonthlyLesson.on_month_for_mentor(date, mentor.id).any?
       end
-      mentors_with_monthly_lessons
+      mentors_with_monthly_lessons_up_to_date.uniq
     end
   end
   
