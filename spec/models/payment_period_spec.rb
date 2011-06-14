@@ -39,25 +39,26 @@ describe PaymentPeriod do
     pp3.should have(1).errors_on(:start_date)
   end
   
-  it "should allow only monthly payment plan on price per lesson enrollment" do
+  it "should reject trimester payment plan on price_per_lesson enrollment" do
     enr = Factory :enrollment, :price_per_lesson => BigDecimal('20.0')
     pp  = Factory.build :payment_period, :enrollment => enr, :payment_plan_id => :trimester
+    pp.save
     pp.should have(1).errors_on(:payment_plan_id)
   end
   
-  it "should allow only monthly payment plan on price per lesson enrollment" do
+  it "should reject singular payment plan on price_per_lesson enrollment" do
     enr = Factory :enrollment, :price_per_lesson => BigDecimal('20.0')
     pp  = Factory.build :payment_period, :enrollment => enr, :payment_plan_id => :singular
     pp.should have(1).errors_on(:payment_plan_id)
   end
   
-  it "should allow only monthly payment plan on price per lesson enrollment" do
+  it "should reject monthly payment plan on price_per_lesson enrollment" do
     enr = Factory :enrollment, :price_per_lesson => BigDecimal('20.0')
     pp  = Factory.build :payment_period, :enrollment => enr
     pp.should have(1).errors_on(:payment_plan_id)
   end
   
-  it "should allow only monthly payment plan on price per lesson enrollment" do
+  it "should allow per_hour payment plan on price per lesson enrollment" do
     enr = Factory :enrollment, :price_per_lesson => BigDecimal('20.0')
     pp  = Factory.build :payment_period, :enrollment => enr, :payment_plan_id => :per_hour
     pp.should have(0).errors_on(:payment_plan_id)

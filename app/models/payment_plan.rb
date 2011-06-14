@@ -39,6 +39,10 @@ class PaymentPlan
     id == :singular
   end
   
+  def per_hour?
+    id == :per_hour
+  end
+  
   def to_s
     title
   end

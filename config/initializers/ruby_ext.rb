@@ -65,26 +65,32 @@ class String
 end
 
 class Date
+  # Returns length in months not including last month
+  # ex. start = 1 jan, stop = 1 feb #=> length_in_months = 1
+  #
   def self.length_in_months(start, stop)
     stop.year == start.year ? stop.month - start.month : stop.month + (stop.year - start.year) * 12 - start.month
   end
   
+  # Returns length in months not including last month
+  # ex. start = 1 jan, stop = 1 feb => length_in_months = 2
+  #
   def self.length_in_months_including_last(start, stop)
     self.length_in_months(start, stop) + 1
   end
   
-  # def self.length_in_months(start, stop)
-  #   stop.year == start.year ? stop.month - start.month : stop.month + (stop.year - start.year) * 12 - start.month
-  # end
-  
+  # Returns yearly reference number
+  # ex. enrollment_date = 2011, cancel_date = 2012 #=> year_reference = "1112"
+  #
   def self.year_reference(enrollment_date, cancel_date)
+    #enrollment doesn't end in the same year
     if enrollment_date.year < cancel_date.year
-      return enrollment_date.year.to_s[2,3] +  cancel_date.year.to_s[2,3]
-    else
+      return enrollment_date.year.to_s[2,3] + cancel_date.year.to_s[2,3]
+    else #enrollment ends in the same year
       if cancel_date.month <= 6
-        return (enrollment_date.year - 1).to_s[2,3] +  cancel_date.year.to_s[2,3]
+        return (enrollment_date.year - 1).to_s[2,3] + cancel_date.year.to_s[2,3]
       else
-        return enrollment_date.year.to_s[2,3] +  (cancel_date.year + 1).to_s[2,3]
+        return enrollment_date.year.to_s[2,3] + (cancel_date.year + 1).to_s[2,3]
       end
     end
   end
