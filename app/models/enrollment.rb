@@ -45,7 +45,7 @@ class Enrollment < ActiveRecord::Base
     end
     
     def including_dates(start_date, stop_date)
-      self.where("enrollments.enrollment_date <= ? AND enrollments.cancel_date >= ?", start_date, stop_date)
+      self.where("enrollment_date <= ?", start_date).where("cancel_date >= ?", stop_date)
     end
     
     def including_date(date)
