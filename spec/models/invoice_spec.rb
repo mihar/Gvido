@@ -6,7 +6,7 @@ describe Invoice do
   it { should be_valid }
   it { should belong_to :student }
 
-  context "Calculations" do
+  context "concerning invoice price calculations" do
     it "should return correct calculations for created enrollments" do
       student = Factory :student
       enrollment = Factory :enrollment, :student => student
@@ -21,6 +21,10 @@ describe Invoice do
       invoice.payers_address.should ==  student.full_address
       invoice.recievers_name.should == Invoice::RECIEVERS_NAME
       invoice.recievers_address.should == Invoice::RECIEVERS_ADDRESS
+    end
+    
+    it "should add three euros to invoice price when student is late with payment" do
+      
     end
   end
 end

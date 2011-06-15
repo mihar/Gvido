@@ -3,7 +3,7 @@ class Pdf
   H1 = 25
   H2 = 20
   H3 = 15
-  NORMAL_FONT_SIZE = 13
+  NORMAL_FONT_SIZE = 10
   FONT = "#{Prawn::BASEDIR}/data/fonts/DejaVuSans.ttf"
   
   class << self

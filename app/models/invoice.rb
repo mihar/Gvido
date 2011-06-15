@@ -2,9 +2,9 @@ class Invoice < ActiveRecord::Base
   belongs_to :student
   
   scope :due_this_month, where(:payment_date => Date.today.beginning_of_month..Date.today.end_of_month)
-  scope :due, where("payment_date < ? AND settled = false", 1.day.from_now)
-  scope :settled, where(:settled => true).order('payment_date ASC')
-  scope :unsettled, where(:settled => false)
+  scope :due, where("payment_date < ?", 1.day.from_now).where("settled = ?", false)
+  scope :settled, where("settled = ?", true).order('payment_date ASC')
+  scope :unsettled, where("settled = ?", false)
   scope :regular, where(:payment_kind => 1..3)
   
   RECIEVERS_NAME = "Tomaž Pačnik"
