@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110614092043) do
+ActiveRecord::Schema.define(:version => 20110615232021) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -207,12 +207,10 @@ ActiveRecord::Schema.define(:version => 20110614092043) do
     t.integer  "student_id"
     t.integer  "enrollment_id"
     t.integer  "payment_period_id"
-    t.integer  "invoice_id"
     t.integer  "hours",             :default => 0
     t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "monthly_reference"
     t.boolean  "public_lesson",     :default => false
   end
 

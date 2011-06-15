@@ -41,7 +41,7 @@ class Invoice < ActiveRecord::Base
         for student_id in students.keys
           sum_of_all_monthly_payments = students[student_id].flatten.map(&:price).inject(:+)
           student = Student.find(student_id)
-          invoices << self.new(:student_id => student_id, :monthly_reference => student.monthly_reference_for_date(payment_date), :payers_name => student.full_name, :payers_address => student.full_address, :recievers_name => RECIEVERS_NAME, :recievers_address => RECIEVERS_ADDRESS, :payment_date => payment_date, :price => sum_of_all_monthly_payments, :settled => false) #TODO description..
+          invoices << self.new(:student_id => student_id, :payers_name => student.full_name, :payers_address => student.full_address, :recievers_name => RECIEVERS_NAME, :recievers_address => RECIEVERS_ADDRESS, :payment_date => payment_date, :price => sum_of_all_monthly_payments, :settled => false) #TODO description..
         end
       end
       return invoices
