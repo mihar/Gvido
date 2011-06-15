@@ -122,7 +122,7 @@ class Enrollment < ActiveRecord::Base
     if price_per_lesson and price_per_lesson > 0 
       return price_per_lesson
     else
-      return (payments.map(&:price).inject(:+) / nr_of_lessons)
+      return (sum_of_payments / nr_of_lessons)
     end
   end
   
