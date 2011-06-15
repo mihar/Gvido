@@ -2,51 +2,16 @@
 %h2.sub Pregled učenca
 
 .crud
-  = link_to "Dodaj vpisnino", new_student_enrollment_path(@student)
-  = link_to "Dodaj kontakt", new_student_personal_contact_path(@student)
-  = link_to "Odstrani", @student, :confirm => destroy_confirmation(@student), :method => :delete
+  = link_to "Dodaj vpisnino", new_student_enrollment_path(resource)
+  = link_to "Dodaj kontakt", new_student_personal_contact_path(resource)
+  = link_to "Odstrani", resource, :confirm => destroy_confirmation(resource), :method => :delete
   .master
-    = link_to 'Uredi', edit_student_path(@student)
-    
-.data
-  %p
-    %strong Ime in priimek:
-    = @student.full_name
-  %p
-    %strong Referenčna številka:
-    = @student.reference_number
-  %p.date
-    %strong Datum dodajanja:
-    = l @student.created_at, :format => :long
-  %p
-    %strong Naslov:
-    = @student.full_address
-  %p
-    %strong Email:
-    = mail_to @student.email
-  %p
-    %strong Telefon:
-    = @student.landline
-  %p
-    %strong Mobitel:
-    = @student.mobile
-  - if @student.date_of_birth
-    %p
-      %strong Datum rojstva:
-      = l @student.date_of_birth, :format => :long
-  %p
-    %strong Opombe:
-    %br
-    = (textilize @student.notes).html_safe
-  
-  - if @student.contact
-    %h3 Vpisne informacije
-    %p
-      = render "contacts/contact_details", :contact => @student.contact
+    = link_to 'Uredi', edit_student_path(resource)
+
+= render "student_data", :resource => resource    
 
 #contacts_enrollments
-
-  - unless @student.personal_contacts.empty?
+  - if resource.personal_contacts.any?
     #contacts
       %h3 Osebni kontakti učenca
       %table
@@ -58,11 +23,10 @@
           %th Email
           %th Opombe
         %tbody
-        = render @student.personal_contacts
+        = render resource.personal_contacts
 
-  - unless @student.enrollments(true).empty?
-  
-    - enrollments = @student.enrollments(true)
+  - if resource.enrollments(true).any?
+    - enrollments = resource.enrollments(true)
     #enrollments
       %h3 Vpisnine
       %table
@@ -73,8 +37,9 @@
           %th Vpisnina
           %th Kavcija
           %th Popust
-          %th Število ur
-          %th Cena učne ure
+          %th Predvideno št. ur
+          %th Opravljenih ur
+          %th Cena ure
           %th Šolnina
           %th Seštevek plačil
         %tbody
@@ -83,14 +48,17 @@
     %br.clear
       
     #settled_and_unsettled_payments
-      %h3 Poravnava
-      %p
-        %strong Znesek plačanih položnic:
-        = number_to_currency(@student.invoices.settled.map(&:price).sum, :precision => 2)
-      %p
-        %strong Znesek neplačanih položnic:
-        = number_to_currency(@student.invoices.unsettled.map(&:price).sum, :precision => 2)
-          
+      %h3 Statistika
+      %p 
+        %strong Znesek do sedaj plačanih položnic:
+        = number_to_currency(resource.sum_of_settled_invoices, :precision => 2)
+      %p 
+        %strong Znesek plačanih položnic za trenutno vpisno obdobje:
+        = number_to_currency(resource.sum_of_settled_invoices_for_active_enrollments, :precision => 2)
+      %p 
+        %strong Znesek neplačanih položnic za trenutno vpisno obdobje:
+        = number_to_currency(resource.sum_of_unsettled_invoices_for_active_enrollmetns, :precision => 2)
+
     %br.clear
 
     #payments

@@ -5,10 +5,11 @@
   %td= number_to_currency(enrollment.enrollment_fee, :precision => 2)
   %td= number_to_currency(enrollment.prepayment, :precision => 2)
   %td= number_to_percentage(enrollment.discount * 100, :precision => 2)
-  %td= enrollment.nr_of_lessons
+  %td= enrollment.display_nr_of_lessons
+  %td= enrollment.nr_of_lessons_done
   %td= number_to_currency(enrollment.chosen_price_per_hour, :precision => 2)
   %td= number_to_currency(enrollment.total_price, :precision => 2)
-  %td= number_to_currency(enrollment.payments.map(&:price).inject(:+), :precision => 2)
+  %td= number_to_currency(enrollment.sum_of_payments, :precision => 2)
   %td
     .crud
       = link_to "Odstrani", [enrollment.student, enrollment], :confirm => destroy_confirmation(enrollment), :method => :delete

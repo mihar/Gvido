@@ -40,6 +40,25 @@ class Student < Person
     "8#{month_ref}#{year_ref}-#{reference_number}"
   end
   
+  def sum_of_settled_invoices
+    invoices(true).settled.map(&:price).sum
+  end
+  
+  def sum_of_settled_invoices_for_active_enrollments
+    start_enrollment  = enrollments.active.order("enrollment_date ASC").limit(1).first
+    stop_enrollment   = enrollments.active.order("cancel_date DESC").limit(1).first
+    
+    if start_enrollment and stop_enrollment
+      Invoice.for_student_between_dates(id, start_enrollment.enrollment_date, stop_enrollment.cancel_date).sum(:price)
+    else
+      0
+    end
+  end
+  
+  def sum_of_unsettled_invoices_for_active_enrollmetns
+    enrollments.active.collect {|enrollment| enrollment.sum_of_payments }.sum - sum_of_settled_invoices_for_active_enrollments
+  end
+  
   protected
   
   def proper_reference_number

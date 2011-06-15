@@ -83,8 +83,8 @@ class Enrollment < ActiveRecord::Base
           length_in_months = Date.length_in_months_including_last(start, stop)
         end
         
-        length_in_months.times do |i|
-          payment_dates_array << ((start + Payment::DATE_SPACER) >> i)
+        length_in_months.times do |add_month|
+          payment_dates_array << ((start + Payment::DATE_SPACER) >> add_month)
         end
         return payment_dates_array
       else
@@ -138,7 +138,23 @@ class Enrollment < ActiveRecord::Base
       return "Napaka. Izbrišite vpisnino."
     end
   end
-    
+  
+  def display_nr_of_lessons
+    if payment_periods.any? and payment_periods.first.payment_plan.per_hour?
+      "X"
+    else
+      nr_of_lessons
+    end
+  end
+  
+  def nr_of_lessons_done
+    MonthlyLesson.lessons_done_for_student_with_enrollment(student_id, id)
+  end
+  
+  def sum_of_payments
+    payments.map(&:price).inject(:+)
+  end
+  
   private
   
   def destroy_out_of_range_payment_periods_and_invoices

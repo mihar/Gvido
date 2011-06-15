@@ -22,6 +22,10 @@ class MonthlyLesson < ActiveRecord::Base
       lessons_on_date = MonthlyLesson.on_date(_date).with_mentor(_mentor_id).reload
     end
     
+    def lessons_done_for_student_with_enrollment(_student_id, _enrollment_id)
+      self.where(:student_id => _student_id).where(:enrollment_id => _enrollment_id).reload.sum(:hours)
+    end
+    
     def on_month_for_mentor(_date, _mentor_id)
       month, year = _date.month, _date.year
       self.where(:mentor_id => _mentor_id).where("MONTH(date) <= ?", month).where("YEAR(date) <= ?", year).reload

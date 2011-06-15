@@ -1,0 +1,34 @@
+.data
+  %p
+    %strong Ime in priimek:
+    = resource.full_name
+  %p
+    %strong Referenčna številka:
+    = resource.reference_number
+  %p.date
+    %strong Datum dodajanja:
+    = l resource.created_at, :format => :long
+  %p
+    %strong Naslov:
+    = resource.full_address
+  %p
+    %strong Email:
+    = mail_to resource.email
+  %p
+    %strong Telefon:
+    = resource.landline
+  %p
+    %strong Mobitel:
+    = resource.mobile
+  - if resource.date_of_birth
+    %p
+      %strong Datum rojstva:
+      = l resource.date_of_birth, :format => :long
+  %p
+    %strong Opombe:
+    %br
+    = (textilize resource.notes).html_safe
+  
+  - if resource.contact
+    %h3 Vpisne informacije
+    %p= render "contacts/contact_details", :contact => resource.contact
