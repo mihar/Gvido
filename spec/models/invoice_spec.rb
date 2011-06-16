@@ -14,6 +14,7 @@ describe Invoice do
       
       invoice = Invoice.new_on_date(Date.new(2011, 9, 20)).first
       
+      invoice.monthly_reference.should == "8091112-#{student.reference_number}"
       invoice.payment_date.should == Date.new(2011, 9, 20) 
       invoice.price.should == BigDecimal('111.11')
       invoice.payers_name.should == student.full_name
