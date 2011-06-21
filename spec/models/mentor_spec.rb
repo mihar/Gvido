@@ -70,6 +70,12 @@ describe Mentor do
     mentor.should have(1).error_on(:user)
   end
   
+  context "mentors payment calculation" do
+    it "should properly calculate public lessons"
+    
+    it "should properly calculate public and private lessons"
+  end
+  
   context "user" do
     it "should inherit name, surname and email from mentor" do
       user = Factory.build :user, :first_name => nil, :last_name => nil, :email => nil

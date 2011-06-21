@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110615232021) do
+ActiveRecord::Schema.define(:version => 20110621105158) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -194,12 +194,12 @@ ActiveRecord::Schema.define(:version => 20110615232021) do
     t.integer  "position",                                                :default => 0
     t.string   "facebook"
     t.string   "myspace"
-    t.decimal  "price_per_private_lesson", :precision => 10, :scale => 0
-    t.decimal  "price_per_public_lesson",  :precision => 10, :scale => 0
     t.boolean  "public_email",                                            :default => false
     t.boolean  "public_phone",                                            :default => false
     t.boolean  "public_address",                                          :default => false
     t.datetime "last_hours_entry_at"
+    t.decimal  "price_per_private_lesson",  :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "public_lesson_coefficient", :precision => 8, :scale => 2, :default => 0.0
   end
 
   create_table "monthly_lessons", :force => true do |t|

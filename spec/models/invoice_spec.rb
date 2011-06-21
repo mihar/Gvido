@@ -12,7 +12,7 @@ describe Invoice do
       enrollment = Factory :enrollment, :student => student
       payment_period = Factory :payment_period, :enrollment => enrollment
       
-      invoice = Invoice.new_on_date(Date.new(2011, 9, 20)).first
+      invoice = Invoice.new_on_date(Date.new(2011, 9, 20), Date.new(2011, 9, 20)).first
       
       invoice.monthly_reference.should == "8091112-#{student.reference_number}"
       invoice.payment_date.should == Date.new(2011, 9, 20) 
@@ -23,8 +23,32 @@ describe Invoice do
       invoice.recievers_address.should == Invoice::RECIEVERS_ADDRESS
     end
     
-    it "should add three euros to invoice price when student is late with payment" do
+    it "should add three euros to invoice price for each month when student is late with payment" do
+      student = Factory :student
+      enrollment = Factory :enrollment, :student => student
+      payment_period = Factory :payment_period, :enrollment => enrollment
       
+      invoice = Invoice.new_on_date(Date.new(2011, 9, 20), Date.new(2011, 10, 20)).first
+      invoice.payment_date.should == Date.new(2011, 9, 20) 
+      invoice.price.should == BigDecimal('114.11')
     end
+    
+    it "should add three euros to invoice price for each month when student is late with payment" do
+      student = Factory :student
+      enrollment = Factory :enrollment, :student => student
+      payment_period = Factory :payment_period, :enrollment => enrollment
+      
+      invoice = Invoice.new_on_date(Date.new(2011, 9, 20), Date.new(2011, 11, 20)).first
+      invoice.payment_date.should == Date.new(2011, 9, 20) 
+      invoice.price.should == BigDecimal('117.11')
+    end
+    
+    it "should create new invoice for enrollment fee and prepayment on given month"
+    
+    it "should properly calculate per hour payment plan"
+    
+    it "should properly calculate per hour payment plan with more then one monthly lesson"
+    
+    it "post_office and place should be decoupled from both addresses, payers and recievers for easier styling"
   end
 end

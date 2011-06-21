@@ -54,7 +54,7 @@ class Payment
                               total_price, enrollment_length, enrollment_discount, enrollment_date, 
                               _period_discount, period_length, period_start_date, prepayment, _payment_plan, _student_id
                             )
-      when :per_hour  then create_paymetns_per_hour(price_per_lesson, payment_period.id, enrollment_date, prepayment, _student_id, _period_discount, _payment_plan)
+      when :per_hour  then create_payments_per_hour(price_per_lesson, payment_period.id, enrollment_date, prepayment, _student_id, _period_discount, _payment_plan)
       end
     end
     
@@ -88,7 +88,7 @@ class Payment
     
     # Creates a payment for month in a payment period. Calculations are done through number of monthly lessons
     #
-    def create_paymetns_per_hour(price_per_lesson, _payment_period_id, enrollment_date, prepayment, _student_id, _period_discount, _payment_plan)
+    def create_payments_per_hour(price_per_lesson, _payment_period_id, enrollment_date, prepayment, _student_id, _period_discount, _payment_plan)
       payments = []
       monthly_lessons = MonthlyLesson.with_payment_period(_payment_period_id)
       _price = BigDecimal('0')

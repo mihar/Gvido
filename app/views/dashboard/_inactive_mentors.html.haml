@@ -10,4 +10,5 @@
         - @inactive_mentors.each do |inactive_mentors_hash|
           %tr
             %td= l inactive_mentors_hash[:payment_date], :format => :month_year
-            %td= inactive_mentors_hash[:inactive_mentors].to_sentence
+            %td
+              = inactive_mentors_hash[:inactive_mentors].collect {|mentor| link_to mentor, wages_mentor_path(mentor, :check_in_date => inactive_mentors_hash[:payment_date]) }.to_sentence.html_safe

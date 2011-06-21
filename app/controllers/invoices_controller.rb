@@ -44,7 +44,7 @@ class InvoicesController < ApplicationController
   private
   
   def set_instance_variables
-    @invoices, @expected_invoices_sum, @settled_invoices_sum, @unsettled_invoices_sum = Invoice.invoices_expected_settled_and_unsettled_sum_on_date(@selected_date)
+    @invoices, @expected_invoices_sum, @settled_invoices_sum, @unsettled_invoices_sum = Invoice.invoices_expected_settled_and_unsettled_sum_on_date(@selected_date, Date.today)
   end
   
   def set_section

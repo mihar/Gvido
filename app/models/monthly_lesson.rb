@@ -3,7 +3,7 @@ class MonthlyLesson < ActiveRecord::Base
   belongs_to :enrollment
   belongs_to :mentor
   belongs_to :payment_period
-  belongs_to :invoice
+  #belongs_to :invoice
   
   validates_numericality_of :hours, :greater_than_or_equal_to => 0
 
@@ -11,7 +11,7 @@ class MonthlyLesson < ActiveRecord::Base
 
   class << self
     def on_date(_date)
-      where(:date => _date)
+      where("YEAR(date) = ?", _date.year).where("MONTH(date) = ?", _date.month).reload #where(:date => _date)
     end
     
     def with_mentor(_mentor_id)

@@ -12,7 +12,7 @@ class PaymentPeriod < ActiveRecord::Base
   
   class << self
     def for_payment_date(payment_date)
-      where("start_date < ? AND end_date > ?", payment_date, payment_date).all
+      where("start_date < ?", payment_date).where("end_date > ?", payment_date).reload
     end
     
     def last_for_enrollment(_enrollment_id)
