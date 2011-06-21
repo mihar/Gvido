@@ -183,7 +183,7 @@ sl:
         facebook: "Facebook naslov"
         myspace: "Myspace naslov"
         private_email: "Zasebna E-pošta"
-        price_per_public_lesson: "Tarifa javnega predavanja"
+        public_lesson_coefficient: "Koeficient javnega predavanja"
         price_per_private_lesson: "Tarifa zasebnega predavanja"
         public_email: "Javna e-pošta?"
         public_address: "Javen naslov?"

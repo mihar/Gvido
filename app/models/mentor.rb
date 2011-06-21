@@ -11,9 +11,9 @@ class Mentor < ActiveRecord::Base
   default_scope order(:position)
 
   validates_uniqueness_of :email
-  validates_presence_of :name, :surname, :email, :price_per_private_lesson, :price_per_public_lesson
-  validates_numericality_of :price_per_private_lesson, :greater_than_or_equal_to => 0
-  validates_numericality_of :price_per_public_lesson,  :greater_than_or_equal_to => 0
+  validates_presence_of :name, :surname, :email, :price_per_private_lesson, :public_lesson_coefficient
+  validates_numericality_of :price_per_private_lesson, :greater_than => 0
+  validates_numericality_of :public_lesson_coefficient,  :greater_than => 0
   validate :validate_user_presence
 
   before_save :make_permalink
