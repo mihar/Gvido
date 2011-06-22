@@ -70,13 +70,19 @@ class PaymentPeriod < ActiveRecord::Base
     [date_at_beginning_of_month, monthly_reference]
   end
   
+  # Returns date_at_beginning_of_month
+  # 
+  def get_monthly_lessons_date(add_months)
+    (start_date >> add_months)
+  end
+  
   # Creates monthly lessons for each month in the enrollment
   #
   def create_monthly_lessons
     _enrollment, mentor_id, student_id, year_ref = parse_enrollment
     length.times do |add_months|
-      date_at_beginning_of_month, monthly_reference = get_date_and_monthly_reference(add_months, year_ref)      
-      monthly_lesson = MonthlyLesson.find_or_create_by_mentor_id_and_student_id_and_enrollment_id_and_payment_period_id_and_date_and_monthly_reference(mentor_id, student_id, enrollment_id, id, date_at_beginning_of_month, monthly_reference)
+      date_at_beginning_of_month = get_monthly_lessons_date(add_months)      
+      monthly_lesson = MonthlyLesson.find_or_create_by_mentor_id_and_student_id_and_enrollment_id_and_payment_period_id_and_date(mentor_id, student_id, enrollment_id, id, date_at_beginning_of_month)
     end
     true
   end

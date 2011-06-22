@@ -11,13 +11,13 @@ describe Mentor do
   it { should have_and_belong_to_many :gigs }
   it { should have_many :enrollments }
   it { should validate_numericality_of(:price_per_private_lesson) }
-  it { should validate_numericality_of(:price_per_public_lesson) }
+  it { should validate_numericality_of(:public_lesson_coefficient) }
   it { should validate_uniqueness_of(:email) }
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:surname) }
   it { should validate_presence_of(:price_per_private_lesson) }
-  it { should validate_presence_of(:price_per_public_lesson) }
+  it { should validate_presence_of(:public_lesson_coefficient) }
   
   it "should change created_at and updated_at" do
     monthly_lesson = Factory :monthly_lesson, :date => Date.new(2011, 9, 1), :created_at => DateTime.new(2011, 10, 1), :updated_at => DateTime.new(2011, 10, 1)

@@ -122,7 +122,7 @@ Factory.define :mentor do |f|
   f.association :user
   f.after_build { |mentor| mentor.instruments << Factory(:instrument) }
   f.price_per_private_lesson 25.0
-  f.price_per_public_lesson 10.0
+  f.public_lesson_coefficient 1.5
 end
 
 Factory.define :movie do |f|
