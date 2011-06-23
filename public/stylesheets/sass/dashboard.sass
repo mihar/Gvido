@@ -15,6 +15,7 @@ $gvido_light_blue: #B2DCFE
 @import "common/forms"
 
 @import "controllers/contacts"
+@import "controllers/payment_periods"
 @import "dashboard/students"
 
 =nav_link
@@ -61,11 +62,14 @@ header
     position: absolute
     top: 0px
     left: 250px
+    li
+      list-style: none
+      li
+        background: #964F3E
     &>ul
       float: left
       &>li
         float: left
-        list-style: none
         position: relative
         &>a
           +nav_link
@@ -83,7 +87,6 @@ header
           display: none
           position: absolute
           li
-            background: url("../images/backgrounds/90red.png")
             float: none
             a
               display: block
