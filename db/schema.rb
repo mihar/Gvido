@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110621105158) do
+ActiveRecord::Schema.define(:version => 20110629202947) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -73,15 +73,17 @@ ActiveRecord::Schema.define(:version => 20110621105158) do
     t.integer  "student_id"
     t.date     "enrollment_date"
     t.date     "cancel_date"
-    t.decimal  "total_price",      :precision => 8, :scale => 2
-    t.decimal  "prepayment",       :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "total_price",                 :precision => 8, :scale => 2
+    t.decimal  "prepayment",                  :precision => 8, :scale => 2, :default => 0.0
     t.integer  "nr_of_lessons"
-    t.decimal  "discount",         :precision => 6, :scale => 4, :default => 0.0
+    t.decimal  "discount",                    :precision => 6, :scale => 4, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted",                                        :default => false
-    t.decimal  "enrollment_fee",   :precision => 8, :scale => 2, :default => 0.0
-    t.decimal  "price_per_lesson", :precision => 6, :scale => 2, :default => 0.0
+    t.boolean  "deleted",                                                   :default => false
+    t.decimal  "enrollment_fee",              :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "price_per_lesson",            :precision => 6, :scale => 2, :default => 0.0
+    t.date     "prepayment_payment_date"
+    t.date     "enrollment_fee_payment_date"
   end
 
   create_table "gigs", :force => true do |t|
@@ -123,9 +125,9 @@ ActiveRecord::Schema.define(:version => 20110621105158) do
 
   create_table "invoices", :force => true do |t|
     t.string   "monthly_reference"
-    t.decimal  "price",             :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "price",                          :precision => 8, :scale => 2, :default => 0.0
     t.date     "payment_date"
-    t.boolean  "settled",                                         :default => false
+    t.boolean  "settled",                                                      :default => false
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -134,6 +136,8 @@ ActiveRecord::Schema.define(:version => 20110621105158) do
     t.string   "payers_address"
     t.string   "recievers_name"
     t.string   "recievers_address"
+    t.string   "recievers_post_office_and_city"
+    t.string   "payers_post_office_and_city"
   end
 
   create_table "link_categories", :force => true do |t|
