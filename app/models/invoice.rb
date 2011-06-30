@@ -21,7 +21,9 @@ class Invoice < ActiveRecord::Base
         payment_date = date.at_beginning_of_month + Payment::DATE_SPACER
         active_periods = PaymentPeriod.for_payment_date(payment_date)
         students = Hash.new{|h, k| h[k] = []}
-      
+        enrollments_with_enrollment_fees = Enrollment.with_enrollment_fees_on_date(date)
+        enrollments_with_prepayments = Enrollment.with_prepayments_on_date(date)
+        
         #creates payments for active payment periods
         for payment_period in active_periods
           if payment_period.payment_plan.id == :per_hour
@@ -41,8 +43,20 @@ class Invoice < ActiveRecord::Base
         #creates new invoices and adds them to an array
         for student_id in students.keys
           sum_of_all_monthly_payments = students[student_id].flatten.map(&:price).inject(:+)
-          student = Student.find(student_id)
+          student = Student.find_by_id(student_id)
           invoices << self.new(:student_id => student_id, :monthly_reference => student.monthly_reference_for_date(payment_date), :payers_name => student.full_name, :payers_address => student.full_address, :recievers_name => RECIEVERS_NAME, :recievers_address => RECIEVERS_ADDRESS, :payment_date => payment_date, :price => sum_of_all_monthly_payments, :settled => false) #TODO description..
+        end
+        
+        #creates new invoices for prepayments
+        for enrollment in enrollments_with_prepayments
+          student = Student.find_by_id(enrollment.student_id)
+          invoices << self.new(:student_id => enrollment.student_id, :monthly_reference => "Kavcija", :payers_name => student.full_name, :payers_address => student.full_address, :recievers_name => RECIEVERS_NAME, :recievers_address => RECIEVERS_ADDRESS, :payment_date => enrollment.prepayment_payment_date, :price => enrollment.prepayment, :settled => false) #TODO description..
+        end
+        
+        #creates new invoices for prepayments
+        for enrollment in enrollments_with_enrollment_fees
+          student = Student.find_by_id(enrollment.student_id)
+          invoices << self.new(:student_id => enrollment.student_id, :monthly_reference => "Šolnina", :payers_name => student.full_name, :payers_address => student.full_address, :recievers_name => RECIEVERS_NAME, :recievers_address => RECIEVERS_ADDRESS, :payment_date => enrollment.enrollment_fee_payment_date, :price => enrollment.enrollment_fee, :settled => false) #TODO description..
         end
         
         #adds 3€ to the invoice price for each unpaid month

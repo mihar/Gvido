@@ -43,12 +43,25 @@ describe Invoice do
       invoice.price.should == BigDecimal('117.11')
     end
     
-    it "should create new invoice for enrollment fee and prepayment on given month"
+    it "should create new invoice for enrollment fee and prepayment on given month" do
+      student = Factory :student
+      enrollment = Factory :enrollment, :student => student, 
+        :enrollment_fee_payment_date => Date.new(2011, 1, 1), :enrollment_fee => BigDecimal('50'),
+        :prepayment_payment_date => Date.new(2011, 1, 1), :prepayment => BigDecimal('50')
+      payment_period = Factory :payment_period, :enrollment => enrollment
+      
+      Invoice.new_on_date(Date.new(2011, 1, 1), Date.today).should have(2).invoices
+    end
     
     it "should properly calculate per hour payment plan"
     
     it "should properly calculate per hour payment plan with more then one monthly lesson"
     
-    it "post_office and place should be decoupled from both addresses, payers and recievers for easier styling"
+    it "post_office and place should be decoupled from both addresses, payers and recievers for easier styling" do
+      subject.should respond_to(:recievers_address)
+      subject.should respond_to(:recievers_post_office_and_city)
+      subject.should respond_to(:payers_address)
+      subject.should respond_to(:payers_post_office_and_city)
+    end
   end
 end

@@ -20,19 +20,7 @@ class Enrollment < ActiveRecord::Base
   scope :active, where("enrollments.enrollment_date < CURRENT_DATE()").where("enrollments.cancel_date > CURRENT_DATE()").reload
   scope :future, where("enrollments.enrollment_date > CURRENT_DATE()").reload
   scope :past, where("enrollments.cancel_date < CURRENT_DATE()").reload
-  
-  composed_of :prepayment_payment_date,
-                :class_name => 'Date',
-                :mapping => %w(Date to_date),
-                :constructor => Proc.new{ Date.today },
-                :converter => Proc.new{ |item| item }
-  
-  composed_of :enrollment_fee_payment_date,
-                :class_name => 'Date',
-                :mapping => %w(Date to_date),
-                :constructor => Proc.new{ Date.today },
-                :converter => Proc.new{ |item| item }
-  
+    
   before_update :destroy_out_of_range_payment_periods_and_invoices
   
   class << self
@@ -91,7 +79,16 @@ class Enrollment < ActiveRecord::Base
         return []
       end      
     end
-  end
+    
+    def with_enrollment_fees_on_date(date)
+      where("enrollment_fee > 0").where(:enrollment_fee_payment_date => date.at_beginning_of_month..date.at_end_of_month)
+    end
+    
+    def with_prepayments_on_date(date)
+      where("prepayment > 0").where(:prepayment_payment_date => date.at_beginning_of_month..date.at_end_of_month)
+    end
+    
+  end #class << self
     
   def discount_percent
     "#{discount * 100}%".gsub(".", ",")
