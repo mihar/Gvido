@@ -4,6 +4,7 @@ class Mentor < ActiveRecord::Base
   has_and_belongs_to_many :locations
   has_and_belongs_to_many :gigs
   has_many :enrollments, :conditions => "enrollment_date < CURRENT_DATE() AND cancel_date > CURRENT_DATE() AND deleted = 0", :dependent => :destroy
+  has_many :students, :through => :enrollments
   has_many :monthly_lessons
 
   accepts_nested_attributes_for :user

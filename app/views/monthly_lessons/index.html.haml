@@ -1,12 +1,13 @@
 - if @can_edit
-  = title "Vnesite števila zasebnih predavanj unčencev za obdobje #{@period}"
+  = title "Vnesite števila zasebnih predavanj učencev za obdobje #{@period}"
   
   = form_tag(bulk_update_monthly_lessons_path, {:method => :put} )  do
     %table
       %thead
-        %th Program
-        %th Učenec
-        %th Število ur
+        %tr
+          %th Program
+          %th Učenec
+          %th Število ur
       %tbody
         - for lessons in @monthly_lessons
           - field_name = "students_monthly_lessons[#{lessons[:students_monthly_lessons].id}][hours]"
@@ -14,11 +15,32 @@
             %td= lessons[:programme_title]
             %td= lessons[:student_name]
             %td= number_field_tag field_name, lessons[:students_monthly_lessons].hours
-
-    = submit_tag 'Shrani'
-
+      %thead
+        %tr
+          %th{:colspan => 3} Skupne ure
+      %tbody
+        - @monthly_lessons_public.group_by { |lesson| "#{lesson.date} #{lesson.enrollment.instrument}" }.each do |public_lesson, lessons|  
+          %tr
+            %td= lessons.first.enrollment.instrument
+            %td= lessons.map(&:student).to_sentence
+            %td= lessons.first.hours
+        %tr
+          %td{:colspan => 3}
+            %strong Dodaj skupinsko uro
+            = date_select :student_public_lesson, :date
+            = text_field_tag "student_public_lesson[hours]"
+            ur
+            = select("student_public_lesson", "instrument", Instrument.all.collect {|p| [ p.title, p.id ] }, {:include_blank => 'Izberite program'})
+            - @students.each do |student|
+              %label
+                = check_box_tag "student_public_lesson[students][]", student.id
+                = student
+                
+    %p.submit= submit_tag 'Shrani'
+  
+  
 - else
-  = title "Pregled zasebnih predavanj unčencev za obdobje #{@period}"
+  = title "Pregled zasebnih predavanj učencev za obdobje #{@period}"
   %p
     %strong Vaše plačilo
     = number_to_currency(@mentors_wage, :precision => 2)
@@ -34,3 +56,7 @@
           %td= lessons[:programme_title]
           %td= lessons[:student_name]
           %td= lessons[:students_monthly_lessons].hours
+    %thead{:colspan => 3} 
+      %tr
+        %th Skupne ure
+    %tbody= render @monthly_lessons_public

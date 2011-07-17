@@ -8,6 +8,7 @@ class MonthlyLessonsController < ApplicationController
     date = Date.today.at_beginning_of_month.prev_month
     @all_mentors_monthly_lessons = MonthlyLesson.for_mentor_on_date(current_user.mentor.id, date)
     @monthly_lessons = @all_mentors_monthly_lessons.map { |ml| { :student_name => ml.student.to_s, :programme_title => ml.enrollment.programme, :students_monthly_lessons => ml}}
+    @monthly_lessons_public = current_user.mentor.monthly_lessons.public_lessons.on_date(date)
     @period = "od #{l date } do #{l date.at_end_of_month}"
     last_entry = current_user.mentor.last_hours_entry_at
     if (last_entry.nil?) or 
@@ -16,6 +17,7 @@ class MonthlyLessonsController < ApplicationController
     else
       @can_edit = false
     end
+    @students = (current_user and current_user.mentor) ? current_user.mentor.students : Student.all
     @mentors_wage = @all_mentors_monthly_lessons.map(&:hours).sum * current_user.mentor.price_per_private_lesson
   end
   
@@ -42,6 +44,7 @@ class MonthlyLessonsController < ApplicationController
   protected
   
   def bulk_update_guts
+    MonthlyLesson.update_public(params[:student_public_lesson], current_user.mentor)
     MonthlyLesson.update(params[:students_monthly_lessons].keys, params[:students_monthly_lessons].values)
   end
   
