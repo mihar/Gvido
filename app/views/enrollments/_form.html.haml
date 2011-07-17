@@ -28,8 +28,8 @@
   = f.input :cancel_date, :start_year => Date.today.year, :end_year => Date.today.year + 1, :order => [:month, :year]
 
   - if resource.new_record?
-    = f.association :mentor, :prompt => "Izberite mentorja", :label_method => :title
     = f.association :instrument, :prompt => "Izberite inštrument"
+    = f.association :mentor, :prompt => "Izberite mentorja", :label_method => :title
   - else
     .input
       = f.label :mentor

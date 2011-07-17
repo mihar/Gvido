@@ -1,35 +1,37 @@
-var mentors = []
-<% for mentor in Mentor.all -%>
-  mentors.push(["<%= mentor.id %>", [<%= raw mentor.instruments.map { |instrument| "{\"id\": #{instrument.id}, \"title\": \"#{instrument.title}\"}" }.join(", ") %>]]);
+var instruments = []
+<% for instrument in Instrument.all -%>
+  instruments.push(["<%= instrument.id %>", [<%= raw instrument.mentors.map { |mentor| "{\"id\": #{mentor.id}, \"title\": \"#{mentor.full_name}\"}" }.join(", ") %>]]);
 <% end -%>
 
-function _gvido_handle_mentor_change(event) {
-  $mentors = $("#enrollment_mentor_id")
+function _gvido_handle_instrument_change(event) {
   $instruments = $("#enrollment_instrument_id")
+  $mentors = $("#enrollment_mentor_id")
 
-  $instruments.find("option").each(function(idx, option) {
+  $mentors.find("option").each(function(idx, option) {
     if ( idx != 0 ) $(option).remove()
   })
   
-  if ( $mentors.val() == "" ) // If mentor isn't picked.
+  if ( $instruments.val() == "" ) // If instrument isn't picked.
   {
-    $instruments.parent().hide()
+    $mentors.parent().hide()
     return
   }
   
-  $(mentors).each(function(idx, mentor) {
-    if ( mentor[0] == $mentors.val() )
+  $(instruments).each(function(idx, instrument) {
+    console.log(instrument)
+    console.log(instrument[0], $instruments.val())
+    if ( instrument[0] == $instruments.val() )
     {
-      $(mentor[1]).each(function(idx, instrument) {
-        $instruments.append($("<option value='"+ instrument.id +"'>"+ instrument.title +"</option>"))          
+      $(instrument[1]).each(function(idx, mentor) {
+        $mentors.append($("<option value='"+ mentor.id +"'>"+ mentor.title +"</option>"))
       })
     }
   })
   
-  $instruments.parent().show()
+  $mentors.parent().show()
 }
 
 $(function() {
-  _gvido_handle_mentor_change()
-  $("#enrollment_mentor_id").change(_gvido_handle_mentor_change)
+  _gvido_handle_instrument_change()
+  $("#enrollment_instrument_id").change(_gvido_handle_instrument_change)
 })
