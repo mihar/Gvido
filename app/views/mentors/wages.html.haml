@@ -14,7 +14,36 @@
             %td= lessons.enrollment.programme
             %td= lessons.enrollment.student.full_name
             %td= number_field_tag field_name, lessons.hours
-            
+    %thead
+      %tr
+        %th{:colspan => 3} Skupne ure
+    %tbody
+      - @monthly_lessons_public.group_by { |lesson| "#{lesson.date} #{lesson.enrollment.instrument}" }.each do |public_lesson, lessons|  
+        %tr
+          %td
+            = lessons.first.enrollment.instrument
+            == (#{l lessons.first.date})
+          %td= lessons.map(&:student).to_sentence
+          %td= lessons.first.hours
+
+      - 12.times do |ctr|
+        %tr
+          %td{:colspan => 3}
+            %strong
+              Dodaj skupinsko uro
+              = ctr + 1
+
+            = select_tag "student_public_lesson[#{ctr}][day]", options_for_select((1..31), Date.today.day)
+            = text_field_tag "student_public_lesson[#{ctr}][hours]"
+            ur
+            = select_tag "student_public_lesson[#{ctr}][instrument]", options_from_collection_for_select(resource.instruments, "id", "title")
+            - resource.students.each do |student|
+              %label
+                = check_box_tag "student_public_lesson[#{ctr}][students][]", student.id
+                = student
+
+      
+      
   = submit_tag 'Shrani'
 
 %hr

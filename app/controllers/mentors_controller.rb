@@ -37,7 +37,7 @@ class MentorsController < InheritedResources::Base
       get_mentors_monthly_lessons_and_set_wage
       return
     end
-    
+
     @selected_date = Date.today.at_beginning_of_month
     get_mentors_monthly_lessons_and_set_wage
   end
@@ -72,7 +72,8 @@ class MentorsController < InheritedResources::Base
   protected
   
   def get_mentors_monthly_lessons_and_set_wage
-    @monthly_lessons = MonthlyLesson.on_date_with_mentor(@selected_date, resource.id)
+    @monthly_lessons = MonthlyLesson.on_date_with_mentor(@selected_date, resource.id).non_public_lessons
+    @monthly_lessons_public = MonthlyLesson.on_date_with_mentor(@selected_date, resource.id).public_lessons
     
     if resource.price_per_private_lesson
       @mentors_wage = @monthly_lessons.map(&:hours).sum * resource.price_per_private_lesson
