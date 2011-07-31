@@ -1,0 +1,17 @@
+%tr
+  %td{:colspan => 3, :class => :public_lesson}
+    %p.dom
+      %label== Dan v mesecu #{l @date, :format => "%B %Y"}:
+      = select_tag "student_public_lesson[new_public_lessons][day]", options_for_select((1..31), Date.today.day)
+    %p.hours
+      %label Št. ur:
+      = text_field_tag "student_public_lesson[new_public_lessons][hours]"
+    %p
+      %label Program:
+      = select_tag "student_public_lesson[new_public_lessons][instrument]", options_from_collection_for_select(current_user.mentor.instruments, "id", "title")
+    %p
+      %label Sodelujoči učenci:
+      - @students.each do |student|
+        %label
+          = check_box_tag "student_public_lesson[new_public_lessons][students][]", student.id
+          = student

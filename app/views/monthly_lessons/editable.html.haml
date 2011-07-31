@@ -1,0 +1,51 @@
+= title "Izpolnite poročilo za obdobje #{@period}"
+
+%p 
+  Poročila 
+  %strong ni mogoče naknadno 
+  spreminjati zato izredno pazite na vnešene informacije. Preden stisnete gumb shrani, vpisane podatke 
+  %strong še enkrat preverite!
+
+= form_tag(bulk_update_monthly_lessons_path, {:method => :put} )  do
+  %table
+    %thead
+      %tr
+        %th Program
+        %th Učenec
+        %th Število ur
+    %tbody
+    
+    
+      / PRIVATE LESSONS SEGMENT
+      %tr
+        %td{:colspan => 3}
+          %h2 Zasebne ure
+      = render :partial => "private_lesson", :collection => @monthly_lessons
+          
+      / PUBLIC LESSONS SEGMENT
+      %tr
+        %td{:colspan => 3}
+          %h2 Skupinske ure
+      - @monthly_lessons_public.group_by { |lesson| "#{lesson.date} #{lesson.enrollment.instrument}" }.each do |public_lesson, lessons|  
+        = render "public_lesson", :lesson_group => public_lesson, :lessons => lessons
+      %tr
+        %td{:colspan => 3}
+          .crud= link_to_add_fields "Dodaj skupinsko uro", :public_lessons
+
+  / EXPENSES SEGMENT
+  %h2 Razni stroški
+  %table
+    %thead
+      %tr
+        %th Naziv stroška
+        %th Znesek
+    %tbody
+      - @monthly_expenses.group_by { |expense| expense.name }.each do |expense_name, expenses|
+        = render "expense_row", :expense_name => expense_name, :expenses => expenses
+        
+      %tr
+        %td{:colspan => 3}
+          .crud= link_to_add_fields "Dodaj strošek", :expenses
+
+
+  %p.submit= submit_tag 'Shrani'

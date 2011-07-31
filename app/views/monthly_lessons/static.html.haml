@@ -1,0 +1,35 @@
+= title "Pregled zasebnih predavanj učencev za obdobje #{@period}"
+%p
+  %strong Vaše plačilo
+  = number_to_currency(@mentors_wage, :precision => 2)
+
+%table
+  %thead
+    %th Program
+    %th Učenec
+    %th Število ur
+  %tbody
+    / PRIVATE LESSONS SEGMENT
+    %tr
+      %td{:colspan => 3}
+        %h2 Zasebne ure
+    = render :partial => "private_lesson", :collection => @monthly_lessons, :locals => {:editable => false}
+
+
+    / PUBLIC LESSONS SEGMENT
+    %tr
+      %td{:colspan => 3}
+        %h2 Skupinske ure
+    - @monthly_lessons_public.group_by { |lesson| "#{lesson.date} #{lesson.enrollment.instrument}" }.each do |public_lesson, lessons|
+      = render "public_lesson", :lesson_group => public_lesson, :lessons => lessons
+      
+/ EXPENSES SEGMENT
+%h2 Razni stroški
+%table
+  %thead
+    %tr
+      %th Naziv stroška
+      %th Znesek
+  %tbody
+    - @monthly_expenses.group_by { |expense| expense.name }.each do |expense_name, expenses|
+      = render "expense_row", :expense_name => expense_name, :expenses => expenses

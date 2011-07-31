@@ -1,5 +1,7 @@
 App::Application.routes.draw do
 
+  resources :expenses
+
   devise_for :users, :controllers => { :sessions => "sessions" }
   
   match 'dashboard', :to => 'dashboard#index'

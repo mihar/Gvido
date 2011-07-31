@@ -2,7 +2,7 @@
 # This module should be included in all views globally,
 # to do so you may need to add this line to your ApplicationController
 #   helper :layout
-module LayoutHelper  
+module LayoutHelper 
   def stylesheets(*args)
     content_for(:head) { stylesheet_link_tag(*args.map(&:to_s)) }
   end
@@ -43,10 +43,19 @@ module LayoutHelper
   end
 
   def home_title(_title)
-    default = "Gvdio"
+    default = "Gvido"
     title = (_title) ? _title : default
     content_for(:title) { title }
 
     return content_tag(:a, "", :name => "top") + content_tag(:h1, link_to(_title, root_page)) 
+  end
+  
+  def link_to_remove_fields(name, f)
+    f.input(:_destroy, :as => :hidden) + link_to_function(name, "remove_fields(this)")
+  end
+  
+  def link_to_add_fields(name, association)
+    fields = render(association.to_s.singularize + "_fields", :ctr => Time.now.usec.to_i)
+    link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")")
   end
 end

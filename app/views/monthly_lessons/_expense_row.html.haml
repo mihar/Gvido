@@ -1,0 +1,5 @@
+%tr
+  %td
+    = expense_name
+  %td
+    = number_to_currency expenses.sum(&:amount)
