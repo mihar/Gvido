@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110731010804) do
+ActiveRecord::Schema.define(:version => 20110731024141) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -209,6 +209,7 @@ ActiveRecord::Schema.define(:version => 20110731010804) do
     t.datetime "last_hours_entry_at"
     t.decimal  "price_per_private_lesson",  :precision => 8, :scale => 2, :default => 0.0
     t.decimal  "public_lesson_coefficient", :precision => 8, :scale => 2, :default => 0.0
+    t.boolean  "referent",                                                :default => false
   end
 
   create_table "monthly_lessons", :force => true do |t|

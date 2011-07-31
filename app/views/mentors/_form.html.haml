@@ -40,6 +40,9 @@
         = check_box_tag "mentor[location_ids][]", location.id, resource.location_ids.include?(location.id)
         = location
     
+  %h3 Referent
+  = f.input :referent
+  
   %h3 Pare
   = f.input :price_per_private_lesson
   = f.input :public_lesson_coefficient

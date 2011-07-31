@@ -142,22 +142,26 @@ h2
       &:hover
         :background-color #333
 
-    ul
+    &>ul
       :position absolute
       :display none
       :top 0px
       :left 150px
       :z-index 100
 
-      
       li
         :list-style none 
+        &:hover
+          ul
+            display: block
+        ul
+          display: none
         a
           :display block
           :background #666
           :border-bottom-style dotted
 
-    &:hover ul
+    &:hover > ul
       :display block
 
 

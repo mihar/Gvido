@@ -11,6 +11,7 @@ class Mentor < ActiveRecord::Base
   accepts_nested_attributes_for :user
 
   default_scope order(:position)
+  scope :referents, where(:referent => true)
 
   validates_uniqueness_of :email
   validates_presence_of :name, :surname, :email, :price_per_private_lesson, :public_lesson_coefficient

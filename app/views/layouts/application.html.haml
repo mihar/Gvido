@@ -17,8 +17,12 @@
             = link_to "O nas", abouts_path
             %ul
               = menu_item "Aktualno", "Notices", notices_path
-              = menu_item "Mentorji", "Mentors", mentors_path
-              = menu_item "Lokacije", "Locations", location_sections_path
+              %li{:class => ("active" if current_section == :mentors)}
+                = link_to "Kdo smo?", mentors_path
+                %ul
+                  = menu_item "Mentorji/ce", "mentors", mentors_path
+                  = menu_item "Referenti/ke", "mentors", mentors_path(:referents => true)
+              = menu_item "Kje smo?", "Locations", location_sections_path
               = menu_item "Pogosta vprašanja", "Questions", questions_path
               = menu_item "Reference", "References", references_path
               = menu_item "Urniki", "Schedules", schedules_path

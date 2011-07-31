@@ -8,6 +8,18 @@ class MentorsController < InheritedResources::Base
     new!
   end
   
+  def index
+    @mentors = Mentor.all
+    if params[:by_location]
+      @mentors_by_location = Location.all.map { |l| [l, l.mentors]}
+    elsif params[:by_instrument]
+      @mentors_by_instrument = Instrument.all.map { |i| [i, i.mentors]}
+    elsif params[:referents]
+      @referents = Mentor.referents
+      render :template => "mentors/referents_index"
+    end
+  end
+  
   def edit
     @mentor = Mentor.find_by_permalink params[:id]
     @mentor.build_user unless @mentor.user
