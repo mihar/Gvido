@@ -1,0 +1,6 @@
+%tr
+  %td
+    = lessons.first.enrollment.instrument
+    == (#{l lessons.first.date})
+  %td= lessons.map(&:student).to_sentence
+  %td= lessons.first.hours

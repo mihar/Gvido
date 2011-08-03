@@ -5,15 +5,15 @@ class MonthlyLesson < ActiveRecord::Base
   belongs_to :payment_period
   #belongs_to :invoice
   
+  scope :public_lessons, where(:public_lesson => true)
+  scope :non_public_lessons, where(:public_lesson => false)
+  scope :on_date, lambda { |_date| where("YEAR(date) = ?", _date.year).where("MONTH(date) = ?", _date.month) } # Ful premal uporabljas scope. Pol teh metod bi moral prepisat v scope, ker je potem vse skupaj bolj resuable code!
+  
   validates_numericality_of :hours, :greater_than_or_equal_to => 0
 
   CHECK_IN_DATE_SPACER = 4
 
   class << self
-    def on_date(_date)
-      where("YEAR(date) = ?", _date.year).where("MONTH(date) = ?", _date.month).reload #where(:date => _date)
-    end
-    
     def with_mentor(_mentor_id)
       where(:mentor_id => _mentor_id)
     end
@@ -52,6 +52,27 @@ class MonthlyLesson < ActiveRecord::Base
     
     def for_mentor_on_date(_mentor_id, _date)
       lessons = self.with_mentor(_mentor_id).on_date(_date).reload
+    end
+    
+    def update_public lessons, mentor
+      return unless lessons
+      lessons.each do |lesson_form_id, lesson|
+        if lesson and lesson["day"] and lesson["hours"] and lesson["hours"].present? and lesson["instrument"] and lesson["students"] and lesson["students"].any?
+          lesson["students"].each do |student_id|
+            current_enrollment = Enrollment.find_by_student_id_and_mentor_id_and_instrument_id student_id, mentor.id, lesson["instrument"]
+            return unless current_enrollment
+            date = Date.civil(Date.today.year, Date.today.month, lesson["day"].to_i)
+            new_lesson = self.new
+            new_lesson.date = date
+            new_lesson.hours = lesson["hours"]
+            new_lesson.enrollment = current_enrollment
+            new_lesson.student_id = student_id
+            new_lesson.mentor = mentor
+            new_lesson.public_lesson = true
+            new_lesson.save
+          end
+        end
+      end
     end
   end
 end

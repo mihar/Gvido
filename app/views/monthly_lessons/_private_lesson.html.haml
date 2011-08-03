@@ -1,0 +1,10 @@
+- field_name = "students_monthly_lessons[#{private_lesson[:students_monthly_lessons].id}][hours]"
+%tr
+  %td= private_lesson[:programme_title]
+  %td= private_lesson[:student_name]
+  %td
+    - if defined? editable and editable === false
+      = private_lesson[:students_monthly_lessons].hours
+    - else
+      = number_field_tag field_name, private_lesson[:students_monthly_lessons].hours
+      

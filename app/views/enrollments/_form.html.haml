@@ -28,8 +28,8 @@
   = f.input :cancel_date, :start_year => Date.today.year, :end_year => Date.today.year + 1, :order => [:month, :year]
 
   - if resource.new_record?
-    = f.association :mentor, :prompt => "Izberite mentorja", :label_method => :title
     = f.association :instrument, :prompt => "Izberite inštrument"
+    = f.association :mentor, :prompt => "Izberite mentorja", :label_method => :title
   - else
     .input
       = f.label :mentor
@@ -37,8 +37,8 @@
     .input  
       = f.label :instrument
       .value= resource.instrument.title
-  = f.input :total_price, :input_html => { :step => "10" }
-  = f.input :price_per_lesson, :input_html => { :step => "10" }
+  = f.input :total_price, :input_html => { :step => "1" }
+  = f.input :price_per_lesson, :input_html => { :step => "1" }
   = f.input :nr_of_lessons
   
   - if resource.new_record?

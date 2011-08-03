@@ -1,24 +1,48 @@
 - if @can_edit
-  = title "Vnesite števila zasebnih predavanj unčencev za obdobje #{@period}"
+  = title "Izpolnite poročilo za obdobje #{@period}"
+  
+  %p 
+    Poročila 
+    %strong ni mogoče naknadno 
+    spreminjati zato izredno pazite na vnešene informacije. Preden stisnete gumb shrani, vpisane podatke 
+    %strong še enkrat preverite!
   
   = form_tag(bulk_update_monthly_lessons_path, {:method => :put} )  do
     %table
       %thead
-        %th Program
-        %th Učenec
-        %th Število ur
+        %tr
+          %th Program
+          %th Učenec
+          %th Število ur
       %tbody
+        %tr
+          %td{:colspan => 3}
+            %h2 Zasebne ure
         - for lessons in @monthly_lessons
           - field_name = "students_monthly_lessons[#{lessons[:students_monthly_lessons].id}][hours]"
           %tr
             %td= lessons[:programme_title]
             %td= lessons[:student_name]
             %td= number_field_tag field_name, lessons[:students_monthly_lessons].hours
+        %tr
+          %td{:colspan => 3}
+            %h2 Skupinske ure
+        - @monthly_lessons_public.group_by { |lesson| "#{lesson.date} #{lesson.enrollment.instrument}" }.each do |public_lesson, lessons|  
+          %tr
+            %td
+              = lessons.first.enrollment.instrument
+              == (#{l lessons.first.date})
+            %td= lessons.map(&:student).to_sentence
+            %td= lessons.first.hours
+        %tr
+          %td{:colspan => 3}
+            .crud= link_to_add_fields "Dodaj skupinsko uro", :public_lessons
 
-    = submit_tag 'Shrani'
-
+    %p.submit= submit_tag 'Shrani'
+  
+  
 - else
-  = title "Pregled zasebnih predavanj unčencev za obdobje #{@period}"
+  = title "Pregled zasebnih predavanj učencev za obdobje #{@period}"
   %p
     %strong Vaše plačilo
     = number_to_currency(@mentors_wage, :precision => 2)
@@ -34,3 +58,7 @@
           %td= lessons[:programme_title]
           %td= lessons[:student_name]
           %td= lessons[:students_monthly_lessons].hours
+    %thead{:colspan => 3} 
+      %tr
+        %th Skupne ure
+    %tbody= render :partial => "lesson", :collection => @monthly_lessons_public
