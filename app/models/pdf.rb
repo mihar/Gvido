@@ -29,32 +29,35 @@ class Pdf
         pdf
       end
 
+      # ime placnika => od dna = 8,7 cm, od levega roba = 0,6 cm
       def small_invoice_box(pdf, payment_date, payers_name, payers_address, recievers_name, recievers_address, monthly_reference)
-        pdf.bounding_box  [10, pdf.cursor - 10], :width => 200, :height => 245.11 do
+        pdf.bounding_box  [0, pdf.cursor], :width => 170.07874016, :height => 290 do
           pdf.text payers_name
           pdf.text payers_address
           pdf.text payment_date
           pdf.text monthly_reference
           pdf.text recievers_name
           pdf.text recievers_address
+          pdf.stroke_bounds
         end
         pdf
       end
 
       def big_invoice_box(pdf, payment_date, payers_name, payers_address, recievers_name, recievers_address, monthly_reference)
-        pdf.bounding_box  [220, pdf.cursor + 245.11], :width => 200, :height => 245.11 do
+        pdf.bounding_box  [170.07874016, pdf.cursor + 290], :width => 425.19685039, :height => 245.11 do
           pdf.text payers_name
           pdf.text payers_address
           pdf.text payment_date
           pdf.text monthly_reference
           pdf.text recievers_name
           pdf.text recievers_address
+          pdf.stroke_bounds
         end
         pdf
       end
 
       def invoice_box(pdf, payment_date, payers_name, payers_address, recievers_name, recievers_address, monthly_reference)
-        pdf.bounding_box  [0, pdf.bounds.absolute_bottom + 255], :width => 560, :height => 255 do
+        pdf.bounding_box  [-35, pdf.bounds.absolute_bottom + 218], :width => 595.27559055, :height => 289.13385827 do
           pdf = small_invoice_box(pdf, payment_date, payers_name, payers_address, recievers_name, recievers_address, monthly_reference)
           pdf = big_invoice_box(pdf, payment_date, payers_name, payers_address, recievers_name, recievers_address, monthly_reference)
           pdf.stroke_bounds
@@ -63,6 +66,8 @@ class Pdf
       end
     end
   end
+  
+  
   class << self
     def add_page_numbers(pdf)
       pdf.number_pages "Stran <page> od <total>", [pdf.bounds.right - 80, -20]

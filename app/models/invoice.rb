@@ -7,8 +7,12 @@ class Invoice < ActiveRecord::Base
   scope :unsettled, where("settled = ?", false)
   scope :regular, where(:payment_kind => 1..3)
   
-  RECIEVERS_NAME = "Tomaž Pačnik"
-  RECIEVERS_ADDRESS = "Tam kjer domuje Tomaž, 5600, Slovenj Gradec"
+  RECIEVERS_NAME = "GVIDO Društvo"
+  RECIEVERS_ADDRESS = "Podgorje 49/a"
+  RECIEVERS_POST_OFFICE_AND_CITY = "2381, Podgorje/Slovenj Gradec"
+  RECIEVERS_IBAN = "SI56 0317 5100 0008 031"
+  RECIEVERS_BIC = "SKBASI2X"
+  PAYERS_CODE = "OTHR"
   
   class << self
     
