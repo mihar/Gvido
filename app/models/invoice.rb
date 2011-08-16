@@ -12,10 +12,10 @@ class Invoice < ActiveRecord::Base
   RECIEVERS_POST_OFFICE_AND_CITY = "2381, Podgorje/Slovenj Gradec"
   RECIEVERS_IBAN = "SI56 0317 5100 0008 031"
   RECIEVERS_BIC = "SKBASI2X"
+  RECIEVERS_REFERENCE = "00"
   PAYERS_CODE = "OTHR"
   
   class << self
-    
     # Returns an array of new invoices for given month
     #
     def new_on_date(date, current_date)
@@ -132,4 +132,8 @@ class Invoice < ActiveRecord::Base
     
   end # class << self
   
+  
+  def purpose_and_date
+    "GVIDO-#{(I18n.l payment_date, :format => :month_year).upcase}"
+  end
 end

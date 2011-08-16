@@ -14,9 +14,9 @@ ActiveRecord::Schema.define(:version => 20110731024141) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
-    t.text     "contact"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "contact"
   end
 
   create_table "agreements", :force => true do |t|
@@ -33,11 +33,11 @@ ActiveRecord::Schema.define(:version => 20110731024141) do
 
   create_table "albums", :force => true do |t|
     t.string   "title"
-    t.integer  "position"
-    t.text     "description"
-    t.integer  "album_category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position",          :default => 0
+    t.text     "description"
+    t.integer  "album_category_id"
   end
 
   create_table "billing_options", :force => true do |t|
@@ -48,18 +48,18 @@ ActiveRecord::Schema.define(:version => 20110731024141) do
   create_table "contacts", :force => true do |t|
     t.string   "email"
     t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "name"
     t.string   "address"
     t.string   "phone"
-    t.string   "experience"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.text     "experience"
     t.boolean  "processed",  :default => false
   end
 
   create_table "contacts_instruments", :id => false, :force => true do |t|
-    t.integer "instrument_id"
     t.integer "contact_id"
+    t.integer "instrument_id"
   end
 
   create_table "contacts_locations", :id => false, :force => true do |t|
@@ -106,20 +106,20 @@ ActiveRecord::Schema.define(:version => 20110731024141) do
   end
 
   create_table "gigs_mentors", :id => false, :force => true do |t|
-    t.integer "gig_id"
     t.integer "mentor_id"
+    t.integer "gig_id"
   end
 
   create_table "instruments", :force => true do |t|
     t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "permalink"
     t.text     "description"
     t.text     "goals"
     t.text     "activities"
     t.text     "introduction"
     t.text     "shop_instructions"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "instruments_locations", :id => false, :force => true do |t|
@@ -128,12 +128,11 @@ ActiveRecord::Schema.define(:version => 20110731024141) do
   end
 
   create_table "instruments_mentors", :id => false, :force => true do |t|
-    t.integer "instrument_id"
     t.integer "mentor_id"
+    t.integer "instrument_id"
   end
 
   create_table "invoices", :force => true do |t|
-    t.integer  "student_id"
     t.string   "monthly_reference"
     t.decimal  "price",                          :precision => 8, :scale => 2, :default => 0.0
     t.date     "payment_date"
@@ -141,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20110731024141) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "student_id"
     t.string   "payers_name"
     t.string   "payers_address"
     t.string   "recievers_name"
@@ -159,9 +159,9 @@ ActiveRecord::Schema.define(:version => 20110731024141) do
   create_table "links", :force => true do |t|
     t.string   "title"
     t.string   "uri"
-    t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "category_id"
   end
 
   create_table "location_sections", :force => true do |t|
@@ -175,14 +175,14 @@ ActiveRecord::Schema.define(:version => 20110731024141) do
     t.string   "address"
     t.string   "city"
     t.integer  "post_office_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.float    "lat"
     t.float    "lng"
     t.integer  "location_section_id"
     t.string   "subtitle"
     t.text     "about"
     t.string   "uri"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "locations_mentors", :id => false, :force => true do |t|
@@ -196,17 +196,17 @@ ActiveRecord::Schema.define(:version => 20110731024141) do
     t.string   "phone"
     t.string   "email"
     t.string   "address"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.text     "about"
     t.string   "permalink"
-    t.integer  "position"
+    t.integer  "position",                                                :default => 0
     t.string   "facebook"
     t.string   "myspace"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.boolean  "public_email",                                            :default => false
     t.boolean  "public_phone",                                            :default => false
     t.boolean  "public_address",                                          :default => false
@@ -237,7 +237,7 @@ ActiveRecord::Schema.define(:version => 20110731024141) do
 
   create_table "notices", :force => true do |t|
     t.string   "title"
-    t.string   "body"
+    t.text     "body"
     t.datetime "expires_at"
     t.string   "photo_file_name"
     t.string   "photo_content_type"
@@ -281,13 +281,13 @@ ActiveRecord::Schema.define(:version => 20110731024141) do
 
   create_table "photos", :force => true do |t|
     t.integer  "album_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "post_offices", :id => false, :force => true do |t|
@@ -331,11 +331,12 @@ ActiveRecord::Schema.define(:version => 20110731024141) do
     t.string   "url"
     t.text     "description"
     t.integer  "instrument_id"
-    t.string   "photo_file_name"
-    t.integer  "photo_file_size"
-    t.datetime "photo_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
   create_table "statuses", :force => true do |t|

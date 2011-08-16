@@ -17,7 +17,7 @@ class InvoicesController < ApplicationController
     
     respond_to do |format|
       format.html
-      format.pdf { render :pdf => @invoices, :type => "application/pdf", :page_size => 'A4' }
+      format.pdf
     end
   end
   

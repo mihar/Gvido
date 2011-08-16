@@ -50,4 +50,12 @@ module ApplicationHelper
       tag("div", :class => "selectable-dates")
     end
   end
+  
+  class Override < Prawn::Document
+    def initialize(opts={})
+      super(opts)
+      # text "I can override the rendering class"
+      # text "This lets me use pre-built reports and other wrappers around Prawn::Document"
+    end
+  end
 end
