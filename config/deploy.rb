@@ -4,7 +4,7 @@ require "./config/capistrano_extra"
 default_run_options[:pty] = true  # Must be set for the password prompt from git to work
 
 set :application, "Gvido Rails 3"
-set :repository,  "git@staging:gvidor3.git"
+set :repository,  "git@github.com:mihar/Gvido.git"
 set :scm, :git
 set :scm_verbose, true
 set :deploy_via, :remote_cache
