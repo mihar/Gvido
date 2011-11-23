@@ -5,7 +5,7 @@ class AlbumsController < InheritedResources::Base
   layout :pick_layout
    
   def index
-    @albums_by_category = AlbumCategory.includes('albums')
+    @albums_by_category = AlbumCategory.includes('albums').order("position ASC")
     @albums_no_category = Album.not_categorized
     @movies = Movie.all
     index!
