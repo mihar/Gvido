@@ -1,3 +1,7 @@
+$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+require "rvm/capistrano"
+set :rvm_ruby_string, 'ree-1.8.7-2011.03@gvido'
+
 require 'bundler/capistrano'
 require "./config/capistrano_extra"
 
@@ -21,6 +25,10 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
+  task :link_rvmrc do
+    run "ln -s #{shared_path}/rvmrc #{latest_release}/.rvmrc"
+    run "ln -s #{shared_path}/config/setup_load_paths.rb #{latest_release}/config/setup_load_paths.rb"
+  end
 end
 
 task :uname do
@@ -31,4 +39,5 @@ require 'config/boot'
 
 # Hoptoad
 require 'hoptoad_notifier/capistrano'
+after "deploy:update", "deploy:link_rvmrc"
 after "deploy:update", "deploy:notify_hoptoad"
