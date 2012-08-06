@@ -38,21 +38,23 @@ then
     echo
     
     if [ -z $dbp ]; then
-      dbcmd="mysql -u$dbu --database $dbn"
+      dbcmd="mysql -u$dbu"
     else
-      dbcmd="mysql -u$dbu -p$dbp --database $dbn"
+      dbcmd="mysql -u$dbu -p$dbp"
     fi
+
+    dbcmdb="$dbcmd --database $dbn"
     
     echo "*** Deleting and recreating $railsenv databases."
-    rake db:drop:all RAILS_ENV=$railsenv
-    rake db:create:all RAILS_ENV=$railsenv
+    echo "DROP DATABASE $dbn" | $dbcmd
+    echo "CREATE DATABASE $dbn" | $dbcmd
 
     echo "*** Importing datafile."
-    $dbcmd < gvido.sql
+    $dbcmdb < gvido.sql
     
     echo "*** Now we'll fix the migrations."
-    echo "TRUNCATE schema_migrations;" | $dbcmd
-    echo "INSERT INTO schema_migrations VALUES ('20110217120349'), ('20110217120510'), ('20110217120636'), ('20110217143703'), ('20110218013020'), ('20110218060622'), ('20110218063315'), ('20110218065651'), ('20110218071514'), ('20110218080711'), ('20110218081707'), ('20110218082615'), ('20110218093755'), ('20110218094344'), ('20110218094531'), ('20110218100117'), ('20110218102334'), ('20110218102355'), ('20110218102846'), ('20110218103217'), ('20110218103507'), ('20110218105623'), ('20110218110025'), ('20110218110604'), ('20110221114809')" | $dbcmd
+    echo "TRUNCATE schema_migrations;" | $dbcmdb
+    echo "INSERT INTO schema_migrations VALUES ('20110217120349'), ('20110217120510'), ('20110217120636'), ('20110217143703'), ('20110218013020'), ('20110218060622'), ('20110218063315'), ('20110218065651'), ('20110218071514'), ('20110218080711'), ('20110218081707'), ('20110218082615'), ('20110218093755'), ('20110218094344'), ('20110218094531'), ('20110218100117'), ('20110218102334'), ('20110218102355'), ('20110218102846'), ('20110218103217'), ('20110218103507'), ('20110218105623'), ('20110218110025'), ('20110218110604'), ('20110221114809')" | $dbcmdb
     
     echo "*** And migrate up to the new version from here..."
     rake db:migrate RAILS_ENV=$railsenv
