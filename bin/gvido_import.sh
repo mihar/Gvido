@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# UTF HAX
+# $ cat gvido2.sql | sed s/'Ä'/'č'/g | sed s/'Å¾'/'ž'/g | sed s/'Å¡'/'š'/g | sed s/'Å½'/'Ž'/g | sed s/'Å¼'/'Ž'/g | sed s/'ÄŒ'/'Č'/g | sed s/'Å '/'Š'/g > gvido.sql
+
 if [ ! -f "gvido.sql" ]; then
   echo "FILERR: Missing gvido.sql data file."
   exit 1
