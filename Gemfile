@@ -22,6 +22,7 @@ gem "aws_sdk"
 group :production do
   gem 'pg'
   gem 'therubyracer-heroku'
+  gem 'thin'
 end
 
 group :assets do
