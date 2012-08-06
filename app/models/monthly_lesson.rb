@@ -7,7 +7,7 @@ class MonthlyLesson < ActiveRecord::Base
   
   scope :public_lessons, where(:public_lesson => true)
   scope :non_public_lessons, where(:public_lesson => false)
-  scope :on_date, lambda { |_date| where("YEAR(date) = ?", _date.year).where("MONTH(date) = ?", _date.month) } # Ful premal uporabljas scope. Pol teh metod bi moral prepisat v scope, ker je potem vse skupaj bolj resuable code!
+  scope :on_date, lambda { |_date| where(:date => _date.beginning_of_month.._date.end_of_month) }
   
   validates_numericality_of :hours, :greater_than_or_equal_to => 0
 
@@ -28,7 +28,7 @@ class MonthlyLesson < ActiveRecord::Base
     
     def on_month_for_mentor(_date, _mentor_id)
       month, year = _date.month, _date.year
-      self.where(:mentor_id => _mentor_id).where("MONTH(date) <= ?", month).where("YEAR(date) <= ?", year).reload
+      self.where(:mentor_id => _mentor_id).where(:date => _date.beginning_of_month.._date.end_of_month).reload
     end
     
     # Returns a hash of mentors check in dates up to now 

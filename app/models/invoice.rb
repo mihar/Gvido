@@ -3,6 +3,7 @@
 class Invoice < ActiveRecord::Base
   belongs_to :student
   
+  scope :on_date, lambda { |_date| where(:payment_date => _date.beginning_of_month.._date.end_of_month) }
   scope :due_this_month, where(:payment_date => Date.today.beginning_of_month..Date.today.end_of_month)
   scope :due, where("payment_date < ?", 1.day.from_now).where("settled = ?", false)
   scope :settled, where("settled = ?", true).order('payment_date ASC')
@@ -73,11 +74,6 @@ class Invoice < ActiveRecord::Base
       return invoices
     end
     
-    # Returns saved (settled) invoices for month
-    #
-    def on_date(date)
-      where("YEAR(payment_date) = ?", date.year).where("MONTH(payment_date) = ?", date.month) #where(:payment_date => date)
-    end
     
     # Settled invoices for student between dates
     #
