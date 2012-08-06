@@ -17,6 +17,7 @@ gem 'cancan', '1.6.4'
 gem 'jquery-rails'
 gem "prawn"
 gem "prawn_rails"
+gem "aws_sdk"
 
 group :production do
   gem 'pg'

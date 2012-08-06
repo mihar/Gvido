@@ -39,6 +39,7 @@ GEM
       fog
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
+    aws_sdk (3.1.5)
     bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
     builder (3.0.0)
@@ -254,6 +255,7 @@ DEPENDENCIES
   RedCloth
   asset_sync
   autotest
+  aws_sdk
   cancan (= 1.6.4)
   capistrano
   capistrano-ext
