@@ -19,9 +19,9 @@ class Enrollment < ActiveRecord::Base
   
   validate :cancel_date_correctness, :enrollment_date_acceptance
     
-  scope :active, where("enrollments.enrollment_date < CURRENT_DATE()").where("enrollments.cancel_date > CURRENT_DATE()").reload
-  scope :future, where("enrollments.enrollment_date > CURRENT_DATE()").reload
-  scope :past, where("enrollments.cancel_date < CURRENT_DATE()").reload
+  scope :active, where("enrollments.enrollment_date < #{Date.today}").where("enrollments.cancel_date > #{Date.today}").reload
+  scope :future, where("enrollments.enrollment_date > #{Date.today}").reload
+  scope :past, where("enrollments.cancel_date < #{Date.today}").reload
     
   before_update :destroy_out_of_range_payment_periods_and_invoices
   

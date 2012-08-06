@@ -5,7 +5,8 @@ class Album < ActiveRecord::Base
   belongs_to :album_category
   has_many :photos, :dependent => :destroy do
     def three_random
-      order("RAND()").limit(3)
+      rand_id = rand(self.count)
+      where("id >= ?", rand_id).limit(3)
     end
   end
   validates_presence_of :title
