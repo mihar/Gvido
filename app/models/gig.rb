@@ -4,8 +4,8 @@ class Gig < ActiveRecord::Base
   
   before_save :format_title
   
-  scope :upcoming, where("`when` > #{Time.now}").order('`when`')
-  scope :recent, where('`when` > ?', 3.month.ago).order('`when`')
+  scope :upcoming, where("when > #{Time.now}").order(:when)
+  scope :recent, where('when > ?', 3.month.ago).order(:when)
   
   def self.with_mentors
     Gig.all.reject { |g| g.mentors.empty? }
