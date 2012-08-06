@@ -149,8 +149,6 @@ GEM
     pg (0.14.0)
     pg (0.14.0-x86-mingw32)
     polyglot (0.3.3)
-    postgres (0.8.1)
-      pg (~> 0)
     prawn (0.12.0)
       pdf-reader (>= 0.9.0)
       ttfunk (~> 1.0.2)
@@ -273,7 +271,6 @@ DEPENDENCIES
   mysql2
   paperclip (~> 2.3)
   pg
-  postgres
   prawn
   prawn_rails
   rails

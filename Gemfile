@@ -19,10 +19,6 @@ gem "prawn"
 gem "prawn_rails"
 
 group :production do
-  gem 'postgres'
-end
-
-group :production do
   gem 'pg'
   gem 'therubyracer-heroku'
 end
