@@ -1,7 +1,7 @@
 class Expense < ActiveRecord::Base
   belongs_to :mentor
   
-  scope :on_date, lambda { |_date| where("YEAR(incurred_at) = ?", _date.year).where("MONTH(incurred_at) = ?", _date.month) }
+  scope :on_date, lambda { |_date| where("incurred_at >= ?", _date.beginning_of_month).where("incurred_at <= ?", _date.end_of_month) }
   scope :with_name, lambda { |_name| where(:name => name) }
   
   def self.update_bulk expenses, mentor
