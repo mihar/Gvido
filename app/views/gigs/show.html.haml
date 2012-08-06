@@ -3,8 +3,8 @@
 
 = spit @gig, :title, :h3
 
-- if @gig.when
-  %p.date= l @gig.when, :format => :simple
+- if @gig.happening_at
+  %p.date= l @gig.happening_at, :format => :simple
 
 = spit @gig, :venue
 = spit @gig, :address    
