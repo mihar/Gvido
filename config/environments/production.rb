@@ -31,8 +31,8 @@ App::Application.configure do
   # In production, Apache or nginx will already do this
   config.serve_static_assets = false
 
-  # Enable serving of images, stylesheets, and javascripts from an asset server
-  # config.action_controller.asset_host = "http://assets.example.com"
+  # Enable serving of images, stylesheets, and JavaScripts from an asset server
+  config.action_controller.asset_host = "https://#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
