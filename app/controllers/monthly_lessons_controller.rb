@@ -1,3 +1,4 @@
+# Encoding: utf-8
 class MonthlyLessonsController < ApplicationController
   before_filter :restrict_access
   load_and_authorize_resource

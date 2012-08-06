@@ -1,3 +1,5 @@
+# Encoding: utf-8
+
 class Payment
   attr_accessor :price, :payment_date, :description, :period_discount, :payment_plan, :student_id, :enrollment_id
   
