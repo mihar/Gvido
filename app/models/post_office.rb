@@ -1,4 +1,6 @@
 class PostOffice < ActiveRecord::Base
+  set_primary_key :id
+
   has_many :people
   has_many :locations
   
