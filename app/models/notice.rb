@@ -11,7 +11,7 @@ class Notice < ActiveRecord::Base
                       :access_key_id => AWS_S3['access_key_id'],
                       :secret_access_key => AWS_S3['secret_access_key']
                     },
-                    :path => '/notices/:id/:style/:basename.:extension'
+                    :path => '/assets/notices/:id/:style/:basename.:extension'
                 
   
   

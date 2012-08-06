@@ -4,8 +4,8 @@
     %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "Content-Type" }/
     %title
       = yield(:title).empty?? "GVIDO Informacijski sistem" : yield(:title)
-    = stylesheet_link_tag "dashboard"
-    = javascript_include_tag 'lib/jquery.min', 'lib/slimbox2', 'lib/rails', 'table_row_links', 'application', :cache => true
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "application"
     = yield :javascripts
     = csrf_meta_tag
   %body{body_attrs}

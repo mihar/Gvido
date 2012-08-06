@@ -9,7 +9,7 @@ class Photo < ActiveRecord::Base
                       :access_key_id => AWS_S3['access_key_id'],
                       :secret_access_key => AWS_S3['secret_access_key']
                     },
-                    :path => '/photos/:id/:style/:basename.:extension'
+                    :path => '/assets/photos/:id/:style/:basename.:extension'
   
   validates_attachment_presence :photo
 end
