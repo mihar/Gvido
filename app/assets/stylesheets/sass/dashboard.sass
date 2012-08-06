@@ -39,7 +39,7 @@ body
 header
   +clearfix
   z-index: 999
-  background: $gvido_red url("../images/back.gif") repeat
+  background: $gvido_red image_url("back.gif") repeat
   color: #fff
   padding: 20px
   position: relative
@@ -74,9 +74,9 @@ header
         &>a
           +nav_link
           &:hover
-            background: url("../images/backgrounds/25white.png")
+            background: image_url("backgrounds/25white.png")
           &:active
-            background: url("../images/backgrounds/50white.png")
+            background: image_url("backgrounds/50white.png")
         &.active a
           background: #fff
           color: #000
@@ -96,26 +96,26 @@ header
               width: 180px
               +dark-shadow
               &:hover
-                background: url("../images/backgrounds/25white.png")
+                background: image_url("backgrounds/25white.png")
               &:active
-                background: url("../images/backgrounds/50white.png")
+                background: image_url("backgrounds/50white.png")
         &:hover
           span
-            background: url("../images/backgrounds/25white.png")
+            background: image_url("backgrounds/25white.png")
           ul
             display: block
         
         
   
   #user
-    background: url('../images/backgrounds/20black.png')
+    background: image_url('backgrounds/20black.png')
     position: absolute
     top: 0px
     right: 0px
     padding: 30px 20px
     height: 34px
     &:hover
-      background-image: url('../images/backgrounds/50black.png')
+      background-image: image_url('backgrounds/50black.png')
     span
       display: block
       +ultra-small-text
