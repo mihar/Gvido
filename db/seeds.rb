@@ -1,3 +1,4 @@
+# Encoding: utf-8
 #rake db:setup to set this baby up
 
 u = User.new(:first_name => "Tomaž", :last_name => "Pačnik", :email => "tomaz.pacnik@gvido.si", :password => "roland2000", :password_confirmation => "roland2000", :admin => true)

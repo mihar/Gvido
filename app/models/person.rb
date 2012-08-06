@@ -1,3 +1,5 @@
+# Encoding: utf-8
+
 class Person < ActiveRecord::Base
   belongs_to  :post_office
   before_save :proper_titleization

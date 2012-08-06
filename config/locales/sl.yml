@@ -66,8 +66,10 @@ sl:
     # Don't forget the nil at the beginning; there's no such thing as a 0th month
     month_names: [~, januar, februar, marec, april, maj, junij, julij, avgust, september, oktober, november, december]
     abbr_month_names: [~, jan, feb, mar, apr, maj, jun, jul, avg, sep, okt, nov, dec]
-    # Used in date_select and datime_select.
-    order: [ :day, :month, :year ]
+    order:
+    - :day
+    - :month
+    - :year
 
   time:
     formats:

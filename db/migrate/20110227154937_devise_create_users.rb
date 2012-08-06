@@ -4,10 +4,23 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :first_name
       t.string :last_name
       t.boolean :admin, :default => false
-      t.database_authenticatable :null => false
-      t.encryptable
-      t.rememberable
-      t.trackable
+
+      ## Database authenticatable
+      t.string :email,              :null => false, :default => ""
+      t.string :encrypted_password, :null => false, :default => ""
+      
+      ## Encryptable
+      t.string :password_salt
+
+      ## Rememberable
+      t.datetime :remember_created_at
+
+      ## Trackable
+      t.integer  :sign_in_count, :default => 0
+      t.datetime :current_sign_in_at
+      t.datetime :last_sign_in_at
+      t.string   :current_sign_in_ip
+      t.string   :last_sign_in_ip
 
       t.timestamps
     end

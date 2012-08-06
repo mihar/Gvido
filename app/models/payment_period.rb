@@ -1,3 +1,5 @@
+# Encoding: utf-8
+
 class PaymentPeriod < ActiveRecord::Base
   belongs_to :enrollment
   has_many :monthly_lessons, :dependent => :destroy

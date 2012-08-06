@@ -1,3 +1,5 @@
+# Encoding: utf-8
+
 class EnrollmentsController < InheritedResources::Base
   load_and_authorize_resource
   belongs_to :student

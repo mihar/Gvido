@@ -1,3 +1,5 @@
+# Encoding: utf-8
+
 module StudentsHelper
   def location_details_links(active_enrollments)
     active_enrollments.collect(&:mentor).collect(&:locations).flatten.uniq.collect { |location| link_to location, details_location_path(location) }.to_sentence.html_safe
