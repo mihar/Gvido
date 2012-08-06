@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120806184304) do
+ActiveRecord::Schema.define(:version => 20120806190156) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -279,6 +279,9 @@ ActiveRecord::Schema.define(:version => 20120806184304) do
     t.integer  "student_id"
     t.string   "type"
     t.integer  "contact_id"
+    t.integer  "day_of_birth"
+    t.integer  "month_of_birth"
+    t.integer  "year_of_birth"
   end
 
   create_table "photos", :force => true do |t|

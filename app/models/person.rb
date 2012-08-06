@@ -2,10 +2,10 @@
 
 class Person < ActiveRecord::Base
   belongs_to  :post_office
-  before_save :proper_titleization
+  before_save :proper_titleization, :split_date_of_birth
   validates_presence_of :first_name, :last_name
   
-  scope :birthday_today, where("DAYOFMONTH(date_of_birth) = ? AND MONTH(date_of_birth) = ?", Date.today.day, Date.today.month)
+  scope :birthday_today, where("day_of_birth = ?", Date.today.day).where("month_of_birth = ?", Date.today.month)
   
   def full_name
     if first_name and last_name
@@ -62,6 +62,12 @@ class Person < ActiveRecord::Base
   end
   
   protected
+
+  def split_date_of_birth
+    self.day_of_birth = date_of_birth.day
+    self.month_of_birth = date_of_birth.month
+    self.year_of_birth = date_of_birth.year
+  end
 
   def proper_titleization
     self.first_name = first_name.titleize
