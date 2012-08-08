@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# UTF HAX
-# $ cat gvido2.sql | sed s/'Ä'/'č'/g | sed s/'Å¾'/'ž'/g | sed s/'Å¡'/'š'/g | sed s/'Å½'/'Ž'/g | sed s/'Å¼'/'Ž'/g | sed s/'ÄŒ'/'Č'/g | sed s/'Å '/'Š'/g > gvido.sql
-
 if [ ! -f "gvido.sql" ]; then
   echo "FILERR: Missing gvido.sql data file."
   exit 1
@@ -51,6 +48,11 @@ then
     echo "*** Deleting and recreating $railsenv databases."
     echo "DROP DATABASE $dbn" | $dbcmd
     echo "CREATE DATABASE $dbn" | $dbcmd
+
+    echo "*** UTF8 H4X."
+    cp gvido.sql gvido_temp.sql
+    cat gvido_temp.sql | sed s/'Ä'/'č'/g | sed s/'Å¾'/'ž'/g | sed s/'Å¡'/'š'/g | sed s/'Å½'/'Ž'/g | sed s/'Å¼'/'Ž'/g | sed s/'ÄŒ'/'Č'/g | sed s/'Å '/'Š'/g | sed s/'â€¦'/'...'/g | sed s/'â€¢'/'-'/g | sed s/'â€'/'-'/g | sed s/'Ä‡'/'ć'/g | sed s/'Â»'/'"'/g | sed s/'Â«'/'"'/g > gvido.sql
+    rm gvido_temp.sql
 
     echo "*** Importing datafile."
     $dbcmdb < gvido.sql
