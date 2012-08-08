@@ -8,12 +8,13 @@
   %thead
     %th Naziv kategorije
     %th Pozicija
-    %th Opcije
+    %th
   %tbody
     - collection.each do |album_category|
       %tr.clickable
         %td= album_category.title
         %td= album_category.position
-        %td.crud= link_to "Odstrani", album_category, :confirm => destroy_confirmation(album_category), :method => :delete
-        %td.crud= link_to "Uredi", edit_album_category_path(album_category)
+        %td
+          .crud= link_to "Odstrani", album_category, :confirm => destroy_confirmation(album_category), :method => :delete
+          .crud= link_to "Uredi", edit_album_category_path(album_category)
 

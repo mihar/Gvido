@@ -8,12 +8,15 @@
   %thead
     %th Naziv povezave
     %th Spletni naslov
-    %th Opcije
+    %th Kategorija
+    %th 
   %tbody
     - for link in collection
       %tr.clickable
         %td= link.title
         %td= link.uri
-        %td.crud= link_to "Odstrani", link, :confirm => destroy_confirmation(link), :method => :delete
-        %td.crud= link_to "Uredi", edit_link_path(link)
+        %td= link.category
+        %td
+          .crud= link_to "Odstrani", link, :confirm => destroy_confirmation(link), :method => :delete
+          .crud= link_to "Uredi", edit_link_path(link)
 

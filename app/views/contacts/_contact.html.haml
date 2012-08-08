@@ -7,4 +7,4 @@
   %td
     = raw contact.locations.map(&:title).join(", ") unless contact.locations.empty?    
   %td
-    =l contact.created_at, :format => :simple
+    =l contact.created_at, :format => :long

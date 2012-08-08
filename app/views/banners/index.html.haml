@@ -1,0 +1,14 @@
+= title "Bannerji"
+
+- if banner = collection.first
+  %h2 Trenutni banner
+  .img= image_tag banner.image.url
+  .url= banner.url
+  .destroy= link_to "Odstrani banner", banner, :method => :delete, :confirm => "Ste prepričani?"
+- else
+  %h2 Aktiviraj banner
+  %p Banner mora biti velikosti 799px skozi 174px.
+  = simple_form_for Banner.new do |f|
+    = f.input :image
+    = f.input :url
+    = f.submit

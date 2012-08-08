@@ -1,0 +1,11 @@
+= title "Dokument"
+%p
+  %strong Naziv:
+  = resource.title
+%p
+  %strong Opis:
+  = resource.body
+%p
+  %strong Datoteka:
+  = link_to resource.file_file_name, resource.file.url
+

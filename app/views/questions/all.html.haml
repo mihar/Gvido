@@ -7,12 +7,13 @@
   %thead
     %th Vprašanje
     %th Odgovor
-    %th Opcije
+    %th
   %tbody
     - for question in collection
       %tr.clickable
         %td= question.question
-        %td= (textilize question.answer).html_safe
-        %td.crud= link_to "Odstrani", question, :confirm => destroy_confirmation(question), :method => :delete
-        %td.crud= link_to "Uredi", edit_question_path(question)
+        %td= (textilize truncate(question.answer, :length => 32)).html_safe
+        %td
+          .crud= link_to "Odstrani", question, :confirm => destroy_confirmation(question), :method => :delete
+          .crud= link_to "Uredi", edit_question_path(question)
 

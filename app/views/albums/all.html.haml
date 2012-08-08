@@ -6,7 +6,6 @@
 %table
   %thead
     %th Naslov albuma
-    %th Opis
     %th Kategorija
     %th Pozicija
     %th Opcije
@@ -14,14 +13,14 @@
     - for album in collection
       %tr.clickable
         %td= album.title
-        %td= (textilize album.description).html_safe
         %td
           - if album.album_category
             = album.album_category.title
           - else
             Brez kategorije
         %td= album.position
-        %td.crud= link_to "Fotografije", all_album_photos_path(album)
-        %td.crud= link_to "Odstrani", album, :confirm => destroy_confirmation(album), :method => :delete
-        %td.crud= link_to "Uredi", edit_album_path(album)
+        %td
+          .crud= link_to "Fotografije", all_album_photos_path(album)
+          .crud= link_to "Odstrani", album, :confirm => destroy_confirmation(album), :method => :delete
+          .crud= link_to "Uredi", edit_album_path(album)
 

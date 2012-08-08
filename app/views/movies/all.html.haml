@@ -6,18 +6,12 @@
 %table
   %thead
     %th Naziv videa
-    %th Video
-    %th Opcije
+    %th
   %tbody
     - for movie in collection
       %tr.clickable
         %td= movie.title
         %td
-          %object{:width => "425", :height => "344"}
-            %param{:name => "movie", :value => "http://www.youtube.com/v/#{movie.youtube}&amp;hl=en&amp;fs=1&amp;rel=0"}
-            %param{:name => "allowFullScreen", :value => "false"}
-            %param{:name => "allowscriptaccess", :value => "always"}
-            %embed{:src => "http://www.youtube.com/v/#{movie.youtube}&amp;hl=en&amp;fs=1&amp;rel=0", :type => "application/x-shockwave-flash", :allowscriptaccess => "always", :allowfullscreen => "true", :width => "425", :height => "344"}
-        %td.crud= link_to "Odstrani", movie, :confirm => destroy_confirmation(movie), :method => :delete
-        %td.crud= link_to "Uredi", edit_movie_path(movie)
+          .crud= link_to "Odstrani", movie, :confirm => destroy_confirmation(movie), :method => :delete
+          .crud= link_to "Uredi", edit_movie_path(movie)
             

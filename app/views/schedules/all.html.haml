@@ -1,20 +1,19 @@
-= title "Urniki"
+= title "Dokumenti"
 .crud
   .master
-    = link_to "Nov urnik", new_schedule_path
+    = link_to "Nov dokument", new_schedule_path
     
 %table
   %thead
     %th Naziv
     %th Vsebina
-    %th Datoteka
-    %th Opcije
+    %th
   %tbody
     - for schedule in collection
       %tr.clickable
         %td= schedule.title
         %td= (textilize schedule.body).html_safe
-        %td= link_to "Prenos urnika", schedule.file.url
-        %td.crud= link_to "Odstrani", schedule, :confirm => destroy_confirmation(schedule), :method => :delete
-        %td.crud= link_to "Uredi", edit_schedule_path(schedule)
+        %td
+          .crud= link_to "Odstrani", schedule, :confirm => destroy_confirmation(schedule), :method => :delete
+          .crud= link_to "Uredi", edit_schedule_path(schedule)
 

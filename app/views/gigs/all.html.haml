@@ -19,7 +19,7 @@
         %td= gig.title
         %td= gig.venue
         %td= gig.address
-        %td= gig.happened_at.to_s(:long)
+        %td= gig.happening_at.to_s(:long)
         %td= (textilize gig.description).html_safe
         %td
           = preforming_mentors(gig)

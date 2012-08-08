@@ -15,10 +15,11 @@
       %tr.clickable
         %td= notice.title
         %td= notice.created_at.to_s :short
-        %td= (textilize notice.body_html).html_safe
+        %td= (textilize truncate(notice.body_html, :length => 32)).html_safe
         %td
           - if notice.photo.file?
             .photo= (image_tag(notice.photo.url(:small))).html_safe
-        %td.crud= link_to "Odstrani", notice, :confirm => destroy_confirmation(notice), :method => :delete
-        %td.crud= link_to "Uredi", edit_notice_path(notice)
+        %td
+          .crud= link_to "Odstrani", notice, :confirm => destroy_confirmation(notice), :method => :delete
+          .crud= link_to "Uredi", edit_notice_path(notice)
 

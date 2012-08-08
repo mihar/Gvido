@@ -1,5 +1,7 @@
 App::Application.routes.draw do
 
+  resources :banners
+
   resources :expenses
 
   devise_for :users, :controllers => { :sessions => "sessions" }
