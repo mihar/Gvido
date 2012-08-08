@@ -19,11 +19,11 @@
     - collection.order(:position).each do |instrument|
       %tr.clickable
         %td= link_to instrument.title, detail_instrument_path(instrument)
-        %td= textilize(truncate instrument.description, :length => 56).html_safe
-        %td= textilize(truncate instrument.goals, :length => 56).html_safe
-        %td= textilize(truncate instrument.activities, :length => 56).html_safe
-        %td= textilize(truncate instrument.introduction, :length => 56).html_safe
-        %td= textilize(truncate instrument.shop_instructions, :length => 56).html_safe
-        %td= textilize(truncate instrument.position, :length => 56).html_safe
+        %td= textilize(truncate(instrument.description, :length => 56)).html_safe
+        %td= textilize(truncate(instrument.goals, :length => 56)).html_safe
+        %td= textilize(truncate(instrument.activities, :length => 56)).html_safe
+        %td= textilize(truncate(instrument.introduction, :length => 56)).html_safe
+        %td= textilize(truncate(instrument.shop_instructions, :length => 56)).html_safe
+        %td= textilize(truncate(instrument.position, :length => 56)).html_safe
         %td
           .crud= link_to "Uredi", edit_instrument_path(instrument)
