@@ -64,6 +64,7 @@ class Person < ActiveRecord::Base
   protected
 
   def split_date_of_birth
+    return unless date_of_birth
     self.day_of_birth = date_of_birth.day
     self.month_of_birth = date_of_birth.month
     self.year_of_birth = date_of_birth.year
