@@ -13,9 +13,9 @@
   
   .facebook_myspace
     - unless @mentor.facebook.blank?
-      = link_to image_tag('icons/facebook_mini.png'), @mentor.facebook, :title => "#{@mentor.full_name} na Facebook"
-    - unless @mentor.myspace.blank?
-      = link_to image_tag('icons/myspace_mini.png'), @mentor.myspace, :title => "#{@mentor.full_name} na MySpace"
+      = link_to @mentor.facebook, :title => "#{@mentor.full_name} na Facebook" do
+        = image_tag('icons/facebook_mini.png')
+        Facebook
 
   .instruments
     = render :partial => "instruments/table", :locals => {:instruments => @mentor.instruments}

@@ -4,6 +4,10 @@ class InstrumentsController < InheritedResources::Base
   
   layout :pick_layout
   
+  def index
+    @instruments = @instruments.order(:position)
+  end
+
   def update
     update! { all_instruments_path }
   end

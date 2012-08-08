@@ -8,6 +8,7 @@
     = javascript_include_tag "application"
     = csrf_meta_tag
   %body{body_attrs}
+    #tenyears= image_tag "10years.png"
     #wrapper
       #header
         = link_to image_tag("header_photos/#{random_image}"), root_path
@@ -25,7 +26,7 @@
               = menu_item "Kje smo?", "Locations", location_sections_path
               = menu_item "Pogosta vprašanja", "Questions", questions_path
               = menu_item "Reference", "References", references_path
-              = menu_item "Urniki", "Schedules", schedules_path
+              = menu_item "Dokumenti", "Schedules", schedules_path
           = menu_item "Programi", "Instruments", instruments_path
           %li{:class => ("active" if current_section == :albums)}
             = link_to "Galerija", albums_path
@@ -35,14 +36,12 @@
           = menu_item "Povezave", "Links", links_path
           = menu_item "Koncerti", "Gigs", gigs_path
           = menu_item "Kontakt / Vpis", "contact", new_contact_path
-      %h1 GVIDO
+      %h1 Gvido
       %h2= yield :heading
       %br.clear
       #sidebar
         .information
-          %strong GVIDO
-          %br
-          Glasbeno vzgojno izobraževalno društvo
+          %strong Gvido
           %br
           T: (031) 34-36-30
           %br
