@@ -3,13 +3,13 @@
   %head
     %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "Content-Type" }/
     %title
-      = yield(:title).empty?? "Gvido" : yield(:title)
+      = yield(:title).empty?? "GVIDO" : yield(:title)
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
     = csrf_meta_tag
   %body{body_attrs}
-    #tenyears= image_tag "10years.png"
     #wrapper
+      #tenyears= image_tag "10years.png"
       #header
         - if banner = Banner.first
           = link_to image_tag(banner.image.url), banner.url
@@ -39,12 +39,12 @@
           = menu_item "Povezave", "Links", links_path
           = menu_item "Koncerti", "Gigs", gigs_path
           = menu_item "Kontakt / Vpis", "contact", new_contact_path
-      %h1 Gvido
+      %h1 GVIDO
       %h2= yield :heading
       %br.clear
       #sidebar
         .information
-          %strong Gvido
+          %strong GVIDO
           %br
           T: (031) 34-36-30
           %br

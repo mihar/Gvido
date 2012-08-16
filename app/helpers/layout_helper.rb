@@ -26,7 +26,7 @@ module LayoutHelper
   end
 
   def title(_title, heading = true)
-    default = "Gvido"
+    default = "GVIDO"
     title = (_title) ? "#{_title} (#{default})" : default
     content_for(:title) { title }
     content_for(:heading) { _title }
@@ -43,7 +43,7 @@ module LayoutHelper
   end
 
   def home_title(_title)
-    default = "Gvido"
+    default = "GVIDO"
     title = (_title) ? _title : default
     content_for(:title) { title }
 
