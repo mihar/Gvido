@@ -16,7 +16,7 @@ gem 'cancan', '1.6.4'
 gem 'jquery-rails'
 gem "prawn"
 gem "prawn_rails"
-gem "aws_sdk"
+gem "aws-sdk"
 
 group :production do
   gem 'pg'
@@ -25,7 +25,7 @@ group :production do
 end
 
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
+  gem 'sass-rails'
   gem 'uglifier', '>= 1.0.3'
   gem 'asset_sync'
 end
