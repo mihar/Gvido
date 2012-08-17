@@ -4,12 +4,12 @@ ruby '1.9.3'
 
 gem 'rails'
 gem "simple_form"
-gem "paperclip", "~> 2.3"
+gem "paperclip"
 gem "geokit"
 gem "RedCloth"
-gem "will_paginate", "~> 3.0.pre2"
+gem "will_paginate"
 gem "haml"
-gem 'inherited_resources', '~> 1.2.1'
+gem 'inherited_resources'
 gem 'json'
 gem 'devise'
 gem 'cancan', '1.6.4'
