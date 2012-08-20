@@ -10,17 +10,17 @@ class MentorsController < InheritedResources::Base
   
   def index
     @mentors = Mentor.all
-    if params[:by_location]
+    if params[:by_instrument]
+      @mentors_by_instrument = Instrument.all.map { |i| [i, i.mentors]}
+    elsif params[:referents]
+      @referents = Mentor.referents
+      render :template => "mentors/referents_index"
+    else
       @locations = Location.order(:title)
       @mentors_by_location = @locations.map { |l| [l, l.mentors]}
       @json = @locations.to_gmaps4rails do |location, marker|
         marker.infowindow render_to_string(:partial => 'locations/mentor_info', :locals => {:location => location})
       end
-    elsif params[:by_instrument]
-      @mentors_by_instrument = Instrument.all.map { |i| [i, i.mentors]}
-    elsif params[:referents]
-      @referents = Mentor.referents
-      render :template => "mentors/referents_index"
     end
   end
   
