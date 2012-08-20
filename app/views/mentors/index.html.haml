@@ -6,6 +6,7 @@
     %li{:class => params[:by_instrument] ? "active" : nil}= link_to "Po glasbilih", :by_instrument => true
 
 - if @mentors_by_location
+  = gmaps4rails(@json)
   %h2 Po lokacijah
   - @mentors_by_location.each do |location, mentors|
     .mentor_location
