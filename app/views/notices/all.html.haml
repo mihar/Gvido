@@ -15,7 +15,7 @@
       %tr.clickable
         %td= notice.title
         %td= notice.created_at.to_s :short
-        %td= (textilize truncate(notice.body_html, :length => 32)).html_safe
+        %td= truncate(notice.body, :length => 32)
         %td
           - if notice.photo.file?
             .photo= (image_tag(notice.photo.url(:small))).html_safe

@@ -2,6 +2,10 @@
   = f.input :title
   = f.input :body
   = f.input :photo
+  - if resource.photo.file?
+    .file.input
+      %label Obstoječa fotografija
+      = image_tag resource.photo(:small)
   = f.input :expires_at,  :start_year => Date.today.year,
                           :end_year => Date.today.year + 1,
                           :discard_minute => true, :discard_second => true, 
