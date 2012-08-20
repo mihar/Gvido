@@ -2,29 +2,12 @@ class Location < ActiveRecord::Base
   has_and_belongs_to_many :mentors
   belongs_to :location_section
   belongs_to :post_office
-  before_save :geocode, :normalize_uri
+  before_save :normalize_uri
   validates_presence_of :title
   
-  attr_accessor :letter
-    
-  def geocoded?
-    !!(self.lat and self.lng)
-  end
-  
-  def geocode
-    geo = !address.blank? && !self.post_office.nil? && Geocoder.geocode(self.address, self.city, self.post_office.id)
-    
-    if geo
-      self.lat, self.lng = geo.lat, geo.lng
-    else
-      self.lat = self.lng = nil
-    end
-  end
+  acts_as_gmappable :lat => "lat", :lng => "lng"
 
-  def geocode!
-    geocode
-    save(false)
-  end
+  attr_accessor :letter
   
   def enrollments
     mentors.map do |m|

@@ -1,11 +1,7 @@
-%h4
-  - if link === true
-    = link_to location.title, location_path(location)
-  - else
-    = location.title
+%h4= link_to location.title, location_path(location)
 = spit location, :subtitle
 .address
   = location.address
   %br
-  = location.zip
+  = location.post_office.id
   = location.city

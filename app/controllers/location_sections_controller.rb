@@ -5,6 +5,10 @@ class LocationSectionsController < InheritedResources::Base
   
   def index
     @locations = Location.all
+    @json = @locations.to_gmaps4rails do |location, marker|
+      marker.infowindow render_to_string(:partial => 'locations/info', :locals => {:location => location})
+    end
+
     super
   end
   
