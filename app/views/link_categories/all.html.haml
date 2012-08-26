@@ -4,11 +4,14 @@
   .master
     = link_to "Nova kategorija povezav", new_link_category_path
 
+#notice
+  Brisanje kategorije povezav NE bo izbrisalo povezav, ki spadajo v kategorijo. Te povezave bodo samo postale nekategorizirane.
+
 %table
   %thead
     %th Naziv kategorije
     %th Pozicija
-    %td
+    %th
   %tbody
     - for link_category in collection
       %tr
