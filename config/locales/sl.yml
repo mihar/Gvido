@@ -25,6 +25,8 @@ sl:
     title: "Naslov"
     email: "E-pošta"
     discount_percent: "Popust (%)"
+    taken_at: "Datum slikanja"
+    album_category: "Kategorija"
   crud:
     archive: "Arhiviraj"
     dearchive: "Dearhiviraj"

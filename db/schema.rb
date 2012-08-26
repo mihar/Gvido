@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120826025747) do
+ActiveRecord::Schema.define(:version => 20120826030545) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20120826025747) do
     t.integer  "position",          :default => 0
     t.text     "description"
     t.integer  "album_category_id"
+    t.date     "taken_at"
   end
 
   create_table "banners", :force => true do |t|
