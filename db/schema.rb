@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120808084323) do
+ActiveRecord::Schema.define(:version => 20120826025747) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -323,6 +323,7 @@ ActiveRecord::Schema.define(:version => 20120808084323) do
     t.text     "answer"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position",   :default => 0
   end
 
   create_table "references", :force => true do |t|
