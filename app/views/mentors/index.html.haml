@@ -2,25 +2,33 @@
 
 #mentors_filters
   %ul
-    %li{:class => params[:by_location] || !params[:by_instrument] ? "active" : nil}= link_to "Po lokacijah", :by_location => true
-    %li{:class => params[:by_instrument] ? "active" : nil}= link_to "Po glasbilih", :by_instrument => true
+    %li.browse Brskaj
+    %li{:class => (params[:by_location].present?? :current : nil)}= link_to "Po lokacijah", :by_location => true
+    %li{:class => (params[:by_instrument].present?? :current : nil)}= link_to "Po glasbilih", :by_instrument => true
 
 - if @mentors_by_location
   = gmaps4rails(@json)
   %h2 Po lokacijah
-  - @mentors_by_location.each do |location, mentors|
-    .mentor_location
-      %h3= location
-      %ul
-        - mentors.each do |mentor|
-          %li= link_to mentor, mentor
+  - LocationSection.all.in_groups_of(2).each do |row|
+    .row
+      - row.each do |section|
+        - if section
+          .section
+            %h3= section.title
+            .locations
+              - section.locations.each do |location|
+                %h4= location.title
+                = location.mentors.map { |mentor| link_to mentor, mentor }.to_sentence.html_safe
 
 - if @mentors_by_instrument
   %h2 Po glasbilih
-  - @mentors_by_instrument.each do |instrument, mentors|
-    .mentor_instrument
-      %h3= instrument
-      %ul
-        - mentors.each do |mentor|
-          %li= link_to mentor, mentor
+  - Instrument.all.in_groups_of(3).each do |row|
+    .row
+      - row.each do |instrument|
+        - if instrument
+          .section.instrument_section
+            %h3= instrument
+            %ul
+              - instrument.mentors.each do |mentor|
+                %li= link_to mentor, mentor
 

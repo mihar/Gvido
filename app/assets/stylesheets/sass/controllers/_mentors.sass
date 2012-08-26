@@ -1,10 +1,42 @@
 .mentors #content
   &>.admin
     :clear left
-  .mentor_location
-    width: 260px
-    float: left
-    
+  .row
+    clear: both
+    .section
+      width: 380px
+      float: left
+      margin-bottom: 20px
+      &:nth-child(2)
+        margin-left: 20px
+    h4
+      margin-top: 5px
+    .instrument_section
+      width: 250px
+      margin-left: 0
+  #mentors_filters
+    +clearfix
+    padding: 10px 0
+    font-size: 16px
+    ul, li
+      list-style: none
+      margin: 0
+      padding: 0
+    li
+      float: left
+      &.browse
+        padding: 5px
+          right: 10px
+      &.current a
+        font-weight: bold
+        text-decoration: none
+        color: #000
+    a
+      display: block
+      padding: 5px
+      margin-right: 10px
+      background: #eee
+
   
 #mentors-show #content
   .data

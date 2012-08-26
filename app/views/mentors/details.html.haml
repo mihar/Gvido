@@ -1,9 +1,9 @@
 = title "Podrobnosti mentorja"
 
 .crud
-  = link_to "Odstrani", resource, :confirm => destroy_confirmation(resource), :method => :delete
   .master
     = link_to "Uredi", edit_mentor_path(resource)
+    = link_to "Odstrani", resource, :confirm => destroy_confirmation(resource), :method => :delete
 
 .data
   %p
