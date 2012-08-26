@@ -12,7 +12,7 @@
     %th Opcije
   %tbody
     - for notice in collection
-      %tr.clickable
+      %tr
         %td= notice.title
         %td= notice.created_at.to_s :short
         %td= truncate(notice.body, :length => 32)

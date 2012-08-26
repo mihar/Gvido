@@ -10,7 +10,7 @@
     %th
   %tbody
     - for reference in collection
-      %tr.clickable
+      %tr
         %td= reference.title
         %td= (textilize truncate(reference.body, :length => 64)).html_safe
         %td

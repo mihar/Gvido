@@ -9,7 +9,7 @@
     %th
   %tbody
     - for movie in collection
-      %tr.clickable
+      %tr
         %td= movie.title
         %td
           .crud= link_to "Odstrani", movie, :confirm => destroy_confirmation(movie), :method => :delete

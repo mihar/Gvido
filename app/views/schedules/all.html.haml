@@ -10,7 +10,7 @@
     %th
   %tbody
     - for schedule in collection
-      %tr.clickable
+      %tr
         %td= schedule.title
         %td= (textilize schedule.body).html_safe
         %td

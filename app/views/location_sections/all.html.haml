@@ -10,7 +10,7 @@
     %th Opcije
   %tbody
     - for location_section in collection
-      %tr.clickable
+      %tr
         %td= location_section.title
         %td.crud= link_to "Odstrani", location_section, :confirm => destroy_confirmation(location_section), :method => :delete
         %td.crud= link_to "Uredi", edit_location_section_path(location_section)

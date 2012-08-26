@@ -10,7 +10,7 @@
     %th
   %tbody
     - for question in collection
-      %tr.clickable
+      %tr
         %td= question.question
         %td= (textilize truncate(question.answer, :length => 32)).html_safe
         %td
