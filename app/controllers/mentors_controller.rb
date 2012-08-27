@@ -11,7 +11,7 @@ class MentorsController < InheritedResources::Base
   def index
     @mentors = Mentor.all
     if params[:by_instrument]
-      @mentors_by_instrument = Instrument.all.map { |i| [i, i.mentors]}
+
     elsif params[:referents]
       @referents = Mentor.referents
       render :template => "mentors/referents_index"

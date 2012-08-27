@@ -5,6 +5,7 @@
     %li.browse Brskaj
     %li{:class => (params[:by_location].present?? :current : nil)}= link_to "Po lokacijah", :by_location => true
     %li{:class => (params[:by_instrument].present?? :current : nil)}= link_to "Po glasbilih", :by_instrument => true
+    %li#referents= link_to "Referenti/tke", mentors_path(:referents => true)
 
 - if @mentors_by_location
   = gmaps4rails(@json)
@@ -18,7 +19,7 @@
             .locations
               - section.locations.each do |location|
                 %h4= location.title
-                = location.mentors.map { |mentor| link_to mentor, mentor }.to_sentence.html_safe
+                = location.mentors.not_referents.map { |mentor| link_to mentor, mentor }.to_sentence.html_safe
 
 - if @mentors_by_instrument
   %h2 Po glasbilih
