@@ -1,5 +1,7 @@
 - title @location.title
 
+= gmaps :markers => {:data => [resource].to_gmaps4rails}, :map_options => {:auto_zoom => false, :zoom => 9, :width => 400, :height => 400}
+
 .data
   %h3= @location.title
   = spit @location, :subtitle
@@ -17,7 +19,11 @@
     = spit_with_links @location, :mentors
   .instruments
     %h4 Programi
-    = render :partial => "instruments/table", :locals => {:instruments => @location.instruments}
+    - @location.instruments.in_groups_of(2) do |instruments|
+      .row
+        - instruments.each do |instrument|
+          - if instrument
+            = render instrument
 
       
 %p= textilize(@location.about).html_safe unless @location.about.blank?

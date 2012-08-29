@@ -67,9 +67,23 @@
   .mentors, .locations
     :margin 20px 0
   .instruments
-    +instruments_table
+    .instrument 
+      float: left
+      width: 150px
+      text-align: center
+      background: #efefef
+      padding: 10px
+      margin: 0 10px 10px 0
+      .icon img
+        width: 85px
+        height: 85px
+  .map_container
+    width: 400px
+    position: absolute
+    top: 0
+    right: 0
   #map
-    :margin-top 30px
+    width: 400px
     
 #location_sections-index
   .section
