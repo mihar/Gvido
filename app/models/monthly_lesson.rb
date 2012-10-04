@@ -36,7 +36,7 @@ class MonthlyLesson < ActiveRecord::Base
     #
     def check_in_dates_for_mentor(_mentor_id)
       if Mentor.find(_mentor_id)
-        date_querry = self.where(:mentor_id => _mentor_id).where("date <= LAST_DAY(CURDATE())").select("DISTINCT date").order("date ASC").reload
+        date_querry = self.where(:mentor_id => _mentor_id).where("date <= ?", Date.today.end_of_month).select("DISTINCT date").order("date ASC").reload
         return date_querry.collect(&:date).group_by {|check_in_date| check_in_date.year}
       end
       return []
