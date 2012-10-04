@@ -8,7 +8,7 @@ class Mentor < ActiveRecord::Base
   has_many :monthly_lessons
   has_many :expenses
 
-  accepts_nested_attributes_for :user
+  accepts_nested_attributes_for :user, :reject_if => proc { |a| a['password'].blank? }
 
   default_scope order(:position)
   scope :referents, where(:referent => true)
