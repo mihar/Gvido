@@ -8,20 +8,20 @@ class Mentor < ActiveRecord::Base
   has_many :monthly_lessons
   has_many :expenses
 
-  accepts_nested_attributes_for :user, :reject_if => proc { |a| a['password'].blank? }
+  accepts_nested_attributes_for :user, :reject_if => Proc.new { |attributes| attributes.any? {|k,v| v.blank?} }
 
   default_scope order(:position)
   scope :referents, where(:referent => true)
   scope :not_referents, where(:referent => false)
 
   validates_uniqueness_of :email
-  validates_presence_of :name, :surname, :email, :price_per_private_lesson, :public_lesson_coefficient
+  validates_presence_of :name, :surname, :email
   validates_numericality_of :price_per_private_lesson#, :greater_than => 0
   validates_numericality_of :public_lesson_coefficient#,  :greater_than => 0
   validate :validate_user_presence
 
   before_save :make_permalink
-  before_validation :push_user_attributes, :if => Proc.new { |mentor| mentor.user.present? }
+  before_validation :push_user_attributes
 
   
   has_attached_file :photo, 
@@ -111,6 +111,7 @@ class Mentor < ActiveRecord::Base
   private
   
   def push_user_attributes
+    self.create_user unless user
     self.user.first_name = name
     self.user.last_name = surname
     self.user.email = email
