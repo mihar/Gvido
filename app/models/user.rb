@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   end
   
   def should_validate_password?
-    new_record? or not password.blank?
+    new_record? or password?
   end
   
   def to_s
