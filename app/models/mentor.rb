@@ -3,7 +3,7 @@ class Mentor < ActiveRecord::Base
   has_and_belongs_to_many :instruments
   has_and_belongs_to_many :locations
   has_and_belongs_to_many :gigs
-  has_many :enrollments, :conditions => "enrollment_date < '#{Date.today}' AND cancel_date > '#{Date.today}' AND deleted = 0", :dependent => :destroy
+  has_many :enrollments, :conditions => "enrollment_date < '#{Date.today}' AND cancel_date > '#{Date.today}' AND deleted = false", :dependent => :destroy
   has_many :students, :through => :enrollments
   has_many :monthly_lessons
   has_many :expenses
