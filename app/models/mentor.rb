@@ -16,8 +16,8 @@ class Mentor < ActiveRecord::Base
 
   validates_uniqueness_of :email
   validates_presence_of :name, :surname, :email, :price_per_private_lesson, :public_lesson_coefficient
-  validates_numericality_of :price_per_private_lesson, :greater_than => 0
-  validates_numericality_of :public_lesson_coefficient,  :greater_than => 0
+  validates_numericality_of :price_per_private_lesson#, :greater_than => 0
+  validates_numericality_of :public_lesson_coefficient#,  :greater_than => 0
   validate :validate_user_presence
 
   before_save :make_permalink
