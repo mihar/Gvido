@@ -13,6 +13,7 @@
       %tr
         %td= location_section.title
         %td
-          .crud= link_to "Odstrani", location_section, :confirm => destroy_confirmation(location_section), :method => :delete
-          .crud= link_to "Uredi", edit_location_section_path(location_section)
+          .crud
+            = link_to "Odstrani", location_section, :confirm => destroy_confirmation(location_section), :method => :delete
+            = link_to "Uredi", edit_location_section_path(location_section)
 

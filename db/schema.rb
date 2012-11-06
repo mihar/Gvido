@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120826030545) do
+ActiveRecord::Schema.define(:version => 20121106184823) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -197,6 +197,7 @@ ActiveRecord::Schema.define(:version => 20120826030545) do
     t.string   "subtitle"
     t.text     "about"
     t.string   "uri"
+    t.boolean  "gmaps"
   end
 
   create_table "locations_mentors", :id => false, :force => true do |t|
@@ -366,8 +367,8 @@ ActiveRecord::Schema.define(:version => 20120826030545) do
     t.string   "first_name"
     t.string   "last_name"
     t.boolean  "admin",               :default => false
-    t.string   "email",               :default => "",    :null => false
-    t.string   "encrypted_password",  :default => "",    :null => false
+    t.string   "email",                                  :null => false
+    t.string   "encrypted_password",                     :null => false
     t.string   "password_salt"
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",       :default => 0
