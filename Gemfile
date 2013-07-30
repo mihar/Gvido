@@ -21,7 +21,7 @@ gem 'gmaps4rails'
 group :production do
   gem 'pg'
   gem 'therubyracer-heroku'
-  gem 'thin'
+  gem 'unicorn'
 end
 
 group :assets do
@@ -45,4 +45,5 @@ group :development, :test do
   gem 'swinger'
   gem 'capybara'
   gem 'rails-erd'
+  gem 'thin'
 end

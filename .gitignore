@@ -16,3 +16,4 @@ coverage
 config/paperclip.yml
 *.sql
 .rvmrc
+.bundle/config
