@@ -12,7 +12,7 @@
       = link_to dashboard_path do
         %span Talissim
     #wrapper
-      #tenyears= image_tag "10years.png"
+      / #tenyears= image_tag "10years.png"
       #header
         - if banner = Banner.first
           = link_to image_tag(banner.image.url), banner.url
