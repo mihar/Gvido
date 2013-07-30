@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 ruby '1.9.3'
 
-gem 'rails'
+gem 'rails', '3.2.14'
 gem 'simple_form'
 gem 'paperclip'
 gem 'RedCloth'
@@ -17,11 +17,11 @@ gem 'prawn'
 gem 'prawn_rails'
 gem 'aws-sdk'
 gem 'gmaps4rails'
+gem 'unicorn'
 
 group :production do
   gem 'pg'
   gem 'therubyracer-heroku'
-  gem 'unicorn'
 end
 
 group :assets do
