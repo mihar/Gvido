@@ -24,10 +24,10 @@ App::Application.configure do
   config.assets.precompile += %w( dashboard.css )
 
   # Specifies the header that your server uses for sending files
-  config.action_dispatch.x_sendfile_header = "X-Sendfile"
+  # config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
   # For nginx:
-  # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
+  config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
 
   # If you have no front-end server that supports something like X-Sendfile,
   # just comment this out and Rails will serve the files
@@ -40,10 +40,6 @@ App::Application.configure do
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
-
-  # Disable Rails's static asset server
-  # In production, Apache or nginx will already do this
-  config.serve_static_assets = false
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   config.action_controller.asset_host = "https://#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
