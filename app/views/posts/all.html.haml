@@ -15,7 +15,7 @@
         %td= post.title
         %td= post.created_at.to_s :short
         %td= (textilize truncate(post.text, :length => 32)).html_safe
-        %td
-          .crud= link_to "Odstrani", post, :confirm => destroy_confirmation(post), :method => :delete
-          .crud= link_to "Uredi", edit_post_path(post)
+        %td.crud
+          = link_to "Odstrani", post, :confirm => destroy_confirmation(post), :method => :delete
+          = link_to "Uredi", edit_post_path(post)
 

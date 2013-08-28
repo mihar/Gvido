@@ -13,7 +13,7 @@
       %tr
         %td= schedule.title
         %td= (textilize schedule.body).html_safe
-        %td
-          .crud= link_to "Odstrani", schedule, :confirm => destroy_confirmation(schedule), :method => :delete
-          .crud= link_to "Uredi", edit_schedule_path(schedule)
+        %td.crud
+          = link_to "Odstrani", schedule, :confirm => destroy_confirmation(schedule), :method => :delete
+          = link_to "Uredi", edit_schedule_path(schedule)
 

@@ -30,6 +30,7 @@
           - if location.location_section
             = location.location_section.title
         %td= location.about
-        %td.crud= link_to "Odstrani", location, :confirm => destroy_confirmation(location), :method => :delete
-        %td.crud= link_to "Uredi", edit_location_path(location)
+        %td.crud
+          = link_to "Odstrani", location, :confirm => destroy_confirmation(location), :method => :delete
+          = link_to "Uredi", edit_location_path(location)
 
