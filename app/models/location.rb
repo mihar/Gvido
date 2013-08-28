@@ -7,7 +7,7 @@ class Location < ActiveRecord::Base
   
   acts_as_gmappable :lat => "lat", :lng => "lng"
 
-  attr_accessor :letter
+  attr_accessor :letter, :gmaps
   
   def enrollments
     mentors.map do |m|
