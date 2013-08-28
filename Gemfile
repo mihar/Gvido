@@ -18,6 +18,7 @@ gem 'prawn_rails'
 gem 'aws-sdk'
 gem 'gmaps4rails'
 gem 'unicorn'
+gem 'i18n'
 
 group :production do
   gem 'pg'
