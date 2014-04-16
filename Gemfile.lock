@@ -3,7 +3,6 @@ GEM
   specs:
     Ascii85 (1.0.2)
     RedCloth (4.2.9)
-    ZenTest (4.9.2)
     actionmailer (3.2.14)
       actionpack (= 3.2.14)
       mail (~> 2.5.4)
@@ -37,8 +36,6 @@ GEM
     asset_sync (1.0.0)
       activemodel
       fog (>= 1.8.0)
-    autotest (4.4.6)
-      ZenTest (>= 4.4.1)
     aws-sdk (1.11.1)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
@@ -279,7 +276,6 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   asset_sync
-  autotest
   aws-sdk
   cancan (= 1.6.4)
   capistrano
