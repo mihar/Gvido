@@ -2,6 +2,7 @@
 %html
   %head
     %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "Content-Type" }/
+    %meta{name: "robots", content: "noindex"}
     %title
       = yield(:title).empty?? "GVIDO Informacijski sistem" : yield(:title)
     = stylesheet_link_tag "dashboard"

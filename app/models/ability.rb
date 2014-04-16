@@ -10,7 +10,24 @@ class Ability
     else
       can :read, :all
       can [:create, :new_report], Contact
-      cannot :read, Person
+      cannot :read, [
+        Agreement, 
+        BillingOption, 
+        Contact, 
+        Enrollment, 
+        Expense, 
+        Invoice, 
+        LinkCategory,
+        MonthlyLesson,
+        Payment,
+        PaymentPeriod,
+        PaymentPlan,
+        Person, 
+        PersonalContact,
+        PostOffice,
+        Student,
+        User
+      ]
       cannot :show, LocationSection
       cannot :manage, PaymentPeriod
       cannot :manage, MonthlyLesson
