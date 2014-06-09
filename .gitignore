@@ -17,3 +17,4 @@ config/paperclip.yml
 *.sql
 .rvmrc
 .bundle/config
+s3.yml
