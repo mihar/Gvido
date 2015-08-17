@@ -20,8 +20,8 @@ gem 'gmaps4rails'
 gem 'unicorn'
 gem 'i18n'
 
-group :production do
   gem 'pg'
+group :production do
   gem 'therubyracer-heroku'
 end
 
@@ -33,9 +33,7 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'mysql2'
-  gem 'capistrano'
-  gem 'capistrano-ext'
+  gem 'sqlite3'
   gem 'rspec-rails'
   gem 'fuubar'
   gem 'factory_girl_rails'
