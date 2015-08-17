@@ -3,7 +3,7 @@ module LinkHelper
   def link_to_lightbox(string, image, album = 'album', title = '')
     ret = "<a href='#{image}' rel='lightbox[#{album}]'"
     ret += " title='#{title}'" unless title.blank?
-    ret += "class='lightbox'>#{string}</a>"
+    ret += "class='lightbox' data-featherlight='image'>#{string}</a>"
   end
 
   # WillPaginate localization hax
