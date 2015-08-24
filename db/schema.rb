@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121106184823) do
+ActiveRecord::Schema.define(:version => 20150824041926) do
 
   create_table "abouts", :force => true do |t|
     t.text     "text"
@@ -134,6 +134,10 @@ ActiveRecord::Schema.define(:version => 20121106184823) do
     t.text     "introduction"
     t.text     "shop_instructions"
     t.integer  "position",          :default => 0
+    t.string   "icon_file_name"
+    t.string   "icon_content_type"
+    t.integer  "icon_file_size"
+    t.datetime "icon_updated_at"
   end
 
   create_table "instruments_locations", :id => false, :force => true do |t|

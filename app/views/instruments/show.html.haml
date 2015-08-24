@@ -1,6 +1,6 @@
 - title @instrument.title
 = render_misc 'instruments'
-.instrument_image= image_tag @instrument.icon
+.instrument_image= image_tag @instrument.icon.url(:normal)
 
 = spit @instrument, :description, :div, true
 

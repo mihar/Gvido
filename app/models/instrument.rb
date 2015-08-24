@@ -6,6 +6,17 @@ class Instrument < ActiveRecord::Base
   
   validates_presence_of :title
   before_save :make_permalink
+
+
+  has_attached_file :icon, :styles => { :small => "30x30#", :medium => "50x50#", :normal => "150x150#" },
+                    :whiny => false,
+                    :storage => :s3,
+                    :bucket => AWS_S3['bucket'],
+                    :s3_credentials => {
+                      :access_key_id => AWS_S3['access_key_id'],
+                      :secret_access_key => AWS_S3['secret_access_key']
+                    },
+                    :path => '/assets/instruments/:id/:style/:basename.:extension'
   
   def to_param
     permalink
@@ -15,16 +26,6 @@ class Instrument < ActiveRecord::Base
     mentors.map do |m|
       m.locations
     end.flatten.uniq
-  end
-  
-  def icon
-    "instruments/" + self.title.make_websafe + ".png"
-  end
-  def icon_medium
-    "instruments/medium/" + self.title.make_websafe + ".png"
-  end
-  def icon_small
-    "instruments/small/" + self.title.make_websafe + ".png"
   end
   
   def make_permalink!

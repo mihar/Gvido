@@ -6,5 +6,9 @@
   = f.input :activities
   = f.input :shop_instructions
   = f.input :position
+  - if resource.icon.file?
+    Obstoječa slika
+    = image_tag resource.icon.url(:normal)
+  = f.input :icon
   .submit
     = f.button :submit
